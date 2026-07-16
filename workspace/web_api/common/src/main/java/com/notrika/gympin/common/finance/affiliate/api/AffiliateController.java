@@ -8,7 +8,7 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateAddPlaceParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterParam;
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;

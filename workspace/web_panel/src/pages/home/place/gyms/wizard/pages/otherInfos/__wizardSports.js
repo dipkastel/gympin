@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Box, Chip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader} from "../../../../../../partials/content/Portlet";
 import {useParams} from "react-router-dom";
-import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";
+import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../../../../../../network/api/gymSport.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {sport_query} from "../../../../../../../network/api/sport.api";
 

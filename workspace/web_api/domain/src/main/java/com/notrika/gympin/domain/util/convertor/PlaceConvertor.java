@@ -7,23 +7,24 @@ import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyable
 import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
-import com.notrika.gympin.common.place.placeCounseling.dto.PlaceCounselingDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeCounseling.Counseling.dto.CounselingDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCounselingEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
+import com.notrika.gympin.persistence.entity.place.Counseling.CounselingEntity;
+import com.notrika.gympin.persistence.entity.place.Counseling.CounselingProficienciesEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
-import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.appointment.TicketAppointmentEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -38,15 +39,15 @@ import java.util.stream.Collectors;
 public final class PlaceConvertor {
 
     //gym
-    public static List<PlaceGymDto> ToGymDto(Collection<PlaceGymEntity> entities) {
+    public static List<PlaceGymDto> ToGymDto(Collection<GymEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::toDtoSecureGym).collect(Collectors.toList());
     }
-    public static Page<PlaceGymDto> ToGymDto(Page<PlaceGymEntity> entities) {
+    public static Page<PlaceGymDto> ToGymDto(Page<GymEntity> entities) {
         if (entities == null) return null;
         return entities.map(PlaceConvertor::toDtoSecureGym);
     }
-    public static PlaceGymDto ToGymDto(PlaceGymEntity entity) {
+    public static PlaceGymDto ToGymDto(GymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         try {
@@ -96,12 +97,12 @@ public final class PlaceConvertor {
         placeDto.setRate(entity.getRate());
         placeDto.setStatus(entity.getStatus());
         if (entity.getPlaceSport() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(GymSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
-    public static PlaceGymDto toSimpleGymDto(PlaceGymEntity entity) {
+    public static PlaceGymDto toSimpleGymDto(GymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         try {
@@ -129,7 +130,7 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
-    public static PlaceGymDto toDtoSecureGym(PlaceGymEntity entity) {
+    public static PlaceGymDto toDtoSecureGym(GymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         UserProvider provider = UserProvider.GYMPIN;
@@ -193,21 +194,21 @@ public final class PlaceConvertor {
             }
         }
         if (entity.getPlaceSport() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(GymSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
     //counseling
-    public static List<PlaceCounselingDto> ToCounselingDto(List<PlaceCounselingEntity> entities) {
+    public static List<CounselingDto> ToCounselingDto(List<CounselingEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::toDtoSecureCounseling).collect(Collectors.toList());
     }
-    public static Page<PlaceCounselingDto> ToCounselingDto(Page<PlaceCounselingEntity> entities) {
+    public static Page<CounselingDto> ToCounselingDto(Page<CounselingEntity> entities) {
         if (entities == null) return null;
         return entities.map(PlaceConvertor::toDtoSecureCounseling);
     }
-    public static PlaceCounselingDto ToCounselingDto(PlaceCounselingEntity entity) {
+    public static CounselingDto ToCounselingDto(CounselingEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         try {
@@ -223,7 +224,7 @@ public final class PlaceConvertor {
         } catch (Exception e) {
         }
 
-        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        CounselingDto placeDto = new CounselingDto();
         placeDto.setId(entity.getId());
         try {
             placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
@@ -258,9 +259,11 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        if (entity.getProficiencies() != null)
+            placeDto.setProficiencies(entity.getProficiencies().stream().filter(p -> !p.isDeleted()).map(CounselingProficienciesEntity::getProficiencies).map(ProficienciesConvertor::toDto).collect(Collectors.toList()));
         return placeDto;
     }
-    public static PlaceCounselingDto toSimpleCounselingDto(PlaceCounselingEntity entity) {
+    public static CounselingDto toSimpleCounselingDto(CounselingEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         try {
@@ -275,7 +278,7 @@ public final class PlaceConvertor {
             }
         } catch (Exception e) {
         }
-        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        CounselingDto placeDto = new CounselingDto();
         placeDto.setId(entity.getId());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setRate(entity.getRate());
@@ -288,7 +291,7 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
-    public static PlaceCounselingDto toDtoSecureCounseling(PlaceCounselingEntity entity) {
+    public static CounselingDto toDtoSecureCounseling(CounselingEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
         UserProvider provider = UserProvider.GYMPIN;
@@ -307,7 +310,7 @@ public final class PlaceConvertor {
         } catch (Exception e) {
         }
 
-        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        CounselingDto placeDto = new CounselingDto();
         placeDto.setId(entity.getId());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setRate(entity.getRate());
@@ -353,18 +356,20 @@ public final class PlaceConvertor {
         }
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        if (entity.getProficiencies() != null)
+            placeDto.setProficiencies(entity.getProficiencies().stream().filter(p -> !p.isDeleted()).map(CounselingProficienciesEntity::getProficiencies).map(ProficienciesConvertor::toDto).collect(Collectors.toList()));
         return placeDto;
     }
     //catering
-    public static List<PlaceCateringDto> ToCateringDto(Collection<PlaceCateringEntity> entities) {
+    public static List<PlaceCateringDto> ToCateringDto(Collection<CateringEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToCateringDto).collect(Collectors.toList());
     }
-    public static Page<PlaceCateringDto> ToCateringDto(Page<PlaceCateringEntity> entities) {
+    public static Page<PlaceCateringDto> ToCateringDto(Page<CateringEntity> entities) {
         if (entities == null) return null;
         return entities.map(PlaceConvertor::ToCateringDto);
     }
-    public static PlaceCateringDto ToCateringDto(PlaceCateringEntity entity) {
+    public static PlaceCateringDto ToCateringDto(CateringEntity entity) {
         if (entity == null) return null;
 
         PlaceCateringDto catering = new PlaceCateringDto();
@@ -407,9 +412,9 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         placeDto.setRate(entity.getRate());
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
-        if(entity instanceof PlaceGymEntity)
+        if(entity instanceof GymEntity)
             placeDto.setPlaceType("Gym");
-        if(entity instanceof PlaceCateringEntity)
+        if(entity instanceof CateringEntity)
             placeDto.setPlaceType("Catering");
         return placeDto;
     }
@@ -438,10 +443,10 @@ public final class PlaceConvertor {
         dto.setId(entity.getId());
         dto.setDeleted(entity.isDeleted());
         dto.setPlaceDto(ToDto(entity.getPlace()));
-        if(entity.getPlace() instanceof PlaceCateringEntity)
-            dto.setPlaceCateringDto(ToCateringDto((PlaceCateringEntity) entity.getPlace()));
-        if(entity.getPlace() instanceof PlaceGymEntity)
-            dto.setPlaceGymDto(ToGymDto((PlaceGymEntity) entity.getPlace()));
+        if(entity.getPlace() instanceof CateringEntity)
+            dto.setPlaceCateringDto(ToCateringDto((CateringEntity) entity.getPlace()));
+        if(entity.getPlace() instanceof GymEntity)
+            dto.setPlaceGymDto(ToGymDto((GymEntity) entity.getPlace()));
         dto.setSms(entity.getSms());
         dto.setUserDto(UserConvertor.toDtoComplete(entity.getUser()));
         dto.setUserRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()));

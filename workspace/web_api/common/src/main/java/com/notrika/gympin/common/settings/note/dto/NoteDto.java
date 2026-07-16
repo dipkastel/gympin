@@ -3,7 +3,7 @@ package com.notrika.gympin.common.settings.note.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.purchased.purchased.dto.PurchasedDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;

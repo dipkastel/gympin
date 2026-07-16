@@ -23,6 +23,7 @@ const _GymPhones = ({initialValue,onChange}) => {
     const removePhone = (index) => {
         const updatedPhones = phones.filter((_, i) => i !== index);
         setPhones(updatedPhones);
+        onChange(updatedPhones.join(","));
     };
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

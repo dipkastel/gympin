@@ -8,7 +8,7 @@ import __wizardModalSelectHallActiveTimes from "./__wizardModalSelectHallActiveT
 import {
     TicketSubscribes_deleteSubscribeActiveTimes,
     TicketSubscribes_getActiveTimesByTicketSubscribe
-} from "../../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../../network/api/TicketSubscribes.api";
 
 const __wizardTicketSubscribesHalls = ({ticketSubscribe,setCanGoNext}) => {
 

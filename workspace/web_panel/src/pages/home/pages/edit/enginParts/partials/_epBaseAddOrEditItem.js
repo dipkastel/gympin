@@ -8,8 +8,8 @@ import {pages_add, pages_update} from "../../../../../../network/api/pages.api";
 import {getViewTypesByItemType} from "../../../../../../helper";
 import {Delete} from "@mui/icons-material";
 import {PagesDestinationsEnum} from "../../../../../../helper/enums/PagesDestinationsEnum";
-import {TicketSubscribes_query} from "../../../../../../network/api/ticketSubscribes.api";
-import {PlaceGym_query} from "../../../../../../network/api/placeGym.api";
+import {TicketSubscribes_query} from "../../../../../../network/api/TicketSubscribes.api";
+import {PlaceGym_query} from "../../../../../../network/api/gym.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -114,7 +114,7 @@ const _epBaseAddOrEditItem = ({elements, itemToEdit, openModal, onClose, parent,
     function testQuery() {
         setTestQueryItems(null);
         if (inItem.Type == "QUERY_SUBSCRIBE") {
-            TicketSubscribes_query({...JSON.parse(inItem?.Data)}).then(result => {
+            TicketSubscribes_query(queryFixer(inItem?.Data)).then(result => {
                 console.log("result1",result);
                 setTestQueryItems(result?.data?.Data);
             }).catch(e => {
@@ -127,7 +127,7 @@ const _epBaseAddOrEditItem = ({elements, itemToEdit, openModal, onClose, parent,
         }
 
         if (inItem.Type == "QUERY_GYM") {
-            PlaceGym_query({...JSON.parse(inItem?.Data)}).then(result => {
+            PlaceGym_query(queryFixer(inItem?.Data)).then(result => {
                 console.log("result2",result);
                 setTestQueryItems(result?.data?.Data);
             }).catch(e => {
@@ -141,6 +141,39 @@ const _epBaseAddOrEditItem = ({elements, itemToEdit, openModal, onClose, parent,
 
     }
 
+    function queryFixer(queryString) {
+        try{
+            const regex = /\[date-(hour|day|month)(Before|After)-(\d+)]/;
+            if(queryString.match(regex))
+                queryString = queryString.replace(
+                    regex,
+                    (_, unit, direction, amount) => {
+                        const date = new Date();
+                        const value = Number(amount);
+                        const sign = direction === 'Before' ? -1 : 1;
+
+                        switch (unit) {
+                            case 'hour':
+                                date.setHours(date.getHours() + sign * value);
+                                break;
+
+                            case 'day':
+                                console.log("reere","day")
+                                date.setDate(date.getDate() + sign * value);
+                                break;
+
+                            case 'month':
+                                date.setMonth(date.getMonth() + sign * value);
+                                break;
+                        }
+
+                        return '"'+date.toISOString().split('T')[0]+'"';
+                    }
+                )
+            return  {...JSON.parse(queryString)};
+        }catch (ex){
+        }
+    }
     function getTableTestResult() {
         return (
             <TableContainer>

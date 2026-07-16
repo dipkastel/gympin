@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketCourse.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.param.BaseParam;

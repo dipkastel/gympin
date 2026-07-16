@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.settings.userSettings.service.userSettingsService;

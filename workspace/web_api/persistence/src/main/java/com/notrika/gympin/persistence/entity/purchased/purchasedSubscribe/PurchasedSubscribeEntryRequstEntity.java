@@ -2,7 +2,6 @@ package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +30,6 @@ public class PurchasedSubscribeEntryRequstEntity extends BaseEntityWithCreateUpd
     @JoinColumn(name = "EnterUserId")
     private UserEntity requester;
 
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "hallId")
-    private HallEntity hall;
 
     @Column(name = "requestDate", nullable = false)
     private Timestamp requestDate;

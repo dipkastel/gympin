@@ -106,6 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"
+                        ,"/api/v1/article/getBySlug"
                 )
                 .permitAll()
                 .antMatchers("/api/GympinChatEndPoint/**").permitAll()

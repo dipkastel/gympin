@@ -46,8 +46,8 @@ import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -276,11 +276,11 @@ public class AccountServiceImpl implements AccountService {
             case WEBAPP:
                 return user.getCorporatesPersonel().stream().filter(o->!o.isDeleted()).count() > 0;
             case WEBMASTER:
-                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof PlaceGymEntity && !pp.isDeleted());
+                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof GymEntity && !pp.isDeleted());
             case WEBCORPORATE:
                 return user.getCorporatesPersonel().stream().filter(o->!o.isDeleted()).filter(f -> f.getRole() == CorporatePersonnelRoleEnum.ADMIN).count() > 0;
             case WEBFOODWORKS:
-                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof PlaceCateringEntity && !pp.isDeleted());
+                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof CateringEntity && !pp.isDeleted());
         }
         return false;
     }

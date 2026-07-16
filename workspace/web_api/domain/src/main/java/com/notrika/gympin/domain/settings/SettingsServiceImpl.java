@@ -10,18 +10,17 @@ import com.notrika.gympin.common.settings.base.param.GetCallListParam;
 import com.notrika.gympin.common.settings.base.param.SettingParam;
 import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
-import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SettingsConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import org.springframework.web.client.RestTemplate;
@@ -49,7 +48,7 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
     @Autowired
     ManageSettingsRepository manageSettingsRepository;
     @Autowired
-    PlaceGymRepository placeGymRepository;
+    GymRepository placeGymRepository;
     @Autowired
     BuyableRepository buyableRepository;
     @Autowired
@@ -95,10 +94,10 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public Boolean DoMaximumDiscount() {
-        List<PlaceGymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
         List<BuyableEntity> buyableToUpdate = new ArrayList<>();
         List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
-        for (PlaceGymEntity place : places) {
+        for (GymEntity place : places) {
             List<BuyableEntity> ActiveBuyablesOfPlace = place.getTicketSubscribes().stream().filter(b -> b.getEnable() && !b.isDeleted()).collect(Collectors.toList());
             for (BuyableEntity buyable : ActiveBuyablesOfPlace) {
                 try {
@@ -128,10 +127,10 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public Boolean DoMaximumManagedDiscount(SettingProfitParam pr) {
-        List<PlaceGymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
         List<BuyableEntity> buyableToUpdate = new ArrayList<>();
         List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
-        for (PlaceGymEntity place : places) {
+        for (GymEntity place : places) {
             List<BuyableEntity> ActiveBuyablesOfPlace = place.getTicketSubscribes().stream().filter(b -> b.getEnable() && !b.isDeleted()).collect(Collectors.toList());
             for (BuyableEntity buyable : ActiveBuyablesOfPlace) {
                 try {
@@ -164,10 +163,10 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public Boolean RemoveAllDiscounts() {
-        List<PlaceGymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
         List<BuyableEntity> buyableToUpdate = new ArrayList<>();
         List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
-        for (PlaceGymEntity place : places) {
+        for (GymEntity place : places) {
             List<BuyableEntity> ActiveBuyablesOfPlace = place.getTicketSubscribes().stream().filter(b -> b.getEnable() && !b.isDeleted()).collect(Collectors.toList());
             for (BuyableEntity buyable : ActiveBuyablesOfPlace) {
                 try {
@@ -197,9 +196,9 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public Boolean SetAutoToAll() {
-        List<PlaceGymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
-        List<PlaceGymEntity> placeToUpdate = new ArrayList<>();
-        for (PlaceGymEntity place : places) {
+        List<GymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> placeToUpdate = new ArrayList<>();
+        for (GymEntity place : places) {
             if (!place.isAutoDiscount()) {
                 place.setAutoDiscount(true);
                 placeToUpdate.add(place);
@@ -211,10 +210,10 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public Boolean UpdateAutoDiscount() {
-        List<PlaceGymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> places = placeGymRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
         List<BuyableEntity> buyableToUpdate = new ArrayList<>();
         List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
-        for (PlaceGymEntity place : places) {
+        for (GymEntity place : places) {
             if (Math.random() > 0.5) {
                 List<BuyableEntity> ActiveBuyablesOfPlace = place.getTicketSubscribes().stream().filter(b -> b.getEnable() && !b.isDeleted()).collect(Collectors.toList());
                 for (BuyableEntity buyable : ActiveBuyablesOfPlace) {

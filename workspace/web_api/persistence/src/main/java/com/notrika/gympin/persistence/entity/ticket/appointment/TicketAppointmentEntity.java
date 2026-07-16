@@ -3,7 +3,7 @@ package com.notrika.gympin.persistence.entity.ticket.appointment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketAppointment.enums.AppointmentStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.persistence.entity.place.PlaceCounselingEntity;
+import com.notrika.gympin.persistence.entity.place.Counseling.CounselingEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedAppointment.PurchasedAppointmentEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
@@ -51,9 +51,9 @@ public class TicketAppointmentEntity extends BuyableEntity<TicketAppointmentEnti
 
 
     @JsonIgnore
-    public PlaceCounselingEntity getPlaceCounseling() {
-        if (getPlace() instanceof PlaceCounselingEntity) {
-            return (PlaceCounselingEntity) getPlace();
+    public CounselingEntity getPlaceCounseling() {
+        if (getPlace() instanceof CounselingEntity) {
+            return (CounselingEntity) getPlace();
         }
         return null;
     }

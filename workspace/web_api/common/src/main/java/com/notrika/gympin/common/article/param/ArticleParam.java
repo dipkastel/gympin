@@ -22,6 +22,12 @@ public class ArticleParam extends BaseParam<ArticleParam> {
     @JsonProperty("Title")
     private String title;
 
+    @JsonProperty("Slug")
+    private String slug;
+
+    @JsonProperty("SeoPriority")
+    private Double seoPriority;
+
     @JsonProperty("FullText")
     private String fullText;
 

@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
@@ -27,7 +27,6 @@ import com.notrika.gympin.domain.util.convertor.UserRoleConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
@@ -35,7 +34,6 @@ import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;

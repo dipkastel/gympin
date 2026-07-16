@@ -62,6 +62,9 @@ public class TicketSubscribeQuery extends BaseQuery<TicketSubscribeQuery> {
     @JsonProperty("Incredibles")
     private Date min_startIncredible;
 
+    @JsonProperty("MaxPlaceCreate")
+    private Date max_placeæcreatedDate;
+
 
 
 

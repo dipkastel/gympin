@@ -1,9 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketCourse.api;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseParam;
@@ -19,11 +17,6 @@ public interface TicketCourseController extends BaseController<TicketCourseParam
 
     ResponseEntity<List<TicketCourseDto>> getTicketCourseByPlace(PlaceGymParam place);
     ResponseEntity<TicketCourseDto> changeTicketCourseStatus(TicketCourseParam ticketCourseParam);
-
-    //activeTimes
-    ResponseEntity<List<ActiveTimesDto>> getActiveTimesByTicketCourse(Long ticketCourseId);
-    ResponseEntity<TicketCourseDto> addCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
-    ResponseEntity<TicketCourseDto> deleteCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
 
     //sports
     ResponseEntity<List<PlaceSportDto>> getSports(Long ticketCourseId);

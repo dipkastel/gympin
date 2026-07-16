@@ -1,26 +1,20 @@
 import React from 'react';
-import _ChangePlaceStatus from "../status/_ChangePlaceStatus";
-import PlaceInviteCode from "../Invite/PlaceInviteCode";
-import DeletePlace from "../Delete/DeletePlace";
-import PlaceQrMessages from "../QrMessages/PlaceQrMessages";
-import PlaceOrder from "../order/PlaceOrder";
-import PlaceContract from "../contract/PlaceContract";
-
-const CounselingManagementSettingTab = ({place, updatePlace}) => {
+import _ChangeCounselingStatus from "../status/_ChangeCounselingStatus";
+const CounselingManagementSettingTab = ({counseling, updatePlace}) => {
     return (
         <>
-            {place && <div className="row">
+            {counseling && <div className="row">
 
                 <div className="col-md-6">
-                    {place && <_ChangePlaceStatus place={place} updatePlace={updatePlace}/>}
-                    {place && <PlaceOrder place={place} updatePlace={updatePlace}/>}
-                    {place && <DeletePlace place={place}/>}
+                    {counseling && <_ChangeCounselingStatus counseling={counseling} updatePlace={updatePlace}/>}
+                {/*    {counseling && <PlaceOrder counseling={counseling} updatePlace={updatePlace}/>}*/}
+                {/*    {counseling && <DeletePlace counseling={counseling}/>}*/}
 
                 </div>
                 <div className="col-md-6">
-                    {place && <PlaceContract place={place} updatePlace={updatePlace}/>}
-                    {place && <PlaceQrMessages place={place}/>}
-                    {place && <PlaceInviteCode place={place}/>}
+                {/*    {counseling && <PlaceContract counseling={counseling} updatePlace={updatePlace}/>}*/}
+                {/*    {counseling && <PlaceQrMessages counseling={counseling}/>}*/}
+                {/*    {counseling && <PlaceInviteCode counseling={counseling}/>}*/}
                 </div>
 
             </div>}

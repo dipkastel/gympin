@@ -2,7 +2,7 @@ package com.notrika.gympin.common.ticket.buyable.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;

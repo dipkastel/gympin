@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import lombok.Data;

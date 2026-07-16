@@ -1,0 +1,46 @@
+@use "variables" as *;
+
+body{
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  font-family: "IRANSans-web" !important;
+  color: $colors-text-primary !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.ltr{
+  direction: ltr;
+}
+.rtl{
+  direction: rtl;
+}
+.notfound-center{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  img{
+    width: 40%;
+    border-radius: 16px;
+  }
+}
+
+// Visible keyboard focus + reduced motion support (accessibility floor).
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid $colors-primary;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

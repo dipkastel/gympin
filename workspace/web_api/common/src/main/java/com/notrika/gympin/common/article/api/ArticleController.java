@@ -10,4 +10,5 @@ import org.springframework.http.ResponseEntity;
 public interface ArticleController extends BaseController<ArticleParam, ArticleDto, ArticleQuery> {
 
     ResponseEntity<ArticleDto> updateArticleImage(ArticleImageParam articleImageParam);
+    ResponseEntity<ArticleDto> getBySlug(String slug);
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import PlaceBeneficiaries from "../gymBeneficiaries/PlaceBeneficiaries";
+import GymBeneficiaries from "../Beneficiaries/GymBeneficiaries";
 
 const GymManagementBeneficiariesTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
                 <div className="col-md-12">
-                    <PlaceBeneficiaries place={place} updatePlace={updatePlace}/>
+                    <GymBeneficiaries place={place} updatePlace={updatePlace}/>
                 </div>
 
             </div>}

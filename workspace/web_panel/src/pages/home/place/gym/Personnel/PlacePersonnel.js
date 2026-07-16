@@ -192,7 +192,7 @@ const PlacePersonnel = ({place}) => {
                                     </TableCell>
                                     <TableCell align="left">
 
-                                        <Button variant={"contained"} size={"small"} color={"primary"} href={"/gyms/personnel/"+row.Id }>جزئیات</Button>
+                                        <Button variant={"contained"} size={"small"} color={"primary"} href={"/place/personnel/"+row.Id }>جزئیات</Button>
                                         <Button variant={"contained"} size={"small"} color={"error"} onClick={(e)=>setItemToDelete(row)}>حذف</Button>
                                     </TableCell>
                                 </TableRow>

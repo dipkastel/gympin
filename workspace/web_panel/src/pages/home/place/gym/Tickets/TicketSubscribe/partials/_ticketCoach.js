@@ -7,7 +7,7 @@ import {
     TicketSubscribes_addCoach,
     TicketSubscribes_deleteCoach,
     TicketSubscribes_getTicketSubscribeCoaches
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 
 const _ticketCoach = ({place,subscribe, reloadList}) => {
 
@@ -21,6 +21,7 @@ const _ticketCoach = ({place,subscribe, reloadList}) => {
         if (openModalInfo)
             getPlaceCoaches();
     }, [openModalInfo]);
+
 
     function getPlaceCoaches() {
         placePersonnel_ByPlace({Id: place.Id}).then(data => {

@@ -6,7 +6,7 @@ const GymManagementTicketTab = ({place}) => {
         <>
             {/*{counseling && <div className="row">*/}
             {/*    <div className="col-md-6">*/}
-            {/*        {counseling && <TicketSubscribe counseling={counseling}/>}*/}
+            {/*        {counseling && <TicketAppointment counseling={counseling}/>}*/}
                     {place && <TicketSubscribe place={place}/>}
             {/*        {counseling && <TicketFood counseling={counseling}/>}*/}
             {/*        {counseling && <TicketProduct counseling={counseling}/>}*/}

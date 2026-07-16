@@ -29,6 +29,12 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "slug")
+    private String slug;
+
+    @Column(name = "seoPriority")
+    private Double seoPriority;
+
     @Column(name = "fullText", columnDefinition = "longtext")
     private String text;
 

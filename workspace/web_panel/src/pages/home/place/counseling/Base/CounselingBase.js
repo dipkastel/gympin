@@ -63,8 +63,7 @@ function CounselingBase({counseling, updateCounseling}) {
 
                         <TextField
                             id="standard-full-width"
-                            label="نام مجموعه"
-                            style={{margin: 8}}
+                            label="نام مشاور"
                             placeholder="نام مجموعه"
                             value={inCounseling.Name}
                             onChange={(e) => setFormValues("Name", e.target.value)}
@@ -89,7 +88,7 @@ function CounselingBase({counseling, updateCounseling}) {
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Label>ساعات فعالیت مجموعه</Form.Label>
+                        <Form.Label>ساعات فعالیت</Form.Label>
                         <textarea
                             className="form-control"
                             id="exampleTextarea"

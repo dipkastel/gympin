@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.place.parts.qrMessage.api;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.place.parts.qrMessage.dto.PlaceQrMessageDto;

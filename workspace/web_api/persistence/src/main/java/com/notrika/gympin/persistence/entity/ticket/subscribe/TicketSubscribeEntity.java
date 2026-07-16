@@ -3,11 +3,10 @@ package com.notrika.gympin.persistence.entity.ticket.subscribe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymSportEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
-import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -56,16 +55,10 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     private List<PurchasedSubscribeEntity> purchasedSubscribes;
 
     @ManyToMany
-    @JoinTable(name = "ticketSubsctibeAction", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
-    @JsonIgnore
-    @ToString.Exclude
-    private List<TicketHallActiveTimeEntity> activeTimes;
-
-    @ManyToMany
     @JoinTable(name = "ticketSubsctibeSport", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceSportEntity> ticketSubscribeSport;
+    private List<GymSportEntity> ticketSubscribeSport;
 
     @ManyToMany
     @JoinTable(name = "ticketSubscribeCouches", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
@@ -75,9 +68,9 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
 
 
     @JsonIgnore
-    public PlaceGymEntity getPlaceGym() {
-        if (getPlace() instanceof PlaceGymEntity) {
-            return (PlaceGymEntity) getPlace();
+    public GymEntity getPlaceGym() {
+        if (getPlace() instanceof GymEntity) {
+            return (GymEntity) getPlace();
         }
         return null;
     }

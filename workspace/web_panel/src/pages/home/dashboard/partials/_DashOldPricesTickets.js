@@ -13,7 +13,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {Explore} from "@mui/icons-material";
-import {TicketSubscribes_query} from "../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_query} from "../../../../network/api/TicketSubscribes.api";
 
 const _DashOldPricesTickets = () => {
 

@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.place.parts.personnel.service;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
@@ -25,14 +25,6 @@ public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, 
     List<PlacePersonnelAccessDto> getUserPlaceAccess(Long placeId, Long userId);
 
     List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId);
-
-    List<PlacePersonnelBuyableAccessDto> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> personnelHallAccess);
-
-//    List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId);
-
-    List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId);
-
-    List<PlacePersonnelBuyableAccessDto> getPersonnelBuyableAccess(Long userId);
 
     PlacePersonnelDto updatePersonnelCommissionFee(PlacePersonnelParam param);
 

@@ -2,12 +2,10 @@ package com.notrika.gympin.persistence.entity.finance.affiliate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.affiliate.enums.AffiliatorStatus;
-import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceAffiliateTransactionEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +61,7 @@ public class FinanceAffiliatorEntity extends BaseEntityWithCreateUpdate<FinanceA
     @OneToMany(mappedBy = "affiliator", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceGymEntity> places;
+    private List<GymEntity> places;
 
     @OneToMany(mappedBy = "affiliator", fetch = FetchType.LAZY)
     @JsonIgnore

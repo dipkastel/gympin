@@ -143,7 +143,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
     //ticket
     @Override
     public List<PurchasedCourseDto> getUserEnteredCourse(Long placeId) {
-        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.findCoursesHasOpenEnterByPlaceId(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.findCoursesHasOpenEnterByPlaceId(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).collect(Collectors.toList());
         return courseEntities.stream().filter(o->!o.isDeleted()).map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
     }
 
@@ -155,7 +155,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 
     @Override
     public List<PurchasedCourseDto> getActiveCoursesOfPlace(Long placeId) {
-        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getActiveCourseOfPlace(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getActiveCourseOfPlace(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).collect(Collectors.toList());
         return convertToDtos(courseEntities);
     }
 

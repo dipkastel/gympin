@@ -1,7 +1,7 @@
 import axios from "axios";
 import {TransactionUserApi} from "./const_api";
 
-//subscribe
+//appointment
 export function transactionUser_query(data) {
     return axios.post(TransactionUserApi.query, data);
 }

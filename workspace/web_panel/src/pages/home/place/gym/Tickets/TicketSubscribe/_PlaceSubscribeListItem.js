@@ -34,7 +34,7 @@ import {
     TicketSubscribes_delete,
     TicketSubscribes_getById,
     TicketSubscribes_update
-} from "../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../network/api/TicketSubscribes.api";
 import {genders} from "../../../../../../helper/enums/genders";
 import _SubscribeSport from "./partials/_SubscribeSports";
 import _ticketCoach from "./partials/_ticketCoach";
@@ -206,7 +206,7 @@ const _PlaceSubscribeListItem = ({place, subscribe, reloadList}) => {
                                 <TableBody>
                                     <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                                         <TableCell colSpan={4}>
-                                            {/*{subscribe?.Coaches?.length > 0 &&*/}
+                                            {/*{appointment?.Coaches?.length > 0 &&*/}
 
 
                                             <Form onSubmit={(e) => updateSubscribe(e)}>
@@ -398,7 +398,7 @@ const _PlaceSubscribeListItem = ({place, subscribe, reloadList}) => {
             </TableRow>
             {ModalDelete()}
         </>
-        // <Grid key={"ticket" + subscribe.Id} size={{xs: 2, sm: 2, md: 2, lg: 1, xl: 1}} sx={{width: "100%"}}>
+        // <Grid key={"ticket" + appointment.Id} size={{xs: 2, sm: 2, md: 2, lg: 1, xl: 1}} sx={{width: "100%"}}>
         //     <Card variant={"outlined"} elevation={2} sx={{
         //         width: "100%",
         //         transition: "0.3s",
@@ -412,11 +412,11 @@ const _PlaceSubscribeListItem = ({place, subscribe, reloadList}) => {
         //             component={"a"}
         //             sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}
         //             title={<Typography variant={"h5"}>
-        //                 {subscribe.Name}
+        //                 {appointment.Name}
         //             </Typography>}
         //             action={<>
-        //                 <_CopySubscribe subscribe={subscribe} reloadList={reloadList}/>
-        //                 <_SubscribeDeactiveDelete subscribe={subscribe} reloadList={reloadList}/>
+        //                 <_CopySubscribe appointment={appointment} reloadList={reloadList}/>
+        //                 <_SubscribeDeactiveDelete appointment={appointment} reloadList={reloadList}/>
         //             </>}
         //         />
         //         <CardContent sx={{pt: 0}}>

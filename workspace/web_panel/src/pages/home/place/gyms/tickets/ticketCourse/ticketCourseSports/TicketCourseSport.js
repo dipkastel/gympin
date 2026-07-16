@@ -7,7 +7,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";
+import {placeSport_getSportsByPlace} from "../../../../../../../network/api/gymSport.api";
 import {
     TicketCourses_addSport,
     TicketCourses_deleteSport,

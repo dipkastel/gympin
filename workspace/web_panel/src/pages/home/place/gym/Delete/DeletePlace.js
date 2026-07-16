@@ -4,7 +4,7 @@ import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {Modal} from "react-bootstrap";
-import {PlaceGym_deletePlace} from "../../../../../network/api/placeGym.api";
+import {PlaceGym_deletePlace} from "../../../../../network/api/gym.api";
 
 function DeletePlace({place}) {
 

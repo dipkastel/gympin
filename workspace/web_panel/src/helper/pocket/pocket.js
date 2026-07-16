@@ -40,6 +40,16 @@ export function SetRppDashNote(number){
     return getValue(rpp_dashNote);
 }
 
+const rpp_proficienciesManagement = "rpp_proficienciesManagement";
+
+export function getRppProficienciesManagement(){
+    return getValue(rpp_proficienciesManagement)||5;
+}
+export function SetRppProficienciesManagement(number){
+    setValue(rpp_proficienciesManagement,number);
+    return getValue(rpp_proficienciesManagement);
+}
+
 const rpp_phoneBook = "rpp_phoneBook";
 
 export function getRppPhoneBook(){

@@ -8,7 +8,7 @@ import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
 import com.notrika.gympin.common.settings.note.param.NoteParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 
 import java.util.List;

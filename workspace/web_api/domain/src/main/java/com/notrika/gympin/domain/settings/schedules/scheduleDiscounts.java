@@ -1,11 +1,11 @@
 package com.notrika.gympin.domain.settings.schedules;
 
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class scheduleDiscounts {
     enum discountAction{addDiscount,removeDiscount,noAction};
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
     @Autowired
     private ManageSettingsRepository manageSettingsRepository;
     @Autowired
@@ -38,8 +38,8 @@ public class scheduleDiscounts {
     public void UpdateAutoTicketSubscribeDiscount() {
         historyToAdd = new ArrayList<>();
         ticketsToUpdate = new ArrayList<>();
-        List<PlaceGymEntity> places = placeGymRepository.findAllByDeletedIsFalseAndAutoDiscountIsTrueAndStatus(PlaceStatusEnum.ACTIVE);
-        for (PlaceGymEntity place : places) {
+        List<GymEntity> places = placeGymRepository.findAllByDeletedIsFalseAndAutoDiscountIsTrueAndStatus(PlaceStatusEnum.ACTIVE);
+        for (GymEntity place : places) {
             if (placeCanDiscount(place)) {
                 for (int i = 0; i < getPlaceTicketsCount(place); i++) {
                     TicketSubscribeEntity ticket = getPlaceTicekt(place, i);
@@ -62,19 +62,19 @@ public class scheduleDiscounts {
         ticketsToUpdate.clear();
     }
 
-    private int getPlaceTicketsCount(PlaceGymEntity place) {
+    private int getPlaceTicketsCount(GymEntity place) {
         return getPlaceActiveTickets(place).size();
     }
 
-    private TicketSubscribeEntity getPlaceTicekt(PlaceGymEntity place, Integer i) {
+    private TicketSubscribeEntity getPlaceTicekt(GymEntity place, Integer i) {
         return getPlaceActiveTickets(place).get(i);
     }
 
-    private List<TicketSubscribeEntity> getPlaceActiveTickets(PlaceGymEntity place) {
+    private List<TicketSubscribeEntity> getPlaceActiveTickets(GymEntity place) {
         return place.getTicketSubscribes().stream().filter(t -> !t.isDeleted() && t.getEnable()).collect(Collectors.toList());
     }
 
-    private boolean placeCanDiscount(PlaceGymEntity place) {
+    private boolean placeCanDiscount(GymEntity place) {
         //TODO check last discount and do logical terms
         return Math.random() > 0.8;
     }

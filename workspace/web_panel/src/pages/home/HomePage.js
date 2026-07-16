@@ -25,7 +25,7 @@ import SupportTicketDetails from "./support/Ticket/SupportTicketDetails";
 import CorporateDetailsManagement from "./corporate/baseData/CorporateDetailsManagement";
 import CorporatePersonnelDetailsManagement from "./corporate/persoanel/CorporatePersonnelDetailsManagement";
 import SubscribeDataManagement from "./purchasedItems/subscribes/baseData/SubscribeDataManagement";
-import PlacePersonnelManagement from "./place/gyms/personnel/PlacePersonnelManagement";
+import PlacePersonnelManagement from "./place/place/personnel/PlacePersonnelManagement";
 import ArticlesManagement from "./articles/ArticlesManagement";
 import SingleArticle from "./articles/SingleArticle/SingleArticle";
 import Reports from "./report/Reports";
@@ -52,6 +52,7 @@ import CateringManagement from "./place/caterings/CateringManagement";
 import LinksManagement from "./links/LinksManagement";
 import CorporatesMap from "./corporate/CorporatesMap/CorporatesMap";
 import VatManagement from "./vat/VatManagement";
+import ProficienciesManagement from "./Proficiencies/ProficienciesManagement";
 
 export default function HomePage() {
   return (
@@ -59,10 +60,11 @@ export default function HomePage() {
       <Switch>
         {<Redirect exact from="/" to="/dashboard" />}
         <Route path="/dashboard" component={Dashboard} />
+        {/*place*/}
+        <Route path="/place/personnel/:personnelId" component={PlacePersonnelManagement} />
         {/*gym*/}
         <Route path="/gyms/data/:placeId" component={GymDataManagement} />
         <Route path="/gyms/hall/:hallId" component={HallDataManagement} />
-        <Route path="/gyms/personnel/:personnelId" component={PlacePersonnelManagement} />
         <Route path="/gyms/placeOptionManagement" component={placeOptionsManagement} />
         <Route path="/gyms/placeOnMap" component={Map} />
         <Route path="/gyms/wizard/:placeId" component={PlaceWizard} />
@@ -110,7 +112,7 @@ export default function HomePage() {
         {/*finance*/}
         <Route path="/FinanceTransactions" component={TransactionManagement} />
         {/*subscribes*/}
-        <Route path="/subscribe/data/:subscribeId" component={SubscribeDataManagement} />
+        <Route path="/appointment/data/:subscribeId" component={SubscribeDataManagement} />
         {/*process*/}
         <Route path="/Process/detail/:serialId" component={ProcessSerialDetail} />
         <Route path="/Process" component={ProcessManagement} />
@@ -131,6 +133,7 @@ export default function HomePage() {
 
 
         <Route path="/sports" component={SportsManagement} />
+        <Route path="/proficiencies" component={ProficienciesManagement} />
         <Route path="/media" component={MediaManagement} />
         <Route path="/events" component={EventManagement} />
         <Route path="/media-category" component={MediaCategoryManagement} />

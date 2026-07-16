@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.ticket.ticketAppointment.api;
 
-import com.notrika.gympin.common.place.placeCounseling.param.PlaceCounselingParam;
+import com.notrika.gympin.common.place.placeCounseling.Counseling.param.CounselingParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketAppointment.dto.TicketAppointmentDto;
 import com.notrika.gympin.common.ticket.ticketAppointment.param.TicketAppointmentParam;
@@ -12,8 +12,9 @@ import java.util.List;
 
 public interface TicketAppointmentController extends BaseController<TicketAppointmentParam, TicketAppointmentDto, TicketAppointmentQuery> {
 
-    ResponseEntity<List<TicketAppointmentDto>> getTicketAppointmentByPlace(PlaceCounselingParam place);
+    ResponseEntity<List<TicketAppointmentDto>> getTicketAppointmentByCounseling(CounselingParam place);
     ResponseEntity<List<TicketDiscountHistoryDto>> getTicketAppointmentDiscountHistory(Long ticketAppointmentId);
     ResponseEntity<TicketAppointmentDto> changeTicketAppointmentStatus(TicketAppointmentParam ticketAppointmentParam);
+    ResponseEntity<List<TicketDiscountHistoryDto>> getTicketAppointmentDiscountHistoryByUser(Long param);
 
 }

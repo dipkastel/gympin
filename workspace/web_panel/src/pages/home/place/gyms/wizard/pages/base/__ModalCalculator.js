@@ -4,7 +4,7 @@ import {Modal} from "react-bootstrap";
 import {Button, Chip, Divider} from "@mui/material";
 import {Rating} from "@mui/lab";
 import StarIcon from "@mui/icons-material/Star";
-import {placeOption_getAll} from "../../../../../../../network/api/placeOptions.api";
+import {placeOption_getAll} from "../../../../../../../network/api/gymOptions.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 
 const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalCalculator,setCommision}) => {

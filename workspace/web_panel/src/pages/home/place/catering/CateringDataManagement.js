@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../../partials/content/Notice";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
-import {Catering_getById, Catering_update} from "../../../../network/api/placeCatering.api";
+import {Catering_getById, Catering_update} from "../../../../network/api/Catering.api";
 import Notes from "../../../partials/content/notes/Notes";
 import {Paper, Tab, Tabs} from "@mui/material";
 import CateringManagementCateringTab from "./CateringManagementTabs/CateringManagementCateringTab";

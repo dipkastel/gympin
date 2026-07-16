@@ -33,7 +33,7 @@ import com.notrika.gympin.persistence.entity.finance.transactions.gympin.Finance
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -298,7 +298,7 @@ public class CalculatePaymentsServiceImpl {
     }
 
 
-    public void PayFoodToCatering(InvoiceEntity invoice, PlaceCateringEntity catering) {
+    public void PayFoodToCatering(InvoiceEntity invoice, CateringEntity catering) {
 
 
         PlacePersonnelEntity beneficiary = catering.getPlaceOwners().stream().filter(po -> !po.isDeleted() && po.getIsBeneficiary()).findFirst().orElse(null);

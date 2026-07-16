@@ -149,7 +149,7 @@ const PurchasedSubscribeManagement = () => {
                                             </TableCell>
                                             <TableCell align="right"><Chip color={getStatusCollor(row)} size={"small"} label={<_TicketStatus ticket={row} />}/></TableCell>
                                             <TableCell align="left"><Button variant={"contained"} onClick={(event) => {
-                                                history.push({pathname: "subscribe/data/" + row.Id});
+                                                history.push({pathname: "appointment/data/" + row.Id});
                                             }} >جزییات عضویت</Button> </TableCell>
                                         </TableRow>
                                     );

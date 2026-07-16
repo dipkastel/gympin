@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.parts.option.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

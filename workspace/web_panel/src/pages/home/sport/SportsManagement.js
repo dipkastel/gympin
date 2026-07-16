@@ -17,7 +17,6 @@ import {getRppSportsManagement, SetRppSportsManagement} from "../../../helper/po
 
 const SportsManagement = () => {
     const error = useContext(ErrorContext);
-    const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppSportsManagement());
     const [sports, SetSports] = useState([]);
@@ -207,8 +206,7 @@ const SportsManagement = () => {
                                 <TableRow>
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام ورزش</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>تصویر</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>عملیات</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -217,7 +215,6 @@ const SportsManagement = () => {
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{row.Id}</TableCell>
                                         <TableCell align="right">{row.Name}</TableCell>
-                                        <TableCell align="right">{(row.LogoIds.length) ? "has image" : ""}</TableCell>
                                         <TableCell align="left">
 
                                             <Button

@@ -1,11 +1,8 @@
 package com.notrika.gympin.domain.ticket.course;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseParam;
@@ -18,18 +15,15 @@ import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeptio
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.ticket.*;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketCourseConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
-import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
-import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallActiveTimesRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymSportRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
-import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
-import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -50,17 +44,15 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     @Autowired
     private TicketCourseRepository ticketCourseRepository;
     @Autowired
-    private TicketHallActiveTimesRepository ticketCourseHallActiveTimesRepository;
+    private GymSportRepository placeSportRepository;
     @Autowired
-    private PlaceSportRepository placeSportRepository;
-    @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public TicketCourseDto add(@NonNull TicketCourseParam param) {
-        PlaceGymEntity place = placeGymRepository.getById(param.getPlace().getId());
+        GymEntity place = placeGymRepository.getById(param.getPlace().getId());
         TicketCourseEntity ticketCourseEntity = TicketCourseEntity.builder()
                 .place(place)
                 .name(param.getName())
@@ -176,7 +168,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
 
     @Override
     public List<TicketCourseDto> getTicketCourseByPlace(PlaceGymParam place) {
-        return ticketCourseRepository.findAllByPlaceAndDeletedIsFalse(PlaceGymEntity.builder().id(place.getId()).build()).stream().map(TicketCourseConvertor::toDto).collect(Collectors.toList());
+        return ticketCourseRepository.findAllByPlaceAndDeletedIsFalse(GymEntity.builder().id(place.getId()).build()).stream().map(TicketCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -190,12 +182,12 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     public TicketCourseDto addSport(TicketCourseSportParam ticketCourseSportParam) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(ticketCourseSportParam.getTicketCourse().getId());
 
-        List<PlaceSportEntity> ticketCourseSports = ticketCourse.getTicketCourseSport();
+        List<GymSportEntity> ticketCourseSports = ticketCourse.getTicketCourseSport();
         if (ticketCourseSports == null) ticketCourseSports = new ArrayList<>();
         for (var placeSportParam : ticketCourseSportParam.getPlaceSports()) {
             if (ticketCourse.getTicketCourseSport().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(placeSportParam.getId())))
                 throw new DuplicateEntryAddExeption();
-            PlaceSportEntity placeSport = placeSportRepository.getById(placeSportParam.getId());
+            GymSportEntity placeSport = placeSportRepository.getById(placeSportParam.getId());
             ticketCourseSports.add(placeSport);
         }
         ticketCourse.setTicketCourseSport(ticketCourseSports);
@@ -284,12 +276,6 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             if (ticketCourseEntity.getTicketCourseSport().size() < 1) {
                 throw new TicketSportCannotBeNull();
             }
-//            if (ticketCourseEntity.getActiveTimes() == null) {
-//                throw new TicketHallsCannotBeNull();
-//            }
-//            if (ticketCourseEntity.getActiveTimes().size() < 1) {
-//                throw new TicketHallsCannotBeNull();
-//            }
             if (ticketCourseEntity.getCoaches().size() < 1) {
                 throw new TicketCouchesCannotBeNull();
             }
@@ -305,33 +291,6 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         return TicketCourseConvertor.toDto(ticketCourseEntity);
     }
 
-    @Override
-    public List<ActiveTimesDto> getTicketActiveTimesByTicketCourse(Long ticketCourseId) {
-        return ticketCourseRepository.getById(ticketCourseId).getActiveTimes().stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToActionDto).collect(Collectors.toList());
-    }
 
-    @Override
-    public TicketCourseDto addCourseActiveTimes(TicketActiveTimesParam param) {
-        var ticketCourse = ticketCourseRepository.getById(param.getTicket().getId());
-        List<TicketHallActiveTimeEntity> activeTimes = ticketCourse.getActiveTimes();
-        for (ActiveTimesParam activeTime : param.getActiveTime()) {
-            if (ticketCourse.getActiveTimes().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(activeTime.getId())))
-                throw new DuplicateEntryAddExeption();
-            activeTimes.add(ticketCourseHallActiveTimesRepository.getById(activeTime.getId()));
-        }
-        ticketCourse.setActiveTimes(activeTimes);
-        return TicketCourseConvertor.toDto(ticketCourseRepository.update(ticketCourse));
-    }
-
-    @Override
-    public TicketCourseDto deleteCourseActiveTimes(TicketActiveTimesParam param) {
-        TicketCourseEntity ticketCourse = ticketCourseRepository.getById(param.getTicket().getId());
-        List<TicketHallActiveTimeEntity> activeTimes = ticketCourse.getActiveTimes();
-        var activeTimesRemoveIds = param.getActiveTime().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = activeTimes.stream().filter(o->!o.isDeleted()).filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
-        ticketCourse.setActiveTimes(afterfilter);
-        ticketCourseRepository.update(ticketCourse);
-        return TicketCourseConvertor.toDto(ticketCourse);
-    }
 
 }

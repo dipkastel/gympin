@@ -3,11 +3,13 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Location_query} from "../../../../network/api/location.api";
 import {user_query} from "../../../../network/api/user.api";
 import {sport_query} from "../../../../network/api/sport.api";
-import {PlaceGym_query} from "../../../../network/api/placeGym.api";
+import {PlaceGym_query} from "../../../../network/api/gym.api";
 import {Grid} from "@mui/material";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {EmojiTransportation, FitnessCenter, Groups, LocationCity, SportsBasketball} from "@mui/icons-material";
+import {EmojiTransportation, FitnessCenter, Groups, LocationCity, SportsBasketball, WorkspacePremium} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
+import {proficiencies_query} from "../../../../network/api/proficiencies.api";
+import {ProficienciesApi} from "../../../../network/api/const_api";
 
 const DashTasksTab = ({updatePage}) => {
 
@@ -17,6 +19,7 @@ const DashTasksTab = ({updatePage}) => {
     const [cityCount, SetCityCount] = useState(0);
     const [regionCount, SetRegionCount] = useState(0);
     const [sportCount, SetSportCount] = useState(0);
+    const [proficienciesCount, SetProficienciesCount] = useState(0);
     const [placeCount, SetPlaceCount] = useState(0);
     useEffect(() => {
         user_query({paging: {Page: 0, Size: 1}}).then(data => {
@@ -54,6 +57,17 @@ const DashTasksTab = ({updatePage}) => {
     useEffect(() => {
         sport_query({paging: {Page: 0, Size: 1}}).then(data => {
             SetSportCount(data.data.Data.totalElements)
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }, []);
+    useEffect(() => {
+        proficiencies_query({paging: {Page: 0, Size: 1}}).then(data => {
+            SetProficienciesCount(data.data.Data.totalElements)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -104,6 +118,14 @@ const DashTasksTab = ({updatePage}) => {
                         title={"ورزش های فعال"}
                         text={sportCount + " ورزش فعال"}
                         icon={<SportsBasketball sx={{fontSize: 40, color: "#8555e8"}}/>}
+                    />
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <QuickStatsIcon
+                        onClick={()=>{history.push("/proficiencies")}}
+                        title={"تخصص های مشاوران"}
+                        text={proficienciesCount + " تخصص"}
+                        icon={<WorkspacePremium sx={{fontSize: 40, color: "#d955e8"}}/>}
                     />
                 </Grid>
                 <Grid item size={{xs:12,md:4}}>

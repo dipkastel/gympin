@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import Notice from "../../../../../partials/content/Notice";
-import {TicketSubscribes_getById, TicketSubscribes_update} from "../../../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_getById, TicketSubscribes_update} from "../../../../../../network/api/TicketSubscribes.api";
 import TicketSubscribeBase from "./Base/TicketSubscribeBase";
 import {Button} from "@mui/material";
 import TicketSubscribeSport from "./ticketSubscribeSports/TicketSubscribeSport";

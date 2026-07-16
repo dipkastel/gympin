@@ -1,13 +1,7 @@
 package com.notrika.gympin.persistence.entity.qrCode;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.qrCodes.enums.QrCodeType;
-import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
-import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
-import com.notrika.gympin.persistence.entity.sport.option.sportOptionOfSportEntity;
-import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Getter

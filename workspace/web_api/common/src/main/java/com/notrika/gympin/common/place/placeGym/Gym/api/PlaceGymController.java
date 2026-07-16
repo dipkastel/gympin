@@ -1,0 +1,55 @@
+package com.notrika.gympin.common.place.placeGym.Gym.api;
+
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeBase.param.PlaceContractSmsParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util._base.base.BaseController;
+import com.notrika.gympin.common.settings.location.param.LocationParam;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaListParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaParam;
+import com.notrika.gympin.common.place.placeGym.Gym.query.PlaceGymQuery;
+import com.notrika.gympin.common.place.placeGym.sport.dto.SportDto;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
+import com.notrika.gympin.common.user.user.param.UserParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+
+public interface PlaceGymController extends BaseController<PlaceGymParam, PlaceGymDto, PlaceGymQuery> {
+
+    ResponseEntity<PlaceGymDto> changeStatus(@RequestBody PlaceGymParam place);
+
+    ResponseEntity<List<PlaceGymDto>> getPlacesByLocation(LocationParam regionParam);
+
+    ResponseEntity<List<PlaceGymDto>> getPlaceByUser(UserParam userParam);
+
+    ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceGymDto place);
+
+    ResponseEntity<List<MultimediaDto>> getMultimedias(PlaceGymParam place);
+
+    ResponseEntity<PlaceGymDto> getMyPlaceGymById(Long id);
+
+    ResponseEntity<PlaceGymDto> addMultimedia(@RequestBody PlaceMultimediaParam place);
+
+    ResponseEntity<PlaceGymDto> addMultimediaList(@RequestBody PlaceMultimediaListParam place);
+
+    ResponseEntity<PlaceGymDto> setDefaultMultimedia(@RequestBody PlaceMultimediaParam place);
+
+    ResponseEntity<PlaceGymDto> deleteMultimedia(@RequestBody PlaceMultimediaParam place);
+
+    ResponseEntity<InviteCode> getPlaceInviteCode(PlaceGymParam placeParam);
+
+    ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceGymParam placeParam);
+
+    ResponseEntity<PlaceGymDto> updateOrder(@RequestBody PlaceGymParam param);
+
+    ResponseEntity<PlaceGymDto> updateContract(@RequestBody PlaceGymParam param);
+
+    ResponseEntity<PlaceGymDto>  signContract(@RequestBody PlaceGymParam placeParam);
+
+    ResponseEntity<Boolean> sendContractCode(@RequestBody PlaceContractSmsParam param);
+
+}

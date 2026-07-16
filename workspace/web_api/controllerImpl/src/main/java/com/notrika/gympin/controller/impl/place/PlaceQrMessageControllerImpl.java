@@ -2,7 +2,7 @@ package com.notrika.gympin.controller.impl.place;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.parts.qrMessage.api.PlaceQrMessageController;
 import com.notrika.gympin.common.place.parts.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.parts.qrMessage.param.PlaceQrMessageParam;

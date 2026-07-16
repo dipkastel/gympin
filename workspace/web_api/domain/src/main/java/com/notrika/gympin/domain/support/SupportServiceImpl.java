@@ -3,7 +3,7 @@ package com.notrika.gympin.domain.support;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.notification.dto.NotificationBasePayload;

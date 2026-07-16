@@ -9,7 +9,7 @@ import {
     TicketSubscribes_delete,
     TicketSubscribes_getByPlace,
     TicketSubscribes_update
-} from "../../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../../network/api/TicketSubscribes.api";
 import __wizardTicketSubscribesDetails from "./__wizardTicketSubscribesDetails";
 import __wizardTicketSubscribesHalls from "./__wizardTicketSubscribesHalls";
 import __wizardTicketSubscribesSports from "./__wizardTicketSubscribesSports";

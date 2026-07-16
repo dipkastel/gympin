@@ -47,7 +47,7 @@ const PurchasedAllManagement = () => {
         event.preventDefault();
         switch (row.PurchasedType) {
             case "SUBSCRIBE":{
-                history.push({pathname: "subscribe/data/" + row.Id});
+                history.push({pathname: "appointment/data/" + row.Id});
                 return;
             }
             case "COURSE":{

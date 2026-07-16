@@ -4,11 +4,11 @@ import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -37,7 +37,7 @@ public class scheduleIncredible {
     @Autowired
     private TicketDiscountHistoryRepository ticketDiscountHistoryRepository;
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
 
     @Autowired
     SmsInService smsService;
@@ -89,9 +89,9 @@ public class scheduleIncredible {
        if(currentIncredibles.size()<20){
 
            Double minimum = Double.valueOf(manageSettingsRepository.findByKeyAndDeletedFalse("TICKET_INCREDIBLES_MIN").getValue());
-           List<PlaceGymEntity> places = placeGymRepository.findAllToAddIncredible(minimum);
+           List<GymEntity> places = placeGymRepository.findAllToAddIncredible(minimum);
            if(places.size()<1)return;
-           PlaceGymEntity place = selectPlaceToIncredible(places);
+           GymEntity place = selectPlaceToIncredible(places);
            List<TicketSubscribeEntity> tickets = place.getTicketSubscribes().stream().filter(p->p.getEnable()&&!p.isDeleted()).collect(Collectors.toList());
            TicketSubscribeEntity ticket = selectTicketToIncredible(tickets);
 
@@ -123,7 +123,7 @@ public class scheduleIncredible {
         return tickets.get(Math.toIntExact((long) (Math.random()*tickets.size())));
     }
 
-    private PlaceGymEntity selectPlaceToIncredible(List<PlaceGymEntity> places) {
+    private GymEntity selectPlaceToIncredible(List<GymEntity> places) {
         return places.get(Math.toIntExact((long) (Math.random()*places.size())));
     }
 

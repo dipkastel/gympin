@@ -10,10 +10,7 @@ import com.notrika.gympin.common.article.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -59,6 +56,12 @@ public class ArticleControllerImpl implements ArticleController {
     @PostMapping("/updateArticleImage")
     public ResponseEntity<ArticleDto> updateArticleImage(@RequestBody ArticleImageParam articleImageParam) {
         return ResponseEntity.ok(articleService.updateArticleImage(articleImageParam));
+    }
+
+    @Override
+    @GetMapping("/getBySlug")
+    public ResponseEntity<ArticleDto> getBySlug(String slug) {
+        return ResponseEntity.ok(articleService.getBySlug(slug));
     }
 
 }

@@ -21,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,8 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
     public ArticleDto add(@NonNull ArticleParam articleParam) {
         ArticleEntity entity = ArticleEntity.builder()
                 .title(articleParam.getTitle())
+                .slug(articleParam.getSlug())
+                .seoPriority(articleParam.getSeoPriority())
                 .summary(articleParam.getSummary())
                 .text(articleParam.getFullText())
                 .articleStatus(articleParam.getArticleStatus())
@@ -53,6 +57,8 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
     public ArticleDto update( ArticleParam articleParam) {
         ArticleEntity entity = articleRepository.getById(articleParam.getId());
         entity.setTitle(articleParam.getTitle());
+        entity.setSlug(articleParam.getSlug());
+        entity.setSeoPriority(articleParam.getSeoPriority());
         entity.setSummary(articleParam.getSummary());
         entity.setText(articleParam.getFullText());
         entity.setArticleStatus(articleParam.getArticleStatus());
@@ -122,6 +128,13 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
         ArticleEntity article = articleRepository.getById(articleImageParam.getArticleId());
         article.setArticleImage(articleImage);
         return ArticleConvertor.toDto(articleRepository.update(article));
+    }
+
+    @Override
+    public ArticleDto getBySlug(String slug) {
+        String decoded = URLDecoder.decode(slug, StandardCharsets.UTF_8);
+        ArticleEntity article = articleRepository.findFirstBySlug(decoded);
+        return ArticleConvertor.toDto(article);
     }
 
 }

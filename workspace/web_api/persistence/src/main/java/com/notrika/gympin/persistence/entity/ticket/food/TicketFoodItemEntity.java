@@ -2,7 +2,7 @@ package com.notrika.gympin.persistence.entity.ticket.food;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedFood.PurchasedFoodEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
@@ -54,9 +54,9 @@ public class TicketFoodItemEntity extends BuyableEntity<TicketFoodItemEntity> {
     private List<MultimediaEntity> multimedias;
 
     @JsonIgnore
-    public PlaceCateringEntity getPlaceCatering() {
-        if (getPlace() instanceof PlaceCateringEntity) {
-            return (PlaceCateringEntity) getPlace();
+    public CateringEntity getPlaceCatering() {
+        if (getPlace() instanceof CateringEntity) {
+            return (CateringEntity) getPlace();
         }
         return null;
     }

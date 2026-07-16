@@ -10,7 +10,7 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterParam;
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.beans.factory.annotation.Autowired;

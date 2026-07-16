@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.place.parts.about.service;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.place.parts.about.dto.PlaceAboutDto;

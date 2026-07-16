@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.place.placeBase.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import lombok.Data;

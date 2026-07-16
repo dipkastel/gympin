@@ -7,12 +7,12 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";
+import {placeSport_getSportsByPlace} from "../../../../../../../network/api/gymSport.api";
 import {
     TicketSubscribes_addSport,
     TicketSubscribes_deleteSport,
     TicketSubscribes_getTicketSubscribesSports
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 
 const TicketSubscribeSport = ({ticketSubscribe}) => {

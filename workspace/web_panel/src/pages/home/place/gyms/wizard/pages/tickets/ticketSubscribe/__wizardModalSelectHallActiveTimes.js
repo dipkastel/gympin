@@ -22,7 +22,7 @@ import {ErrorContext} from "../../../../../../../../components/GympinPagesProvid
 import {useParams} from "react-router-dom";
 import {dayOfWeekEnum} from "../../../../../../../../helper/enums/dayOfWeekEnum";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TicketSubscribes_addSubscribeActiveTimes} from "../../../../../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_addSubscribeActiveTimes} from "../../../../../../../../network/api/TicketSubscribes.api";
 
 const __wizardModalSelectHallActiveTimes = ({ticketSubscribe,openModalAddHall,setOpenModalAddHall, getActiveTimesOfTicketSubscribe}) => {
 

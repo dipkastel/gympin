@@ -2,7 +2,7 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.place.parts.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.parts.qrMessage.param.PlaceQrMessageParam;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public final class PlaceQrMessageConvertor {
 
-    public static PlaceQrMessageEntity ToEntity(PlaceQrMessageParam param, PlaceGymEntity place) {
+    public static PlaceQrMessageEntity ToEntity(PlaceQrMessageParam param, GymEntity place) {
         PlaceQrMessageEntity entity = new PlaceQrMessageEntity();
         entity.setText(param.getText());
         entity.setReplaceText(param.getReplaceText());

@@ -1,20 +1,14 @@
 package com.notrika.gympin.test.domain.ticket.subscribe;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
-import com.notrika.gympin.common.place.parts.hall.param.HallParam;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
-import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.placeGym.GymSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.placeGym.sport.param.SportParam;
 import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
-import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
-import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeSportParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -37,8 +31,6 @@ public class ticketSubscribeTest extends BaseTest {
     public static TicketSubscribeDto ticket = null;
     public static TicketSubscribeDto ticket2 = null;
     public static PlaceSportDto placeSport = null;
-    public static HallDto hall = null;
-    public static ActiveTimesDto activeTime1 = null;
 
 
     @BeforeAll
@@ -75,46 +67,6 @@ public class ticketSubscribeTest extends BaseTest {
 
         Assertions.assertEquals(result.getData().getSport().getName(), "اسکواش");
         placeSport = result.getData();
-    }
-
-    @BeforeAll
-    @Order(3)
-    public void addHall() throws Exception {
-        final HallParam param = HallParam.builder()
-                .name("سالن برای تست عضویت")
-                .place(PlaceGymParam.builder().id(place.getId()).build())
-                .build();
-
-        ResponseModel<HallDto> result = TestPost(
-                "/api/v1/hall/add",
-                param,
-                true,
-                new TypeReference<ResponseModel<HallDto>>() {
-                });
-
-        hall = result.getData();
-    }
-
-    @BeforeAll
-    @Order(4)
-    public void addActiveTime() throws Exception {
-        final ActiveTimesParam param =  ActiveTimesParam.builder()
-                .hall(HallParam.builder().id(hall.getId()).build())
-                .dayOfWeek(DayOfWeek.SATURDAY)
-                .openingTime(LocalTime.parse("09:00:00"))
-                .closingTime(LocalTime.parse("19:00:00"))
-                .build();
-
-
-        ResponseModel<ActiveTimesDto> result = TestPost(
-                "/api/v1/ticketSubscribeActiveTimes/add",
-                param,
-                true,
-                new TypeReference<ResponseModel<ActiveTimesDto>>() {
-                });
-
-        Assertions.assertEquals(result.getData().getDayOfWeek(),DayOfWeek.SATURDAY);
-        activeTime1 = result.getData();
     }
 
     @Test
@@ -347,26 +299,6 @@ public class ticketSubscribeTest extends BaseTest {
 
     }
 
-    @Test
-    @Order(13)
-    public void addTicketActiveTime() throws Exception{
-        if (activeTime1 == null) throw new Exception("is not exist");
-        final TicketActiveTimesParam param = TicketActiveTimesParam.builder()
-                .ticket(TicketBuyableParam.builder().id(ticket.getId()).build())
-                .activeTime(List.of(ActiveTimesParam.builder().id(activeTime1.getId()).build()))
-                .build();
-
-        ResponseModel<TicketSubscribeDto> result2 = TestPost(
-                "/api/v1/TicketSubscribe/addSubscribeActiveTimes",
-                param,
-                true,
-                new TypeReference<ResponseModel<TicketSubscribeDto>>() {
-                });
-
-        Assertions.assertEquals(result2.isSuccess(), true);
-        Assertions.assertEquals(result2.getError(), null);
-
-    }
 
     @Test
     @Order(14)

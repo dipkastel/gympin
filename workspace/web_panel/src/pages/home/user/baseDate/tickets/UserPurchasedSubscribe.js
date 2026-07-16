@@ -89,7 +89,7 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "/subscribe/data/" + row.Id});
+                                            history.push({pathname: "/appointment/data/" + row.Id});
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>

@@ -7,7 +7,7 @@ import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodMenuQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodMenuService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TicketFoodConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceCateringRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Catering.PlaceCateringRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodItemRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodMenuRepository;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;

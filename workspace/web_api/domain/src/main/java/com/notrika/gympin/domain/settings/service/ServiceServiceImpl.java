@@ -105,7 +105,7 @@ public class ServiceServiceImpl extends AbstractBaseService<ServiceParam, Servic
 
     @Override
     public List<MapViewsDto> getMapViews() {
-        List<Object> result =  manageServiceExecutionRepository.getMapViews();
+        List<Object[]> result =  manageServiceExecutionRepository.getMapViews();
         return result.stream().map(ServiceConvertor::ToDto).collect(Collectors.toList());
     }
 

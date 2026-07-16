@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.sport.sport.dto.SportDto;
-import com.notrika.gympin.persistence.entity.sport.SportEntity;
+import com.notrika.gympin.common.place.placeGym.sport.dto.SportDto;
+import com.notrika.gympin.persistence.entity.place.Gym.SportEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -11,7 +11,6 @@ public final class SportConvertor {
 
     public static SportDto toDto(SportEntity sport) {
         SportDto sportDto = SportDto.builder().id(sport.getId()).isDeleted(sport.isDeleted()).name(sport.getName()).launchStatus(sport.getLaunchStatus()).build();
-        if (sport.getSportMultimedias() != null) sportDto.setLogoIds(sport.getSportMultimedias().stream().filter(o->!o.isDeleted()).map(t -> t.getMultimedia().getId()).collect(Collectors.toList()));
         return sportDto;
     }
 

@@ -62,13 +62,6 @@ public class TicketSubscribeConvertor {
         return dto;
     }
 
-//    public static TicketSubscribeActionDto convertToTicketSubscribeHallDto(TicketSubscribeHallActiveTime entity) {
-//        TicketSubscribeActionDto dto = new TicketSubscribeActionDto();
-//        dto.setId(entity.getId());
-//        dto.setTicketSubscribe(toDto(entity.getTicketSubscribe()));
-//        dto.setAction(HallConvertor.convertToActionDto(entity.getAction()));
-//        return dto;
-//    }
 
 
 }

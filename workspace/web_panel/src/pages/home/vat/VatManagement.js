@@ -123,9 +123,9 @@ const VatManagement = () => {
             <Notice icon="flaticon-warning kt-font-primary">
                 <Grid container justifyContent={"space-between"}>
                     <Grid><p>تمام فروش های مراکز به همراه ارزش افزوده با جزییات</p></Grid>
-                    <Grid>تنظیمات صفحه<IconButton>{showPageSettings ?
-                        <ExpandLess onClick={(e) => setShowPageSettings(!showPageSettings)}/> :
-                        <ExpandMore onClick={(e) => setShowPageSettings(!showPageSettings)}/>}</IconButton></Grid>
+                    <Grid>تنظیمات صفحه<IconButton onClick={(e) => setShowPageSettings(!showPageSettings)} >
+                        {showPageSettings?<ExpandLess />:<ExpandMore />}
+                    </IconButton></Grid>
                 </Grid>
                 <Collapse in={showPageSettings} timeout="auto" unmountOnExit>
                     <Grid container direction={"row"} columns={16}>

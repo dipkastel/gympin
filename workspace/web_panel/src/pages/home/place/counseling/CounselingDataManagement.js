@@ -1,13 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {PlaceGym_updatePlace} from "../../../../network/api/placeGym.api";
 import Notice from "../../../partials/content/Notice";
 import Notes from "../../../partials/content/notes/Notes";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Paper, Tab, Tabs} from "@mui/material";
-import {PlaceCounseling_getPlaceById, PlaceCounseling_updatePlace} from "../../../../network/api/placeCounseling.api";
+import {PlaceCounseling_getPlaceById, PlaceCounseling_updatePlace} from "../../../../network/api/Counseling.api";
 import CounselingManagementBaseTab from "./counselingManagementTabs/CounselingManagementBaseTab";
 import CounselingManagementDataTab from "./counselingManagementTabs/CounselingManagementDataTab";
+import CounselingManagementTicketTab from "./counselingManagementTabs/CounselingManagementTicketTab";
+import CounselingManagementBeneficiariesTab from "./counselingManagementTabs/CounselingManagementBeneficiariesTab";
+import CounselingManagementSettingTab from "./counselingManagementTabs/CounselingManagementSettingTab";
 
 const CounselingDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -64,7 +66,7 @@ const CounselingDataManagement = () => {
                         >
                             <Tab label="مرکز" value={"COUNSELING"}/>
                             <Tab label="اطلاعات" value={"DATA"}/>
-                            <Tab label="عضویت ها" value={"TICKET"}/>
+                            <Tab label="مشاوره ها" value={"TICKET"}/>
                             <Tab label="فروش ها" value={"SELLS"}/>
                             <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
@@ -74,12 +76,13 @@ const CounselingDataManagement = () => {
 
                     {selectedTab === "COUNSELING"&&<CounselingManagementBaseTab counseling={counseling} updateCounseling={updateCounseling}/>}
                     {selectedTab === "DATA"&&<CounselingManagementDataTab counseling={counseling} updateCounseling={updateCounseling}/>}
-                    {/*{selectedTab === "TICKET"&&<PlaceManagementTicketsTab counseling={counseling}/>}*/}
+                    {selectedTab === "TICKET"&&<CounselingManagementTicketTab counseling={counseling}/>}
                     {/*{selectedTab === "SELLS"&&<GymManagementSellTab counseling={counseling}/>}*/}
-                    {/*/!*{selectedTab === "BENEFICIARIES"&&<GymManagementBeneficiariesTab counseling={counseling}/>}*!/*/}
-                    {/*{selectedTab === "SETTING"&&<GymManagementSettingTab counseling={counseling} updateCounseling={updateCounseling}/>}*/}
+                    {selectedTab === "BENEFICIARIES"&&<CounselingManagementBeneficiariesTab counseling={counseling}/>}
+                    {selectedTab === "SETTING"&&<CounselingManagementSettingTab counseling={counseling} updateCounseling={updateCounseling}/>}
                     {/*{selectedTab === "REPORTS"&&<PlaceManagementReportTab counseling={counseling} updateCounseling={updateCounseling}/>}*/}
                 </div>
+
                 <div className="col-md-2">
                     {counseling && <Notes source={{Place: {Id: counseling.Id}}}/>}
                 </div>

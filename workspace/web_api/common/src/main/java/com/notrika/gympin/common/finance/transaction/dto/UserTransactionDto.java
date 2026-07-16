@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.purchased.purchased.dto.PurchasedDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;

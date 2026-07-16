@@ -14,7 +14,7 @@ import {
     TicketSubscribes_addCoach,
     TicketSubscribes_deleteCoach,
     TicketSubscribes_getTicketSubscribeCoaches
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 import PopoverUser from "../../../../../../../components/popover/PopoverUser";
 
 const TicketSubscribeCoaches = ({ticketSubscribe}) => {

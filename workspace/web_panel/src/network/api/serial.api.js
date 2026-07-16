@@ -1,7 +1,7 @@
 import axios from "axios";
 import {SerialApi} from "./const_api";
 
-//subscribe
+//appointment
 export function serial_query(data) {
     return axios.post(SerialApi.query, data);
 }

@@ -1,14 +1,13 @@
 import React from 'react';
-import PlaceBeneficiaries from "../gymBeneficiaries/PlaceBeneficiaries";
+import CounselingBeneficiaries from "../Beneficiaries/CounselingBeneficiaries";
 
-const CounselingManagementBeneficiariesTab = ({place, updatePlace}) => {
+const CounselingManagementBeneficiariesTab = ({counseling}) => {
     return (
         <>
-            {place && <div className="row">
+            {counseling && <div className="row">
                 <div className="col-md-12">
-                    <PlaceBeneficiaries place={place} updatePlace={updatePlace}/>
+                    <CounselingBeneficiaries counseling={counseling}/>
                 </div>
-
             </div>}
         </>
     );

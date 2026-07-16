@@ -3,13 +3,13 @@ package com.notrika.gympin.domain.place;
 import com.notrika.gympin.common.place.parts.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.parts.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.parts.about.service.PlaceAboutService;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceAboutRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
@@ -31,7 +31,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     private PlaceAboutRepository placeAboutRepository;
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
     @Autowired
     private PlaceRepository placeRepository;
 

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {
     TicketSubscribes_getDiscountHistory,
     TicketSubscribes_getDiscountHistoryByUser
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {Portlet, PortletBody, PortletHeader} from "../../../../../../partials/content/Portlet";

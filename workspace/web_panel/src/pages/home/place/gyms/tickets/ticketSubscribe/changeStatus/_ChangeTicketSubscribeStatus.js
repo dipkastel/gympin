@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {ListItem, ListItemText, Switch} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader} from "../../../../../../partials/content/Portlet";
-import {TicketSubscribes_ChangeTicketSubscribesStatus} from "../../../../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_ChangeTicketSubscribesStatus} from "../../../../../../../network/api/TicketSubscribes.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 
 const _ChangeTicketSubscribeStatus = ({ticketSubscribe, updateTicketSubscribe}) => {

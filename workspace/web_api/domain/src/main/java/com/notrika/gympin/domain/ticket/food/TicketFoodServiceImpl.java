@@ -15,10 +15,10 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketFoodConvertor;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceCateringRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Catering.PlaceCateringRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodItemRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
 
     @Override
     public TicketFoodDto add(@NonNull TicketFoodParam param) {
-        PlaceCateringEntity place = placeCateringRepository.getById(param.getPlace().getId());
+        CateringEntity place = placeCateringRepository.getById(param.getPlace().getId());
         TicketFoodItemEntity ticketSubscribeEntity = TicketFoodItemEntity.builder()
                 .place(place)
                 .name(param.getName())

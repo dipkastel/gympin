@@ -2,7 +2,7 @@ package com.notrika.gympin.domain.settings.note;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
 import com.notrika.gympin.common.settings.note.dto.SimpleNoteDto;
@@ -14,7 +14,7 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.finance.Invoice.InvoiceServiceImpl;
 import com.notrika.gympin.domain.util.convertor.NoteConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.PurchasedRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
@@ -35,7 +35,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
     @Autowired
     private ManageNoteRepository manageNoteRepository;
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
     @Autowired
     private CorporateServiceImpl corporateService;
     @Autowired

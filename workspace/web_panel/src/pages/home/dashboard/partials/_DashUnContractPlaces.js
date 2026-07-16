@@ -12,7 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {AssignmentTurnedIn} from "@mui/icons-material";
-import {PlaceGym_query} from "../../../../network/api/placeGym.api";
+import {PlaceGym_query} from "../../../../network/api/gym.api";
 
 const _DashUncontractPlaces = () => {
 

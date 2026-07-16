@@ -1,9 +1,7 @@
 package com.notrika.gympin.common.place.placeBase.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.placeBase.enums.PlaceCommentStatusEnum;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

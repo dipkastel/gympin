@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.user.user.service;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;

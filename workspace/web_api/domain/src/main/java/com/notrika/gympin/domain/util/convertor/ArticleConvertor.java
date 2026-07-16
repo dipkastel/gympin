@@ -19,6 +19,8 @@ public class ArticleConvertor {
         dto.setArticleStatus(entity.getArticleStatus());
         dto.setSummary(entity.getSummary());
         dto.setTitle(entity.getTitle());
+        dto.setSlug(entity.getSlug());
+        dto.setSeoPriority(entity.getSeoPriority());
         dto.setFullText(entity.getText());
         dto.setArticleImage(MultimediaConvertor.toDto(entity.getArticleImage()));
         dto.setCreatedDate(entity.getCreatedDate());

@@ -2,8 +2,7 @@ package com.notrika.gympin.common.ticket.ticketCourse.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -76,13 +75,13 @@ public class TicketCourseDto extends BaseDto<TicketCourseDto> {
     @JsonProperty("EntryTotalCount")
     private Short entryTotalCount;
 
-    @JsonProperty( "CourseCapacity")
+    @JsonProperty("CourseCapacity")
     private Integer courseCapacity;
 
     @JsonProperty("CourseLevel")
     private String courseLevel;
 
-    @JsonProperty( "StartDate")
+    @JsonProperty("StartDate")
     private Date startDate;
 
     @JsonProperty("DayBeforeRenew")
@@ -96,14 +95,8 @@ public class TicketCourseDto extends BaseDto<TicketCourseDto> {
 
     @JsonProperty("DayAfterStartSell")
     private Short dayAfterStartSell;
-
-
-
-
-    @JsonProperty( "ActiveTimes")
-    private List<ActiveTimesDto> activeTimes;
-
-    @JsonProperty( "PlaceSports")
+    
+    @JsonProperty("PlaceSports")
     private List<PlaceSportDto> sports;
 
 

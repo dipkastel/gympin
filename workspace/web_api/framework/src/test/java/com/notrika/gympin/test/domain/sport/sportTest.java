@@ -1,9 +1,9 @@
 package com.notrika.gympin.test.domain.sport;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.sport.sport.dto.SportDto;
-import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
-import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.place.placeGym.sport.dto.SportDto;
+import com.notrika.gympin.common.place.placeGym.sport.enums.LaunchStatus;
+import com.notrika.gympin.common.place.placeGym.sport.param.SportParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;

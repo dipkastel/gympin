@@ -7,7 +7,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {TicketSubscribes_add, TicketSubscribes_getByPlace} from "../../../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_add, TicketSubscribes_getByPlace} from "../../../../../../network/api/TicketSubscribes.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import _PlaceSubscribeListItem from "./_PlaceSubscribeListItem";
 

@@ -24,4 +24,7 @@ public class MapViewsDto extends BaseDto<MapViewsDto> {
     @JsonProperty("Longitude")
     private Double longitude;
 
+    @JsonProperty("UserId")
+    private Long userId;
+
 }

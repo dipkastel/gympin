@@ -54,12 +54,14 @@ const _ViewsMap = () => {
     };
 
     function addMarker(view) {
+        if (view.Latitude.toFixed(4) == 35.7019 && view.Longitude.toFixed(4) == 51.4047)
+            return;
         // set custom SVG icon marker
         var leafletIcon = L.divIcon({
-            html: getIconHtml(),
+            html: getIconHtml(view),
             bgPos: [60, 60],
-            iconAnchor: [0, 35],
-            popupAnchor: [-19, -35],
+            iconAnchor: [-50, 50],
+            popupAnchor: [-50, 50],
             className: "leaflet-marker",
         });
 
@@ -68,20 +70,21 @@ const _ViewsMap = () => {
         if (markerLayer)
             marker.addTo(markerLayer);
 
-        function getIconHtml() {
+        function getIconHtml(view) {
             return ` <span class="svg-icon svg-icon-danger svg-icon-3x">
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="200" height="200" fill="url(#gradient-fill)"/>
-<defs>
-<radialGradient id="gradient-fill" x1="0" y1="0" x2="200" y2="0" radientUnits="userSpaceOnUse">
-<stop offset="0" stop-color="#d7000070" />
-<stop offset="0.2" stop-color="#d7000033" />
-<stop offset="0.5" stop-color="#d7000022" />
-<stop offset="0.8" stop-color="#d7000011" />
-<stop offset="1" stop-color="#d7000000" />
-</radialGradient>
-</defs>
-</svg>
+                        <svg width="100" height="100" viewBox="0 0 100 100"  xmlns="http://www.w3.org/2000/svg">
+                        <text x="59" y="55" fill="red" opacity="0.3" font-size="18">`+view.UserId+`</text>
+                        <rect width="100" height="100" fill="url(#gradient-fill)"/>
+                        <defs>
+                        <radialGradient id="gradient-fill" x1="0" y1="0" x2="100" y2="0" radientUnits="userSpaceOnUse">
+                        <stop offset="0"   stop-color="#0000d760" />
+                        <stop offset="0.2" stop-color="#0000d722" />
+                        <stop offset="0.5" stop-color="#0000d711" />
+                        <stop offset="0.8" stop-color="#0000d705" />
+                        <stop offset="1"   stop-color="#0000d700" />
+                        </radialGradient>
+                        </defs>
+                        </svg>
                     </span>`;
         }
     }

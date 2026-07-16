@@ -1,11 +1,11 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
-import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.placeGym.GymSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.placeGym.sport.param.SportParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
@@ -62,17 +62,17 @@ public class placeSportTest extends BaseTest {
 //    @Order(3)
 //    public void update() throws Exception {
 //        if(placeSportId==null) throw new Exception("is not exist");
-//        final PlaceSportParam param = PlaceSportParam.builder()
+//        final CounselingProficienciesParam param = CounselingProficienciesParam.builder()
 //                .id(placeSportId)
 //                .place(PlaceParam.builder().id(placeId).build())
-//                .sportTest(SportParam.builder().id(2l).build())
+//                .sportTest(ProficienciesParam.builder().id(2l).build())
 //                .build();
 //
-//        ResponseModel<PlaceSportDto> result = TestPut(
+//        ResponseModel<CounselingProficienciesDto> result = TestPut(
 //                "/api/v1/placeSport/update",
 //                param,
 //                true,
-//                new TypeReference<ResponseModel<PlaceSportDto>>() {
+//                new TypeReference<ResponseModel<CounselingProficienciesDto>>() {
 //                });
 //
 //        Assertions.assertEquals(result.getData().getSport().getName(), "اسب سواری");

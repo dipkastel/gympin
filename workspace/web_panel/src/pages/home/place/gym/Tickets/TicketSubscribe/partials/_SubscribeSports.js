@@ -2,12 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Chip, Dialog, DialogContent, DialogTitle, Typography} from "@mui/material";
 import {DriveFileRenameOutline} from "@mui/icons-material";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
-import {placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";
+import {placeSport_getSportsByPlace} from "../../../../../../../network/api/gymSport.api";
 import {
     TicketSubscribes_addSport,
     TicketSubscribes_deleteSport,
     TicketSubscribes_getTicketSubscribesSports
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 
 const _SubscribeSport = ({place,ticketSubscribe}) => {
     const error = useContext(ErrorContext);

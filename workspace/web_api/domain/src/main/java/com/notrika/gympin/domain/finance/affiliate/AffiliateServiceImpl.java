@@ -18,7 +18,7 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterPara
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
 import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.Gym.dto.PlaceGymDto;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.exception.affiliate.AffiliateAuthException;
 import com.notrika.gympin.common.util.exception.affiliate.AffiliatorHasNotThisCorporateException;
@@ -29,7 +29,7 @@ import com.notrika.gympin.common.util.exception.user.UserPhoneNumberRequiredExce
 import com.notrika.gympin.common.util.exception.user.UserPhoneNumberValidationException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
-import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
+import com.notrika.gympin.domain.place.Gym.GymServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.AffiliateConvertor;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
@@ -39,7 +39,7 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporateReposito
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceAffiliateRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
     UserServiceImpl userService;
 
     @Autowired
-    PlaceGymServiceImpl placeService;
+    GymServiceImpl placeService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -222,7 +222,7 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
     @Transactional
     public PlaceGymDto AddPlaceToAffiliator(AffiliateAddPlaceParam param){
         FinanceAffiliatorEntity affiliator = getEntityById(param.getId());
-        PlaceGymEntity place = placeService.getEntityById(param.getPlace().getId());
+        GymEntity place = placeService.getEntityById(param.getPlace().getId());
         place.setAffiliator(affiliator);
         placeService.update(place);
         return PlaceConvertor.ToGymDto(place);
@@ -231,7 +231,7 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
     @Override
     @Transactional
     public PlaceGymDto RemovePlaceToAffiliator(AffiliateAddPlaceParam param){
-        PlaceGymEntity place = placeService.getEntityById(param.getPlace().getId());
+        GymEntity place = placeService.getEntityById(param.getPlace().getId());
         place.setAffiliator(null);
         placeService.update(place);
         return PlaceConvertor.ToGymDto(place);

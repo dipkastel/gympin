@@ -1,0 +1,17 @@
+package com.notrika.gympin.common.place.placeGym.GymSport.api;
+
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.placeGym.GymSport.param.PlaceSportParam;
+import com.notrika.gympin.common.util._base.base.BaseController;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
+
+public interface PlaceSportController extends BaseController<PlaceSportParam, PlaceSportDto, BaseQuery<?>> {
+
+    ResponseEntity<List<PlaceSportDto>> getSportsByPlace(PlaceGymParam placeParam);
+
+}

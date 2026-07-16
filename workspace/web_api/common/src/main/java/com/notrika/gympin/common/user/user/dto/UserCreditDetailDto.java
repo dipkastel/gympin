@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.user.user.enums.CreditType;

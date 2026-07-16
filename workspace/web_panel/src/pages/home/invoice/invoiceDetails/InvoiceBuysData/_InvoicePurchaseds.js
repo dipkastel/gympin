@@ -9,7 +9,7 @@ const _InvoicePurchaseds = ({PurchasedBases}) => {
 
     function goToPurchased(row) {
         switch(row.PurchasedType){
-            case "SUBSCRIBE":return  history.push({pathname: "/subscribe/data/" + row.Id});
+            case "SUBSCRIBE":return  history.push({pathname: "/appointment/data/" + row.Id});
             case "COURSE":return  history.push({pathname: "/course/data/" + row.Id});
         }
     }

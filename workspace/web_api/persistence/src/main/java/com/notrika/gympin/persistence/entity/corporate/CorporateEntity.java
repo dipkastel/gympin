@@ -15,7 +15,6 @@ import com.notrika.gympin.persistence.entity.management.location.ManageLocationE
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.settings.CorporateSettingsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -153,7 +152,7 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        HallEntity that = (HallEntity) o;
+        CorporateEntity that = (CorporateEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

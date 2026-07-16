@@ -1,10 +1,7 @@
 package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 
-import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
@@ -117,24 +114,6 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
     @PostMapping("/changeTicketSubscribeStatus")
     public ResponseEntity<TicketSubscribeDto> changeTicketSubscribeStatus(@RequestBody TicketSubscribeParam ticketSubscribeParam) {
         return ResponseEntity.ok(ticketSubscribeService.ChangeTicketSubscribeStatus(ticketSubscribeParam));
-    }
-
-    @Override
-    @GetMapping("/getActiveTimesByTicketSubscribe")
-    public ResponseEntity<List<ActiveTimesDto>> getSubscribeActiveTimesByTicketSubscribe(Long ticketSubscribeId) {
-        return ResponseEntity.ok(ticketSubscribeService.getTicketSubscribeActiveTimesByTicketSubscribe(ticketSubscribeId));
-    }
-
-    @Override
-    @PostMapping("/addSubscribeActiveTimes")
-    public ResponseEntity<TicketSubscribeDto> addSubscribeActiveTimes(@RequestBody TicketActiveTimesParam ticketSubscribeActiveTimesParam) {
-        return ResponseEntity.ok(ticketSubscribeService.addSubscribeActiveTimes(ticketSubscribeActiveTimesParam));
-    }
-
-    @Override
-    @PutMapping("/deleteSubscribeActiveTimes")
-    public ResponseEntity<TicketSubscribeDto> deleteSubscribeActiveTimes(@RequestBody TicketActiveTimesParam ticketSubscribeActiveTimesParam) {
-        return ResponseEntity.ok(ticketSubscribeService.deleteSubscribeActiveTimes(ticketSubscribeActiveTimesParam));
     }
 
 }

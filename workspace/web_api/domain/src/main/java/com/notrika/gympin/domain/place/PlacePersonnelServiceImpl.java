@@ -1,15 +1,13 @@
 package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelAccessEnum;
 import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -23,20 +21,17 @@ import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
-import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.place.*;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,16 +57,13 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     PlacePersonnelAccessRepository placePersonnelAccessRepository;
 
     @Autowired
-    PlacePersonnelHallAccessRepository placePersonnelHallAccessRepository;
-
-    @Autowired
     PlacePersonnelRoleRepository placePersonnelRoleRepository;
 
     @Autowired
     private PlaceRepository placeRepository;
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -183,13 +175,13 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public List<PlacePersonnelDto> getGymPersonnelByUser(UserParam userParam) {
-        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof PlaceGymEntity).collect(Collectors.toList());
+        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof GymEntity).collect(Collectors.toList());
         return convertToDtos(placePersonnel);
     }
 
     @Override
     public List<PlacePersonnelDto> getCateringPersonnelByUser(UserParam userParam) {
-        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof PlaceCateringEntity).collect(Collectors.toList());
+        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof CateringEntity).collect(Collectors.toList());
         return convertToDtos(placePersonnel);
     }
 
@@ -278,22 +270,6 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         }
     }
 
-    @Override
-    public List<PlacePersonnelBuyableAccessDto> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> personnelhallAccess) {
-
-        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelhallAccess.get(0).getPlacePersonelId());
-        List<PlacePersonelBuyableAccessEntity> toUpdate = new ArrayList<>();
-        for (PlacePersonnelBuyableAccessParam param : personnelhallAccess) {
-            try {
-                PlacePersonelBuyableAccessEntity access = placePersonnel.getPlacePersonnelBuyableAccess().stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId() == param.getBuyableParam().getId()).findFirst().get();
-                access.setAccess(param.getAccess());
-                toUpdate.add(access);
-            } catch (Exception e) {
-            }
-        }
-        placePersonnelHallAccessRepository.updateAll(toUpdate);
-        return PlaceConvertor.personelBuyableAccessToDto(toUpdate);
-    }
 
 
 //    @Override
@@ -336,84 +312,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 //
 //    }
 
-    @Override
-    public List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId) {
-        PlaceGymEntity place = placeGymRepository.getById(placeId);
-        PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
-        if (placePersonnel == null)
-            throw new UnknownUserException();
-        List<PlacePersonelBuyableAccessEntity> currentAccess = placePersonnel.getPlacePersonnelBuyableAccess();
-        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
-        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        for (TicketSubscribeEntity placeBuyable : place.getTicketSubscribes()) {
-            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-            resultItem.setPlacePersonelId(placePersonnel.getId());
-            var hasAccess = false;
-            try {
-                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-                if (currentAccessItem.isEmpty()) {
-                    toAdd.add(
-                            PlacePersonelBuyableAccessEntity.builder()
-                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-                                    .placePerson(placePersonnel)
-                                    .buyable(placeBuyable)
-                                    .build()
-                    );
-                }
-                hasAccess = currentAccessItem.get().getAccess();
-            } catch (Exception e) {
-            }
-            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-            result.add(resultItem);
-        }
-
-        if (toAdd.size() > 0) {
-            placePersonnelHallAccessRepository.addAll(toAdd);
-        }
-        return result;
-
-    }
-
-    @Override
-    public List<PlacePersonnelBuyableAccessDto> getPersonnelBuyableAccess(Long personelId) {
-        PlacePersonnelEntity personnel = placePersonnelRepository.getById(personelId);
-        if (personnel == null)
-            throw new UnknownUserException();
-        List<PlacePersonelBuyableAccessEntity> currentAccess = personnel.getPlacePersonnelBuyableAccess();
-        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
-        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
-
-        for (BuyableEntity placeBuyable : ((PlaceGymEntity)personnel.getPlace()).getTicketSubscribes()) {
-            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-            resultItem.setPlacePersonelId(personnel.getId());
-            var hasAccess = false;
-            try {
-                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-                if (currentAccessItem.isEmpty()) {
-                    toAdd.add(
-                            PlacePersonelBuyableAccessEntity.builder()
-                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-                                    .placePerson(personnel)
-                                    .buyable(placeBuyable)
-                                    .build()
-                    );
-                }
-                hasAccess = currentAccessItem.get().getAccess();
-            } catch (Exception e) {
-            }
-            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-            result.add(resultItem);
-        }
-
-        if (toAdd.size() > 0) {
-            placePersonnelHallAccessRepository.addAll(toAdd);
-        }
-        return result;
-
-    }
 
     @Override
     public PlacePersonnelEntity add(PlacePersonnelEntity entity) {

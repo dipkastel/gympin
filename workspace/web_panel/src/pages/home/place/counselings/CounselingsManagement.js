@@ -16,8 +16,8 @@ import {getRppPlaceManagement, SetRppPlaceManagement} from "../../../../helper/p
 import PaidIcon from '@mui/icons-material/Paid';
 import ImageIcon from '@mui/icons-material/Image';
 import SportsIcon from '@mui/icons-material/Sports';
-import {NoteAlt} from "@mui/icons-material";
-import {PlaceCounseling_addPlace, PlaceCounseling_query} from "../../../../network/api/placeCounseling.api";
+import {EmojiEvents, NoteAlt} from "@mui/icons-material";
+import {PlaceCounseling_addPlace, PlaceCounseling_query} from "../../../../network/api/Counseling.api";
 
 
 const CounselingsManagement = () => {
@@ -111,7 +111,7 @@ const CounselingsManagement = () => {
                         autoComplete="off"
                         onSubmit={(e) => addPlace(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن مرکز ورزشی "}</Modal.Title>
+                            <Modal.Title>{"افزودن مشاور "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
@@ -119,10 +119,10 @@ const CounselingsManagement = () => {
                                 <Form.Control
                                     name="formName"
                                     type="text"
-                                    placeholder="نام مکان (مجموعه ورزشی)"
+                                    placeholder="نام مشاور"
                                 />
                                 <Form.Text className="text-muted">
-                                    از نوشتن حاشیه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری
+                                    از نوشتن حاشیه ها (مرکز مشاوره ، کلینیک ، مطب و...) خودداری
                                     کنید
                                 </Form.Text>
                             </Form.Group>
@@ -150,10 +150,9 @@ const CounselingsManagement = () => {
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">
-                <p>موجودیت مرکز ورزشی به معنای محلی است که در آن ورزش انجام میشود</p>
+                <p>موجودیت مشاوران به معنای فرد نیست تعریف فرایند مشاوره در اپسا است </p>
                 <p>
-                    این مراکز میتواند سر پوشیده یا باز باشد و نوع فعالیت های آنها در
-                    قسمت ورزش ها تایین میشود
+                    این مشاوران میتواند دارای محل فعالیت یا آنلاین با منشی و... باشند
                 </p>
             </Notice>
 
@@ -246,8 +245,8 @@ const CounselingsManagement = () => {
                                                 <Tooltip title={"تصاوبر"}>
                                                     <ImageIcon color={row.Multimedias?.[0]?"success":"error"} />
                                                 </Tooltip>
-                                                <Tooltip title={"ورزش ها"}>
-                                                    <SportsIcon color={row.Sports?.[0]?"success":"error"} />
+                                                <Tooltip title={"تخصص ها"}>
+                                                    <EmojiEvents color={row.Proficiencies?.[0]?"success":"error"} />
                                                 </Tooltip>
                                                 <Tooltip title={"قرارداد"}>
                                                     <NoteAlt color={row.HasContract?"success":"error"} />

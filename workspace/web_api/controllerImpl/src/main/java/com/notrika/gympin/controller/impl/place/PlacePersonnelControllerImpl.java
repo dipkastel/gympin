@@ -8,7 +8,7 @@ import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAcces
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -91,12 +91,6 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     }
 
     @Override
-    @GetMapping("getUserPlaceBuyableAccess")
-    public ResponseEntity<List<PlacePersonnelBuyableAccessDto>> getUserPlaceBuyableAccess(Long placeId, Long userId) {
-        return new ResponseEntity<>(placePersonnelService.getUserPlaceBuyableAccess(placeId, userId), HttpStatus.OK);
-    }
-
-    @Override
     @PostMapping("updatePersonnelCommissionFee")
     public ResponseEntity<PlacePersonnelDto> updatePersonnelCommissionFee(@RequestBody PlacePersonnelParam param) {
         return new ResponseEntity<>(placePersonnelService.updatePersonnelCommissionFee(param), HttpStatus.OK);
@@ -106,12 +100,6 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     @PostMapping("updatePersonnelGetSms")
     public ResponseEntity<PlacePersonnelDto> updatePersonnelGetSms(@RequestBody PlacePersonnelParam param) {
         return new ResponseEntity<>(placePersonnelService.updatePersonnelGetSms(param), HttpStatus.OK);
-    }
-
-    @Override
-    @PostMapping("updatePersonnelBuyableAccess")
-    public ResponseEntity<List<PlacePersonnelBuyableAccessDto>> updatePersonnelBuyableAccess(@RequestBody List<PlacePersonnelBuyableAccessParam> param) {
-        return new ResponseEntity<>(placePersonnelService.updatePersonnelBuyableAccess(param), HttpStatus.OK);
     }
 
     @Override

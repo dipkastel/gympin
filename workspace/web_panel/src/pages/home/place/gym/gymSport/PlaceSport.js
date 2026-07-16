@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {Button, TableCell} from "@mui/material";
 import {Form, Modal, Table} from "react-bootstrap";
 import {sport_query,} from "../../../../../network/api/sport.api";
-import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../../../../network/api/placeSport.api";
+import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../../../../network/api/gymSport.api";
 import Select from "react-select";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";

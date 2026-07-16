@@ -1,9 +1,9 @@
 package com.notrika.gympin.domain.settings.schedules;
 
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 public class SchedulePlace {
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
 
 
     @Transactional
     public void UpdatePlaceSearchStr() {
-        List<PlaceGymEntity> placeEntities = placeGymRepository.findAllByStatusAndDeletedIsFalseAndSearchStrIsNull(PlaceStatusEnum.ACTIVE);
-        List<PlaceGymEntity> placesToUpdate = new ArrayList<>();
-        for (PlaceGymEntity place : placeEntities) {
+        List<GymEntity> placeEntities = placeGymRepository.findAllByStatusAndDeletedIsFalseAndSearchStrIsNull(PlaceStatusEnum.ACTIVE);
+        List<GymEntity> placesToUpdate = new ArrayList<>();
+        for (GymEntity place : placeEntities) {
             String searchSrt = place.getName();
             searchSrt += " "+place.getAddress();
             searchSrt += " "+place.getLocation().getName();

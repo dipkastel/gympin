@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.param.PlaceSportParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

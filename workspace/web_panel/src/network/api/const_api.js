@@ -331,6 +331,18 @@ export let TicketSubscribesApi = {
     getActiveTimesByTicketSubscribe: "v1/TicketSubscribe/getActiveTimesByTicketSubscribe",
     deleteSubscribeActiveTimes: "v1/TicketSubscribe/deleteSubscribeActiveTimes",
 };
+export let TicketAppointmentsApi = {
+    add: "v1/TicketAppointment/add",
+    delete: "v1/TicketAppointment/delete",
+    getAll: "v1/TicketAppointment/getAll",
+    getTicketSubscribeDiscountHistory: "v1/TicketAppointment/getTicketSubscribeDiscountHistory",
+    getTicketSubscribeDiscountHistoryByUser: "v1/TicketAppointment/getTicketSubscribeDiscountHistoryByUser",
+    getById: "v1/TicketAppointment/getById",
+    update: "v1/TicketAppointment/update",
+    ChangeTicketSubscribeStatus: "v1/TicketAppointment/ChangeTicketSubscribeStatus",
+    query: "v1/TicketAppointment/query",
+    getByCounseling: "v1/TicketAppointment/getByCounseling",
+};
 export let TicketCoursesApi = {
     add: "v1/TicketCourse/add",
     delete: "v1/TicketCourse/delete",
@@ -367,6 +379,13 @@ export let PlaceSportApi = {
     getAll: "v1/placeSport/getAll",
     update: "v1/placeSport/update",
     getSportsByPlace: "v1/placeSport/getSportsByPlace"
+};
+export let CounselingProficienciesApi = {
+    add: "v1/CounselingProficiencies/add",
+    delete: "v1/CounselingProficiencies/delete",
+    getAll: "v1/CounselingProficiencies/getAll",
+    update: "v1/CounselingProficiencies/update",
+    getCounselingProficiencies: "v1/CounselingProficiencies/getCounselingProficiencies"
 };
 export let PlaceOptionApi = {
     add: "v1/PlaceOption/add",
@@ -455,6 +474,14 @@ export let SportApi = {
     updateSport: "v1/sport/update",
     query: "v1/sport/query",
     countFilter: "v1/sport/count-filter",
+};
+export let ProficienciesApi = {
+    add: "v1/Proficiencies/add",
+    delete: "v1/Proficiencies/delete",
+    getAll: "v1/Proficiencies/getAll",
+    getById: "v1/Proficiencies/getById",
+    update: "v1/Proficiencies/update",
+    query: "v1/Proficiencies/query",
 };
 export let SmsApi = {
     add: "v1/sms/add",

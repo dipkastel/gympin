@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/conte
 import {Button, Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
-import {placeGym_changeStatus, PlaceGym_getPlaceById} from "../../../../../../network/api/placeGym.api";
+import {placeGym_changeStatus, PlaceGym_getPlaceById} from "../../../../../../network/api/gym.api";
 
 const _wizardActivePlace = ({allowNext}) => {
 

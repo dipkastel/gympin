@@ -9,7 +9,6 @@ import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedC
 import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntryEntity;
-import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,24 +29,6 @@ public class PurchasedCourseServiceHelper {
 
     @Autowired
     PurchasedCourseEntryRepository purchasedCourseEntryRepository;
-
-    public boolean checkForAccess(PurchasedCourseEntity purchesedCourse, Long placeId) {
-
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        var userHallAccess = userRequester.getPlacePersonnel().stream().filter(o->!o.isDeleted()).filter(p -> p.getPlace().getId() == placeId).findFirst().get();
-        var halls = purchesedCourse.getTicketCourse().getActiveTimes().stream().filter(o->!o.isDeleted()).map(TicketHallActiveTimeEntity::getHall).collect(Collectors.toSet());
-        for (var hall : halls) {
-            if (userHallAccess.getPlacePersonnelRoles().stream().filter(o->!o.isDeleted()).anyMatch(pp->pp.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER)) return true;
-            if (userHallAccess.getPlacePersonnelBuyableAccess().size() < 1) return false;
-            var hallAccess = userHallAccess.getPlacePersonnelBuyableAccess().stream().filter(o->!o.isDeleted()).filter(c -> Objects.equals(c.getBuyable().getId(), hall.getId())).findFirst().get();
-            if (!hallAccess.getAccess())
-                return false;
-        }
-        return true;
-    }
 
     public PurchasedCourseEntity checkForExpire(PurchasedCourseEntity course) {
         switch (course.getStatus()) {

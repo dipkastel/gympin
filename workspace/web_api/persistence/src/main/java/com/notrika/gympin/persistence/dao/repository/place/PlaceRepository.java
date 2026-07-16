@@ -4,12 +4,9 @@ import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
-import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public interface PlaceRepository extends BaseRepository<PlaceEntity, Long> {
 
     List<PlaceEntity> findAllByStatusAndDeletedIsFalse(PlaceStatusEnum status);
 
-    @Query("select p from PlaceGymEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = 0 and po.user.id = :#{#userId} ")
+    @Query("select p from GymEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = 0 and po.user.id = :#{#userId} ")
     List<PlaceEntity> getPlaceByUser(Long userId);
 
     @Query("SELECT DISTINCT bdh.buyable.place \n" +

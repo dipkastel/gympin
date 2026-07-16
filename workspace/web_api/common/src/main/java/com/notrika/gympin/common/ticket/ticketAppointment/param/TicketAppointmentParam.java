@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketAppointment.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.placeCounseling.param.PlaceCounselingParam;
+import com.notrika.gympin.common.place.placeCounseling.Counseling.param.CounselingParam;
 import com.notrika.gympin.common.ticket.ticketAppointment.enums.AppointmentStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.param.BaseParam;
@@ -47,8 +47,8 @@ public class TicketAppointmentParam extends BaseParam<TicketAppointmentParam> {
     @JsonProperty("Timing")
     private String timing;
 
-    @JsonProperty(value = "Place", required = true)
-    private PlaceCounselingParam place;
+    @JsonProperty(value = "Counseling", required = true)
+    private CounselingParam counseling;
 
     @JsonProperty( "ExpireDuration")
     private Short expireDuration;

@@ -1,9 +1,7 @@
 package com.notrika.gympin.controller.impl.ticket.ticketCourse;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.ticketCourse.api.TicketCourseController;
 import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
@@ -106,22 +104,5 @@ public class TicketCourseControllerImpl implements TicketCourseController {
         return ResponseEntity.ok(ticketCourseService.ChangeTicketCourseStatus(ticketCourseParam));
     }
 
-    @Override
-    @GetMapping("/getActiveTimesByTicketCourse")
-    public ResponseEntity<List<ActiveTimesDto>> getActiveTimesByTicketCourse(Long ticketCourseId) {
-        return ResponseEntity.ok(ticketCourseService.getTicketActiveTimesByTicketCourse(ticketCourseId));
-    }
-
-    @Override
-    @PostMapping("/addCourseActiveTimes")
-    public ResponseEntity<TicketCourseDto> addCourseActiveTimes(@RequestBody TicketActiveTimesParam ticketActiveTimesParam) {
-        return ResponseEntity.ok(ticketCourseService.addCourseActiveTimes(ticketActiveTimesParam));
-    }
-
-    @Override
-    @PutMapping("/deleteCourseActiveTimes")
-    public ResponseEntity<TicketCourseDto> deleteCourseActiveTimes(@RequestBody TicketActiveTimesParam ticketActiveTimesParam) {
-        return ResponseEntity.ok(ticketCourseService.deleteCourseActiveTimes(ticketActiveTimesParam));
-    }
 
 }

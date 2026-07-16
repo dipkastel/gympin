@@ -14,7 +14,7 @@ import {
     TicketSubscribes_addSubscribeActiveTimes,
     TicketSubscribes_deleteSubscribeActiveTimes,
     TicketSubscribes_getActiveTimesByTicketSubscribe
-} from "../../../../../../../network/api/ticketSubscribes.api";
+} from "../../../../../../../network/api/TicketSubscribes.api";
 
 const TicketSubscribeActivityTimes = ({ticketSubscribe}) => {
     const error = useContext(ErrorContext);

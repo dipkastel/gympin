@@ -13,7 +13,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {getRppCateringManagement, SetRppCateringManagement,} from "../../../../helper/pocket/pocket";
-import {Catering_add, Catering_query} from "../../../../network/api/placeCatering.api";
+import {Catering_add, Catering_query} from "../../../../network/api/Catering.api";
 
 
 const CateringManagement = () => {

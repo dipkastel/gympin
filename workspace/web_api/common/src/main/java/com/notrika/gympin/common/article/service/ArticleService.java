@@ -9,5 +9,6 @@ import com.notrika.gympin.common.article.query.ArticleQuery;
 public interface ArticleService extends BaseService<ArticleParam, ArticleDto, ArticleQuery> {
 
     ArticleDto updateArticleImage(ArticleImageParam articleImageParam);
+    ArticleDto getBySlug(String slug);
 
 }

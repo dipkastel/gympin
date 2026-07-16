@@ -1,19 +1,15 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery;
 import com.notrika.gympin.common.settings.service.dto.MapViewsDto;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.management.service.reportDto.ManageServiceExecutionSimpleDto;
-import org.apache.tomcat.util.json.JSONParser;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.notrika.gympin.persistence.dao.BaseRepositoryImpl.objectMapper;
 
 public final class ServiceConvertor {
 
@@ -29,13 +25,13 @@ public final class ServiceConvertor {
         return dto;
     }
 
-    public static MapViewsDto ToDto(Object entity) {
+    public static MapViewsDto ToDto(Object[] entity) {
         if (entity == null) return null;
         ObjectMapper mapper = new ObjectMapper();
 
         JsonNode root = null;
         try {
-            root = mapper.readTree(entity.toString());
+            root = mapper.readTree(entity[0].toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +45,7 @@ public final class ServiceConvertor {
         return MapViewsDto.builder()
                 .latitude ((minLatitude+maxLatitude)/2)
                 .longitude ((minLongitude+maxLongitude)/2)
+                .userId(entity[1]==null?null:Long.valueOf(entity[1].toString()))
                 .build();
     }
 

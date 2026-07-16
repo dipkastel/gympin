@@ -83,16 +83,16 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 //    @Override
 //    @Transactional
 //    public Boolean settlementRequest(UserSettlementRequestParam param) {
-//        PlaceGymEntity PlaceGymEntity = placeRepository.getById(param.getPlaceId());
-//        if (param.getAmount().compareTo(PlaceGymEntity.getBalance()) > 0)
+//        GymEntity GymEntity = placeRepository.getById(param.getPlaceId());
+//        if (param.getAmount().compareTo(GymEntity.getBalance()) > 0)
 //            throw new RequestOverCreditLimit();
 //        if (param.getAmount().compareTo(BigDecimal.valueOf(50000)) < 0)
 //            throw new RequestUnderLimit();
-//        PlaceGymEntity.setBalance(PlaceGymEntity.getBalance().subtract(param.getAmount()));
-//        placeRepository.update(PlaceGymEntity);
+//        GymEntity.setBalance(GymEntity.getBalance().subtract(param.getAmount()));
+//        placeRepository.update(GymEntity);
 //        userTransactionRepository.add(TransactionEntity.builder()
-//                .place(PlaceGymEntity)
-//                .balance(PlaceGymEntity.getBalance())
+//                .place(GymEntity)
+//                .balance(GymEntity.getBalance())
 //                .amount(param.getAmount().negate())
 //                .transactionStatus(TransactionStatus.REQUEST)
 //                .transactionType(TransactionType.PLACE_SETTLEMENT)
@@ -271,9 +271,9 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 //            transaction.setBalance(userEntity.getBalance());
 //            transaction.setTransactionType(TransactionType.CHARGE_USER);
 //        } else if (param.getPlaceId() != null) {
-//            PlaceGymEntity PlaceGymEntity = placeRepository.getById(param.getPlaceId());
-//            transaction.setPlace(PlaceGymEntity);
-//            transaction.setBalance(PlaceGymEntity.getBalance());
+//            GymEntity GymEntity = placeRepository.getById(param.getPlaceId());
+//            transaction.setPlace(GymEntity);
+//            transaction.setBalance(GymEntity.getBalance());
 //            transaction.setTransactionType(TransactionType.CHARGE_PLACE);
 //        } else if (param.getCorporateId() != null) {
 //            CorporateEntity corporateEntity = corporateService.getEntityById(param.getCorporateId());
@@ -333,14 +333,14 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 //            } catch (Exception e) {
 //            }
 //        } else if (transactionRequest.getPlace() != null) {
-//            PlaceGymEntity PlaceGymEntity = transactionRequest.getPlace();
+//            GymEntity GymEntity = transactionRequest.getPlace();
 //            transaction.setTransactionType(TransactionType.CHARGE_PLACE);
-//            transaction.setPlace(PlaceGymEntity);
+//            transaction.setPlace(GymEntity);
 //            if (TransactionResult) {
-//                PlaceGymEntity.setBalance(PlaceGymEntity.getBalance().add(transactionRequest.getAmount()));
-//                placeRepository.update(PlaceGymEntity);
+//                GymEntity.setBalance(GymEntity.getBalance().add(transactionRequest.getAmount()));
+//                placeRepository.update(GymEntity);
 //            }
-//            transaction.setBalance(PlaceGymEntity.getBalance());
+//            transaction.setBalance(GymEntity.getBalance());
 //        } else if (transactionRequest.getCorporate() != null) {
 //            CorporateEntity corporateEntity = transactionRequest.getCorporate();
 //            transaction.setTransactionType(TransactionType.CHARGE_CORPORATE);
@@ -400,10 +400,10 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 //
 //                transactionAccepted.setBalance(userEntity.getBalance());
 //            } else if (transactionRequest.getPlace() != null) {
-//                PlaceGymEntity PlaceGymEntity = transactionRequest.getPlace();
-//                PlaceGymEntity.setBalance(PlaceGymEntity.getBalance().add(transactionRequest.getAmount()));
-//                placeRepository.update(PlaceGymEntity);
-//                transactionAccepted.setBalance(PlaceGymEntity.getBalance());
+//                GymEntity GymEntity = transactionRequest.getPlace();
+//                GymEntity.setBalance(GymEntity.getBalance().add(transactionRequest.getAmount()));
+//                placeRepository.update(GymEntity);
+//                transactionAccepted.setBalance(GymEntity.getBalance());
 //            } else if (transactionRequest.getCorporate() != null) {
 //                CorporateEntity corporateEntity = transactionRequest.getCorporate();
 //                //todo fix this shit

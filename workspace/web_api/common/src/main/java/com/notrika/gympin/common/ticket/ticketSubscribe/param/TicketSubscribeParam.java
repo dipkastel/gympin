@@ -3,7 +3,7 @@ package com.notrika.gympin.common.ticket.ticketSubscribe.param;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

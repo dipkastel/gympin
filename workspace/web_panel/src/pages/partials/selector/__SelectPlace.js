@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AsyncSelect from "react-select/async";
-import {PlaceGym_query} from "../../../network/api/placeGym.api";
+import {PlaceGym_query} from "../../../network/api/gym.api";
 
 const __SelectPlace = ({hidden,onChange}) => {
 

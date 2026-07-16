@@ -11,6 +11,7 @@ import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceExtraItemEnt
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.rateAndComment.PlaceCommentEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
@@ -139,6 +140,13 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @JsonIgnore
     @ToString.Exclude
     private List<BuyableEntity<?>> buyables = new ArrayList<>();
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "placeImage", joinColumns = @JoinColumn(name = "multimediaPlaceId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
+    @JsonIgnore
+    @ToString.Exclude
+    private List<MultimediaEntity> multimedias;
 
     public void addBuyable(BuyableEntity<?> buyable) {
         buyables.add(buyable);

@@ -5,7 +5,6 @@ import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

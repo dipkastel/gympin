@@ -1,9 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketCourse.service;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.GymSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseParam;
@@ -28,9 +26,4 @@ public interface TicketCourseService extends BaseService<TicketCourseParam, Tick
     List<UserDto> getCoaches(Long ticketId);
     TicketCourseDto addCoach(TicketCourseCoachParam ticketSportParam);
     TicketCourseDto deleteCoach(TicketCourseCoachParam ticketSportParam);
-
-    //activeTime
-    List<ActiveTimesDto> getTicketActiveTimesByTicketCourse(Long ticketCourseId);
-    TicketCourseDto addCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
-    TicketCourseDto deleteCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
 }

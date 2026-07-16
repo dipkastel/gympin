@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.finance.Invoice;
 
-import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
@@ -37,7 +36,7 @@ import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntit
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceFoodEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceSubscribeEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -444,7 +443,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         //init
         InvoiceEntity invoice = invoiceRepository.getById(param.getId());
         CorporateEntity corporate = invoice.getCorporate();
-        PlaceCateringEntity catering = (PlaceCateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
+        CateringEntity catering = (CateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
 
         //checks
         if (invoice.getStatus() != InvoiceStatus.NEED_TO_PAY)
@@ -477,7 +476,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         //init
         InvoiceEntity invoice = invoiceRepository.getById(param.getId());
         CorporateEntity corporate = invoice.getCorporate();
-        PlaceCateringEntity catering = (PlaceCateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
+        CateringEntity catering = (CateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
 
         //checks
         if (invoice.getStatus() != InvoiceStatus.PROCESSING)

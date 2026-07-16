@@ -103,7 +103,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
 
     @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), MAX(mse.executionDate)) " +
             "FROM ManageServiceExecutionEntity mse " +
-            "WHERE mse.service = 'public org.springframework.http.ResponseEntity<com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto> com.notrika.gympin.controller.impl.place.PlaceGymControllerImpl.getById(java.lang.Long)' " +
+            "WHERE mse.service LIKE '%PlaceGymControllerImpl.getById%' " +
             "  AND mse.dto LIKE CONCAT('{\"id\":', :placeId, ',%') " +
             "  AND mse.executionDate > :startDate " +
             "  AND mse.executionDate < :endDate " +
@@ -115,12 +115,8 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
     List<PlaceViewsDto> getExecutionGroupByDateReport(String service, String param, Date startDate, Date endDate);
 
 
-    @Query(value = "SELECT param FROM manage_service_execution where service = 'public org.springframework.http.ResponseEntity<org.springframework.data.domain.Page<com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto>> com.notrika.gympin.controller.impl.place.PlaceGymControllerImpl.query(com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery)' and param like '%max_latitude\":35%' order by id DESC LIMIT 500", nativeQuery = true)
-    List<Object> getMapViews();
-
-
-
-
+    @Query(value = "SELECT param,executor_user_id FROM manage_service_execution where service LIKE '%PlaceGymControllerImpl.query%' and param like '%max_latitude\":3%' order by id DESC LIMIT 500", nativeQuery = true)
+    List<Object[]> getMapViews();
 
 }
 

@@ -8,10 +8,10 @@ import com.notrika.gympin.common.settings.tag.service.TagService;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TagConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.Gym.GymRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageTagsRepository;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.Gym.GymEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +29,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
     private ManageTagsRepository manageTagsRepository;
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private GymRepository placeGymRepository;
 
     @Override
     public TagDto add(@NonNull TagParam tagParam) {
@@ -42,7 +42,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
 
     @Override
     public List<TagDto> addToPlace(@NonNull TagParam tagParam) {
-        PlaceGymEntity place = placeGymRepository.getById(tagParam.getPlace().getId());
+        GymEntity place = placeGymRepository.getById(tagParam.getPlace().getId());
         ManageTagsEntity entity = getEntityById(tagParam.getId());
         List<ManageTagsEntity> placeTags = place.getTags();
         if(placeTags.stream().filter(o->!o.isDeleted()).anyMatch(p->p.getId().equals(entity.getId())))
@@ -54,7 +54,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
     }
     @Override
     public List<TagDto> removeFromPlace(@NonNull TagParam tagParam) {
-        PlaceGymEntity place = placeGymRepository.getById(tagParam.getPlace().getId());
+        GymEntity place = placeGymRepository.getById(tagParam.getPlace().getId());
         ManageTagsEntity entity = getEntityById(tagParam.getId());
         List<ManageTagsEntity> placeTags = place.getTags();
         placeTags.remove(entity);
@@ -65,7 +65,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
 
     @Override
     public List<TagDto> getPlaceTags(Long placeId) {
-        PlaceGymEntity place = placeGymRepository.getById(placeId);
+        GymEntity place = placeGymRepository.getById(placeId);
         return convertToDtos(place.getTags());
     }
 

@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.place.parts.personnel.api;
 
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.place.placeGym.Gym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -11,7 +11,6 @@ import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAcces
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,8 +24,6 @@ public interface PlacePersonnelController extends BaseController<PlacePersonnelP
 
     ResponseEntity<List<PlacePersonnelAccessDto>> getUserPlaceAccess(Long placeId,Long userId);
 
-    ResponseEntity<List<PlacePersonnelBuyableAccessDto>> getUserPlaceBuyableAccess(Long placeId, Long userId);
-
     ResponseEntity<PlacePersonnelDto> updatePersonnelCommissionFee(PlacePersonnelParam param);
 
     ResponseEntity<PlacePersonnelDto> updatePersonnelGetSms(PlacePersonnelParam param);
@@ -34,8 +31,6 @@ public interface PlacePersonnelController extends BaseController<PlacePersonnelP
     ResponseEntity<List<PlacePersonnelAccessDto>> updatePersonnelAccess(List<PlacePersonnelAccessParam> param);
 
     ResponseEntity<List<PlacePersonnelDto>> getPlaceBeneficiaries(Long placeId);
-
-    ResponseEntity<List<PlacePersonnelBuyableAccessDto>> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> param);
 
     ResponseEntity<PlacePersonnelDto> addRole(PlacePersonnelParam param);
 

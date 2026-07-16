@@ -2,7 +2,7 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodMenuDto;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.Catering.CateringEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 
@@ -33,7 +33,7 @@ public class TicketFoodConvertor {
     public static TicketFoodMenuDto toDto(TicketFoodMenuEntity entity) {
         if (entity == null) return null;
         TicketFoodMenuDto dto = new TicketFoodMenuDto();
-        dto.setCatering(PlaceConvertor.ToCateringDto((PlaceCateringEntity) entity.getFoodItem().getPlace()));
+        dto.setCatering(PlaceConvertor.ToCateringDto((CateringEntity) entity.getFoodItem().getPlace()));
         dto.setFood(toDto(entity.getFoodItem()));
         dto.setId(entity.getId());
         dto.setDate(entity.getDate());
