@@ -69,7 +69,9 @@ export async function generateMetadata({params}: ArticlePageProps):
 
 export async function generateStaticParams(): Promise<{ slug: string; }[]> {
     try {
-        const {articles} = await getArticles({page: 0, size: 20});
+
+        const {articles} = await getArticles({page: 0, size: 100});
+
         return articles.map((article) =>
             ({slug: buildArticleHref(article).replace("/blog/", "")})
         );

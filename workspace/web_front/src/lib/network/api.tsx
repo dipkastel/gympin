@@ -83,7 +83,10 @@ export async function getArticles({page = 0, size = 9}: GetArticlesParams = {}) 
         } as PagingRequest,
     };
 
+    console.log("before request = body = > ",JSON.stringify(body));
+    console.log("before request = url = > ",`${AuthApi.BASEURL}${ArticleApi.query}`);
     const data = await apiPost<PageResponse<Article>>(`${AuthApi.BASEURL}${ArticleApi.query}`, body,);
+    console.log("after request = result = > ",JSON.stringify(data));
     return {
         articles: data?.content ?? [],
         totalPages: data?.totalPages ?? 0,
