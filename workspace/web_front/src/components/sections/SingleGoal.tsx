@@ -27,7 +27,10 @@ export default function SingleGoal({title, text, image, alt}: SingleGoalProps): 
                 }}
             >
                 <CardContent className="goals">
-                    <Grid direction="column">
+                    <Grid sx={{
+                        display:"flex",
+                        flexDirection:"column"
+                    }}>
                         <Grid>
                             <img
                                 src={image}

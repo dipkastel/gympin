@@ -9,6 +9,7 @@ import {buildArticleHref} from "@/lib/util";
 import ArticleShare from "@/components/blog/ArticleShare";
 import ArticleHeader from "@/components/blog/ArticleHeader";
 import ArticleTableOfContent from "@/components/blog/ArticleTableOfContent";
+import {Article} from "@/types/Article";
 
 
 type ArticlePageProps = {
@@ -106,7 +107,7 @@ function extractHeadings(html: string) {
 
 export default async function ArticlePage({params}: ArticlePageProps): Promise<JSX.Element> {
     const {slug} = await params;
-    const article = await loadArticle(slug);
+    const article : null | Article = await loadArticle(slug);
     if (!article) notFound();
     const href = `${SITE_URL}${buildArticleHref(article)}`;
     //TODO getRelatedArticlesById
@@ -125,7 +126,7 @@ export default async function ArticlePage({params}: ArticlePageProps): Promise<J
                 {name: article.Title, url: href,},
             ])}/>
 
-            <ArticleHeader article={article}/>
+            {article&&<ArticleHeader article={article}/>}
             <Grid container columns={40} spacing={3} sx={{p: 3}}>
                 <Grid size={{md: 30, sm: 40}}>
                     <Card sx={{borderRadius: 5}} elevation={3}>

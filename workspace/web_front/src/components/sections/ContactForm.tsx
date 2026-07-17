@@ -1,6 +1,6 @@
 "use client";
 
-import {FormEvent, JSX, useState} from "react";
+import React, {FormEvent, JSX, useState} from "react";
 
 import axios from "axios";
 
@@ -59,12 +59,12 @@ export default function ContactForm({
         return Object.keys(obj).length === 0;
     }
 
-    async function sendMessage(
-        event: FormEvent<ContactFormElement>
-    ): Promise<void> {
+    const sendMessage = async (
+        event: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         event.preventDefault();
 
-        const form = event.currentTarget;
+        const form = event.currentTarget as ContactFormElement;
 
         const name =
             form.elements.Name.value.trim();
@@ -127,7 +127,7 @@ export default function ContactForm({
             Text: message,
         };
 
-        const endpointByType = {
+        const endpointByType: Partial<Record<FormType, string>> = {
             [formTypeEnum.advise]:
             AccountApi.requestRegisterAdvise,
 
@@ -136,11 +136,13 @@ export default function ContactForm({
 
             [formTypeEnum.Message]:
             AccountApi.requestPublicMessage,
+
+            [formTypeEnum.PlaceRegister]:
+            AccountApi.requestPublicMessage,
+
         };
 
-        const endpoint =
-            endpointByType[formType] ??
-            AccountApi.requestRegisterAdvise;
+        const endpoint = endpointByType[formType] ?? AccountApi.requestRegisterAdvise;
 
         try {
             await axios.post(`${AuthApi.BASEURL}${endpoint}`, postData);

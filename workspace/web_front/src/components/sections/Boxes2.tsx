@@ -31,8 +31,9 @@ function SingleBox({
         }}
       >
         <Grid
-          direction="column"
           sx={{
+              display:"flex",
+              flexDirection:"column",
             p: 3,
           }}
         >

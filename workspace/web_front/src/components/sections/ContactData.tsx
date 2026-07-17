@@ -167,7 +167,7 @@ export default function ContactData(): JSX.Element {
                 </Typography>
 
                 <Grid
-                    md={4}
+                    size={{md:4}}
                     sx={{
                       direction: "rtl",
                       mt: 1,

@@ -245,9 +245,13 @@ export default function Header(): JSX.Element {
               >
                 <CardContent>
                   <Grid
-                      direction="column"
-                      spacing={3}
-                      sx={{textAlign:"center"}}
+                      container
+                      sx={{
+                          display:"flex",
+                          flexDirection:"column",
+                          gap:3,
+                          textAlign:"center"}}
+
                   >
                     <Typography
                         variant="body2"

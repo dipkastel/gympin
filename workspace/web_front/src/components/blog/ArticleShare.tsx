@@ -3,7 +3,11 @@ import {IconButton,} from "@mui/material";
 import {LinkedIn, Telegram, WhatsApp} from "@mui/icons-material";
 
 
-export default function ArticleShare({articleTitle, href}): JSX.Element {
+type ArticleShareProps = {
+    articleTitle: string,
+    href: string,
+};
+export default function ArticleShare({articleTitle, href}:ArticleShareProps): JSX.Element {
     return (
         <section>
             <div className="article-share">

@@ -18,10 +18,6 @@ const settings: Settings = {
   infinite: true,
   slidesToShow: 1,
   dots: true,
-  rtl: true,
-  autoplay: true,
-  speed: 1000,
-  autoplaySpeed: 4000,
   arrows: false,
 };
 
@@ -67,7 +63,6 @@ export default function HeroSlider(): JSX.Element {
                       <img
                           src={slide.desktop}
                           alt={slide.alt}
-                          width="100%"
                           className="slider-img"
                       />
                     </picture>

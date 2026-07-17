@@ -44,9 +44,10 @@ function FaqSliderItem({
       >
         <Grid
           container
-          direction="column"
           className="experience-text"
           sx={{
+              display:"flex",
+              flexDirection:"column",
             alignItems: "start",
             textAlign: "center",
           }}
@@ -73,9 +74,10 @@ function FaqSliderItem({
       >
         <Grid
           container
-          direction="column"
           className="experience-text"
           sx={{
+              display:"flex",
+              flexDirection:"column",
             alignItems: "start",
             textAlign: "center",
           }}
@@ -183,8 +185,9 @@ export default function HomeFaq(): JSX.Element {
 
       <Grid
         container
-        direction="column"
         sx={{
+            display:"flex",
+            flexDirection:"column",
           mb: 6,
           alignItems: "end",
           textAlign: "end",

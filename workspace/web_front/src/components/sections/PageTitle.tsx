@@ -14,9 +14,10 @@ export default function PageTitle({
     return (
         <section>
             <Grid
-                direction="column"
                 className="header"
                 sx={{
+                    display:"flex",
+                    flexDirection:"column",
                     alignContent: "center",
                     textAlign: "center",
                 }}

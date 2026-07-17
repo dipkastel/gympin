@@ -12,8 +12,9 @@ export default function PageTitleWhite({title, subtitle}: PageTitleWhiteProps): 
         <section>
             <Grid
                 className="headerw"
-                direction="column"
                 sx={{
+                    display:"flex",
+                    flexDirection:"column",
                     alignContent: "center",
                     textAlign: "center",
                 }}

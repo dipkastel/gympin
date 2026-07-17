@@ -77,9 +77,10 @@ export default function IntroForm(): JSX.Element {
                 >
                     <CardContent>
                         <Grid
-                            direction="column"
                             spacing={3}
                             sx={{
+                                display:"flex",
+                                flexDirection:"column",
                                 textAlign: "center",
                             }}
                         >
