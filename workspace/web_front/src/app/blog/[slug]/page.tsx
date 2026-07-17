@@ -30,12 +30,7 @@ export async function generateMetadata({params}: ArticlePageProps):
     const article = await loadArticle(slug);
 
     if (!article) {
-        return {
-            alternates: {canonical: ""},
-            description: "",
-            openGraph: {description: "", images: undefined, publishedTime: undefined, title: "", type: "", url: ""},
-            title: ""
-        };
+        notFound();
     }
     const plainSummary = (article?.Summary || "")
         .replace(/<[^>]*>/g, "")
