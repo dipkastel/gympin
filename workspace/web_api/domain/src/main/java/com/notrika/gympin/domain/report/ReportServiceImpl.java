@@ -142,7 +142,7 @@ public class ReportServiceImpl implements ReportService {
     public List<ReportPlaceViewsDto> getLinkViewsReport(Long linkId){
         ManageLinkEntity link = manageLinkRepository.getById(linkId);
         List<PlaceViewsDto> listViews =  reportRepository.getExecutionGroupByDateReport(
-                "%LinkControllerImpl.getByCode%",
+                "LinkControllerImpl.getByCode",
                 "[\""+link.getCode()+"\"]",null,null);
         return listViews.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
     }

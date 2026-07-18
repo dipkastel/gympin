@@ -103,7 +103,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
 
     @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), MAX(mse.executionDate)) " +
             "FROM ManageServiceExecutionEntity mse " +
-            "WHERE mse.service LIKE '%PlaceGymControllerImpl.getById%' " +
+            "WHERE mse.service = 'PlaceGymControllerImpl.getById' " +
             "  AND mse.dto LIKE CONCAT('{\"id\":', :placeId, ',%') " +
             "  AND mse.executionDate > :startDate " +
             "  AND mse.executionDate < :endDate " +
@@ -111,11 +111,11 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
             " ORDER BY DATE(mse.executionDate) ASC")
     List<PlaceViewsDto> getPlaceViewsReport(Long placeId, Date startDate, Date endDate);
 
-    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), DATE(mse.executionDate)) FROM ManageServiceExecutionEntity mse WHERE (:service IS NULL OR mse.service LIKE :service) AND (:param IS NULL OR mse.param LIKE %:param%) AND (:startDate IS NULL OR mse.executionDate > :startDate) AND (:endDate IS NULL OR mse.executionDate < :endDate) GROUP BY DATE(mse.executionDate) ORDER BY DATE(mse.executionDate) ASC ")
+    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), DATE(mse.executionDate)) FROM ManageServiceExecutionEntity mse WHERE (:service IS NULL OR mse.service = :service) AND (:param IS NULL OR mse.param LIKE %:param%) AND (:startDate IS NULL OR mse.executionDate > :startDate) AND (:endDate IS NULL OR mse.executionDate < :endDate) GROUP BY DATE(mse.executionDate) ORDER BY DATE(mse.executionDate) ASC ")
     List<PlaceViewsDto> getExecutionGroupByDateReport(String service, String param, Date startDate, Date endDate);
 
 
-    @Query(value = "SELECT param,executor_user_id FROM manage_service_execution where service LIKE '%PlaceGymControllerImpl.query%' and param like '%max_latitude\":3%' order by id DESC LIMIT 500", nativeQuery = true)
+    @Query(value = "SELECT param,executor_user_id FROM manage_service_execution where service = 'PlaceGymControllerImpl.query' and param like '%max_latitude\":3%' order by id DESC LIMIT 500", nativeQuery = true)
     List<Object[]> getMapViews();
 
 }
