@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.notrika.gympin.common.util._base.base.ResponseModel.ERROR;
 import static com.notrika.gympin.common.util._base.base.ResponseModel.SUCCESS;
@@ -166,7 +168,7 @@ public class ApiAspect {
             }
             UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
             ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
-            serviceExecution.setService(method.toGenericString());
+            serviceExecution.setService(normalizeMethod(method.toGenericString()));
 //        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
             serviceExecution.setParam(paramJson);
             serviceExecution.setDto(dtoJson);
@@ -176,6 +178,17 @@ public class ApiAspect {
         }catch (Exception e){}
 
     }
+    private static final Pattern PATTERN =
+            Pattern.compile("([A-Za-z0-9_]+ControllerImpl\\.[A-Za-z0-9_]+)\\(");
 
+    public static String normalizeMethod(String input) {
+        Matcher matcher = PATTERN.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return input;
+    }
 
 }
