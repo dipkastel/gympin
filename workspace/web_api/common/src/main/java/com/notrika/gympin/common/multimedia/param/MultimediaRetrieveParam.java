@@ -18,6 +18,8 @@ public class MultimediaRetrieveParam extends MultimediaStoreParam {
 
     private String fileUrl;
 
+    private String extension;
+
     private Integer height;
 
     private Integer width;

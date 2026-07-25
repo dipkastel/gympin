@@ -44,6 +44,9 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @Column(name = "mediaType", nullable = false)
     private MediaType mediaType;
 
+    @Column(name = "extension", nullable = false)
+    private String extension;
+
     @Column(name = "documentFormat")
     private String documentFormat;
 
@@ -52,6 +55,9 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "slug")
+    private String slug;
 
     @Column(name = "size")
     private String size;

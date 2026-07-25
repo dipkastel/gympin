@@ -1,5 +1,5 @@
 import React, {forwardRef, useContext, useEffect, useImperativeHandle, useState} from 'react';
-import {media_delete, media_query} from "../../../../network/api/media.api";
+import {media_delete, media_query, media_update} from "../../../../network/api/media.api";
 import {Delete} from '@mui/icons-material';
 import {
     Button,
@@ -9,18 +9,25 @@ import {
     CardContent,
     CardMedia,
     Divider,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
     Grid,
     IconButton,
     Pagination,
+    Radio,
+    RadioGroup,
+    Tab,
+    Tabs,
     Typography
 } from "@mui/material";
 import AddImageModal from "./AddImageModal";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {Image, Modal} from "react-bootstrap";
+import {Form, Image, Modal} from "react-bootstrap";
 import _imageFilter, {defaultFilterImages} from "./_ImageFilter";
 
 
-const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
+const ImageManager = ({openAddModalRef, openFilterModalRef}, ref) => {
     const error = useContext(ErrorContext);
     const [images, setImages] = useState([])
     const [page, setPage] = useState(1)
@@ -30,11 +37,12 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
     const [itemToDetail, setItemToDetail] = useState(null)
     const [itemToDelete, setItemToDelete] = useState(null)
     const [filters, SetFilters] = useState(defaultFilterImages);
+    const [selectedTab, SetSelectedTab] = useState("DETAIL");
 
     useEffect(() => {
-        if(openModalAdd)return;
+        if (openModalAdd) return;
         getImages();
-    }, [page, perPage,filters,openModalAdd]);
+    }, [page, perPage, filters, openModalAdd]);
 
     useImperativeHandle(openAddModalRef, () => ({
         OpenModal(item) {
@@ -119,23 +127,44 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
         );
     }
 
-    function renderModalDetails() {
-        function DeleteItem(e) {
-            e.preventDefault()
-        }
+    function updateImage(e) {
+        e.preventDefault();
+        media_update(itemToDetail)
+            .then(data => {
+                error.showError({message: "عملیات موفق",});
+                setItemToDetail(null);
+                getImages();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+        })
+    }
 
+    function renderModalDetails() {
         return (
             <>
                 <Modal show={!!itemToDetail} onHide={() => setItemToDetail(null)}>
-                    <form onSubmit={(e) => DeleteItem(e)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{"جزئیات تصویر"}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Image src={itemToDetail && itemToDetail.Url} width={"100%"}/>
+                        <Tabs
+                            value={selectedTab}
+                            onChange={(e, n) => SetSelectedTab(n)}
+                            indicatorColor="primary"
+                            textColor="inherit"
+                            variant={"standard"}
+                            aria-label="full width tabs example"
+                        >
+                            <Tab label="اطلاعات" value={"DETAIL"}/>
+                            <Tab label="ویرایش" value={"EDIT"}/>
+                        </Tabs>
 
-
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"جزئیات تصویر"}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Image src={itemToDetail && itemToDetail.Url} width={"100%"}/>
-
+                        {selectedTab === "DETAIL" && <>
                             <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="p"/>
                             <Typography sx={{p: 1}} gutterBottom variant="h5" component="p">
                                 {"نام فایل : " + (itemToDetail && itemToDetail.Name)}
@@ -170,8 +199,48 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
                             <Typography sx={{p: 1}} variant="h5" color="textSecondary" component="p">
                                 {"آدرس : " + (itemToDetail && itemToDetail.Url)}
                             </Typography>
-                        </Modal.Body>
-                    </form>
+                        </>}
+                        {selectedTab === "EDIT" && <>
+
+                            <Form.Group>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="عنوان"
+                                    value={itemToDetail?.Title}
+                                    onChange={e => setItemToDetail({...itemToDetail, Title: e.target.value})}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="slug"
+                                    value={itemToDetail?.Slug}
+                                    onChange={e => setItemToDetail({...itemToDetail, Slug: e.target.value})}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="description"
+                                    value={itemToDetail?.Description}
+                                    onChange={e => setItemToDetail({...itemToDetail, Description: e.target.value})}
+                                />
+                            </Form.Group>
+                            <FormControl>
+                                <FormLabel>نوع</FormLabel>
+                                <RadioGroup
+                                    aria-labelledby={"نوع"}
+                                    defaultValue="jpg"
+                                    value={itemToDetail?.Extension}
+                                    onChange={e => setItemToDetail({...itemToDetail, Extension: e.target.value})}
+                                >
+                                    <FormControlLabel value="jpg" control={<Radio/>} label="jpg"/>
+                                    <FormControlLabel value="webp" control={<Radio/>} label="webp"/>
+                                </RadioGroup>
+                            </FormControl>
+                            <Button variant={"contained"} onClick={(e) => updateImage(e)} fullWidth>تایید</Button>
+                        </>}
+                    </Modal.Body>
                 </Modal>
             </>
         );
@@ -182,7 +251,7 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
             {images.content && (<>
                 <Grid container spacing={1}>
                     {images.content.map((item, number) => (
-                        <Grid container item size={{xs:6,md:2}} key={number}>
+                        <Grid container item size={{xs: 6, md: 2}} key={number}>
                             <Card sx={{width: "100%"}}>
                                 <CardActionArea onClick={() => setItemToDetail(item)}>
                                     <CardMedia
@@ -197,6 +266,9 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             {item.Description | ""}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {item.Extension}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
@@ -219,7 +291,7 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
                 </Grid>
             </>)}
 
-            <_imageFilter filter={filters} setFilter={SetFilters} openModal={openModalFilter} setOpenModal={(e)=>setOpenModalFilter(e)}/>
+            <_imageFilter filter={filters} setFilter={SetFilters} openModal={openModalFilter} setOpenModal={(e) => setOpenModalFilter(e)}/>
             {openModalAdd && <AddImageModal setOpenAddImage={setOpenModalAdd} done={imageUploadComplete}/>}
             {renderModalDelete()}
             {renderModalDetails()}

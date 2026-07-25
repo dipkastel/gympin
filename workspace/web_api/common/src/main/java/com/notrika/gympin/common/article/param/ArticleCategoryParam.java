@@ -18,4 +18,7 @@ public class ArticleCategoryParam extends BaseParam<ArticleCategoryParam> {
     @JsonProperty("Name")
     private String name;
 
+    @JsonProperty("Slug")
+    private String slug;
+
 }

@@ -1,7 +1,7 @@
 import {notFound, permanentRedirect} from "next/navigation";
 
 import {getArticleById} from "@/lib/network/api";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 import {buildArticleHref, decodeLegacyCid} from "@/lib/util";
 
 interface LegacyBlogDetailRedirectProps {
@@ -12,7 +12,7 @@ export default async function LegacyBlogDetailRedirect({params}: LegacyBlogDetai
     const {cid} = await params;
     const id = decodeLegacyCid(cid);
     if (!id) notFound();
-    const article: Article | null = await getArticleById(id);
+    const article: ArticleType | null = await getArticleById(id);
     if (!article) notFound();
     permanentRedirect(buildArticleHref(article),
     );

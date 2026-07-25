@@ -27,6 +27,7 @@ public class ArticleCategoryServiceImpl extends AbstractBaseService<ArticleCateg
     public ArticleCategoryDto add(ArticleCategoryParam articleCategoryParam) {
         ArticleCategoryEntity entity = ArticleCategoryEntity.builder()
                 .name(articleCategoryParam.getName())
+                .slug(articleCategoryParam.getSlug())
                 .build();
         return ArticleConvertor.toDto(add(entity));
     }
@@ -40,6 +41,7 @@ public class ArticleCategoryServiceImpl extends AbstractBaseService<ArticleCateg
     public ArticleCategoryDto update(ArticleCategoryParam articleCategoryParam) {
         ArticleCategoryEntity category = getEntityById(articleCategoryParam.getId());
         category.setName(articleCategoryParam.getName());
+        category.setSlug(articleCategoryParam.getSlug());
         return ArticleConvertor.toDto(update(category));
     }
 

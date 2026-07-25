@@ -1,4 +1,4 @@
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 
 export function formatDate(dateStr?: string,): string {
     if (!dateStr) return "";
@@ -17,7 +17,7 @@ export function formatDate(dateStr?: string,): string {
 }
 
 
-export function buildArticleHref(article: Pick<Article,"Slug">): string {
+export function buildArticleHref(article: Pick<ArticleType,"Slug">): string {
     return `/blog/${article.Slug}`;
 }
 
@@ -46,7 +46,7 @@ export function decodeLegacyCid(cid = ""): string | null {
     return id || null;
 }
 
-export function categoriesLabel(article: Article,): string {
+export function categoriesLabel(article: ArticleType,): string {
     return (
         article.Categories
             ?.map((category) => category.Name)

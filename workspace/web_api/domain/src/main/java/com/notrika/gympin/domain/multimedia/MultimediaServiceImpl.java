@@ -48,15 +48,12 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
             throw new MultimediaNotFoundException();
         MultimediaEntity multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
-//        if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
-//            List<MultimediaCategoryEntity> multimediaCategories = new ArrayList<>();
-//            for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
-//                multimediaCategories.add(categoryService.getEntityById(categoryParam.getId()));
-//            }
-//        }
-        multimedia.setIsDef(multimediaStoreParam.getIsDefault());
         multimedia.setTitle(multimediaStoreParam.getTitle());
+        if(multimediaStoreParam.getSlug().isEmpty())
+            multimediaStoreParam.setSlug(helper.generateSlugOfText(multimediaStoreParam.getTitle()));
+        multimedia.setSlug(multimediaStoreParam.getSlug());
         multimedia.setDescription(multimediaStoreParam.getDescription());
+        multimedia.setExtension(multimediaStoreParam.getExtension());
         MultimediaEntity update = multimediaRepository.update(multimedia);
         return MultimediaConvertor.toDto(update);
     }

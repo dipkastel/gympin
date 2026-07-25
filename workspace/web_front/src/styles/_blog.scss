@@ -328,7 +328,7 @@
 }
 
 // ---------------------------------------------------------------------------
-// Article (blog detail) page
+// ArticleType (blog detail) page
 // ---------------------------------------------------------------------------
 
 .article-page {
@@ -398,22 +398,52 @@
     display: block;
   }
 }
-.article-ContentTable{
+
+.sideBox{
+  z-index: 3;
   ul{
-    list-style-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjx0aXRsZSB4bWxucz0iIj5hcnJvdy1lbnRlcjwvdGl0bGU+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik0xOS43NSA1LjYyM1Y5LjUyYTQgNCAwIDAgMS00IDRIMy44NzFtNC4yMzYgNC44NTdMNC4zMSAxNC41OGExLjUgMS41IDAgMCAxLS40NC0xLjA2MW00LjIzNi00Ljg1N0w0LjMxIDEyLjQ2Yy0uMjkzLjI5My0uNDQuNjc3LS40NCAxLjA2MSIvPjwvc3ZnPg==);
+    list-style: none;
     font-size: 12px;
     text-decoration: none;
+    padding: 0;
+  }
+  img{
+    margin-left: 5px;
+    align-self: center;
+
   }
   li{
+    padding: 5px 15px;
     a{
       text-decoration: none;
+      color: #114b75;
     }
   }
-  &_header{
-    margin:0;
-    font-size: 1rem !important;
-    background-color: #e7333e;
+  .h2{
   }
+  .h3{
+    margin-right: 25px;
+  }
+  .h4{
+    margin-right: 33px;
+  }
+  .h5{
+    margin-right: 40px;
+  }
+  .h6{
+    margin-right: 40px;
+  }
+  &_header{
+    padding: 0 10px;
+    background-color: $colors-text-on-dark2;
+    color: $colors-text-on-dark8;
+    z-index: 4;
+    .MuiCardHeader-title{
+      font-size: 0.8rem !important;
+    }
+  }
+}
+.article-ContentTable{
 }
 .article-body {
   margin: 0 auto;
@@ -447,6 +477,14 @@
 .article-lead {
   padding: 10px 32px;
   font-size: 1.05rem !important;
+  line-height: 2 !important;
+  color: $colors-text-primary-light;
+  text-align: justify;
+  p { margin: 0; }
+}
+
+.article-summary {
+  font-size: 0.8rem;
   line-height: 2 !important;
   color: $colors-text-primary-light;
   text-align: justify;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {MultimediaApi} from "./const_api";
+import {MultimediaApi, NoteApi} from "./const_api";
 
 
 export function media_addImage(data) {
@@ -19,6 +19,11 @@ export function media_getAllImages(data) {
 export function media_getAllFiles(data) {
   return axios.get(MultimediaApi.getAllFiles, { params: data });
 }
+
+export function media_update(data) {
+  return axios.put(MultimediaApi.update, data);
+}
+
 
 export function media_delete(data) {
   return axios.put(MultimediaApi.delete,  data );

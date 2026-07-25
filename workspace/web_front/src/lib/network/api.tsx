@@ -1,5 +1,5 @@
-import {Article} from "@/types/Article";
-import {ArticleApi, AuthApi, LinkApi} from "@/lib/network/apiConstants";
+import {ArticleCategoryType, ArticleType} from "@/types/ArticleType";
+import {ArticleApi, ArticleCategoryApi, AuthApi, CategoryApi, LinkApi} from "@/lib/network/apiConstants";
 
 const REVALIDATE_SECONDS = 3600;
 
@@ -12,6 +12,7 @@ interface PagingRequest {
 interface GetArticlesParams {
     page?: number;
     size?: number;
+    category?: string | null;
 }
 
 interface ApiResponse<T> {
@@ -72,21 +73,18 @@ async function apiPost<T>(url: string, body: unknown, options?: { revalidate?: n
     }
 }
 
-export async function getArticles({page = 0, size = 9}: GetArticlesParams = {}) {
+export async function getArticles({category=null,page = 0, size = 9}: GetArticlesParams = {}) {
     const body = {
         queryType: "FILTER",
         Status: "PUBLISHED",
+        Category:category,
         paging: {
             Page: page,
             Size: size,
             Desc: true,
         } as PagingRequest,
     };
-
-    console.log("before request = body = > ",JSON.stringify(body));
-    console.log("before request = url = > ",`${AuthApi.BASEURL}${ArticleApi.query}`);
-    const data = await apiPost<PageResponse<Article>>(`${AuthApi.BASEURL}${ArticleApi.query}`, body,);
-    console.log("after request = result = > ",JSON.stringify(data));
+    const data = await apiPost<PageResponse<ArticleType>>(`${AuthApi.BASEURL}${ArticleApi.query}`, body,);
     return {
         articles: data?.content ?? [],
         totalPages: data?.totalPages ?? 0,
@@ -95,18 +93,23 @@ export async function getArticles({page = 0, size = 9}: GetArticlesParams = {}) 
     };
 }
 
-export async function getArticleById(id: number | string,): Promise<Article | null> {
+export async function getArticleById(id: number | string,): Promise<ArticleType | null> {
     if (!id) return null;
-    return apiGet<Article>(`${AuthApi.BASEURL}${ArticleApi.getById}?id=${encodeURIComponent(String(id))}`);
+    return apiGet<ArticleType>(`${AuthApi.BASEURL}${ArticleApi.getById}?id=${encodeURIComponent(String(id))}`);
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
+export async function getArticleBySlug(slug: string): Promise<ArticleType | null> {
     if (!slug) return null;
 
-    return apiGet<Article>(`${AuthApi.BASEURL}${ArticleApi.getBySlug}?slug=${encodeURIComponent(slug)}`);
+    return apiGet<ArticleType>(`${AuthApi.BASEURL}${ArticleApi.getBySlug}?slug=${encodeURIComponent(slug)}`);
 }
 
 export async function getLinkByCode(code: string,): Promise<LinkData | null> {
     if (!code) return null;
     return apiGet<LinkData>(`${AuthApi.BASEURL}${LinkApi.getByCode}?code=${encodeURIComponent(code)}`, {noStore: true});
+}
+
+
+export async function getArticleCategories() {
+    return  apiGet<ArticleCategoryType[]>(`${AuthApi.BASEURL}${ArticleCategoryApi.getAll}`,);
 }

@@ -1,6 +1,6 @@
 import {JSX} from "react";
 import {notFound} from "next/navigation";
-import {Card, CardHeader, Grid} from "@mui/material";
+import {Card, CardContent, CardHeader, Grid, TextField} from "@mui/material";
 import {getArticleBySlug, getArticles} from "@/lib/network/api";
 import {articleJsonLd, breadcrumbJsonLd, JsonLd} from "@/lib/seo";
 import {SITE_URL} from "@/lib/data/constants";
@@ -9,7 +9,10 @@ import {buildArticleHref} from "@/lib/util";
 import ArticleShare from "@/components/blog/ArticleShare";
 import ArticleHeader from "@/components/blog/ArticleHeader";
 import ArticleTableOfContent from "@/components/blog/ArticleTableOfContent";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
+import ArticleSearch from "@/components/blog/ArticleSearch";
+import ArticleSummary from "@/components/blog/ArticleSummary";
+import ArticleCategories from "@/components/blog/ArticleCategories";
 
 
 type ArticlePageProps = {
@@ -82,17 +85,18 @@ export async function generateStaticParams(): Promise<{ slug: string; }[]> {
 
 
 function extractHeadings(html: string) {
-    const headings: { id: string; text: string }[] = [];
+    const headings: { id: string; text: string; type: string; }[] = [];
 
-    const regex = /<h3\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h3>/gis;
+    const regex = /<h([1-6])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1>/gis;
 
     let match;
 
     while ((match = regex.exec(html)) !== null) {
-        const [, id, text] = match;
+        const [,level, id, text] = match;
 
         headings.push({
             id,
+            type: `h${level}`,
             text: text
                 .replace(/<[^>]+>/g, "")
                 .trim(),
@@ -104,7 +108,7 @@ function extractHeadings(html: string) {
 
 export default async function ArticlePage({params}: ArticlePageProps): Promise<JSX.Element> {
     const {slug} = await params;
-    const article : null | Article = await loadArticle(slug);
+    const article : null | ArticleType = await loadArticle(slug);
     if (!article) notFound();
     const href = `${SITE_URL}${buildArticleHref(article)}`;
     //TODO getRelatedArticlesById
@@ -122,45 +126,27 @@ export default async function ArticlePage({params}: ArticlePageProps): Promise<J
                 {name: "وبلاگ", url: `${SITE_URL}/blog`,},
                 {name: article.Title, url: href,},
             ])}/>
-
             {article&&<ArticleHeader article={article}/>}
             <Grid container columns={40} spacing={3} sx={{p: 3}}>
-                <Grid size={{md: 30, sm: 40}}>
-                    <Card sx={{borderRadius: 5}} elevation={3}>
+                <Grid size={{sm:40,xs:40,md:30}}>
+                    <Card sx={{borderRadius: 5}}  variant={"outlined"}>
                         {article?.ArticleImage?.Url && (
                             <div className="article-hero-image">
                                 <img src={article.ArticleImage.Url} alt={article.Title}/>
                             </div>
                         )}
-                        {article?.Summary && (
-                            <div className="article-lead" dangerouslySetInnerHTML={{__html: article.Summary,}}/>
-                        )}
-                        <div className="article-body" dangerouslySetInnerHTML={{__html: article.FullText || "",}}/>
-
+                        <div id={"article-content"} className="article-body" dangerouslySetInnerHTML={{__html: article.FullText || "",}}/>
                         <div className={"article-divider"}/>
                         <ArticleShare articleTitle={article.Title} href={href}/>
                     </Card>
-
                 </Grid>
-                <Grid size={10}>
-
-                    {table.length>0&&<Card sx={{borderRadius: 5}} className={"article-ContentTable"} elevation={3}>
-                        <CardHeader
-                            className={"article-ContentTable_header"}
-                            title={"در این مقاله خواهید خواند"}
-                            sx={{
-                                bgcolor:"#eaeaea",
-                                "& .MuiCardHeader-title": {
-                                    fontSize: "1rem !important",
-                                },
-                            }}
-                        />
-                        <ArticleTableOfContent table={table} />
-                    </Card>}
+                <Grid size={{sm:40,xs:40,md:10}}>
+                    <ArticleTableOfContent table={table} />
+                    <ArticleSummary summary={article.Summary} />
+                    <ArticleSearch />
+                    <ArticleCategories categories={article.Categories} />
                 </Grid>
-
             </Grid>
-
             {relatedFiltered.length > 0 && (
                 <div className="article-related">
                     <h2 className="article-related__title"> مطالب مرتبط </h2>

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import {buildArticleHref, categoriesLabel, estimateReadingMinutes, formatDate} from "@/lib/util";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 
 interface BlogCardProps {
-    article: Article;
+    article: ArticleType;
 }
 
 export default function BlogCard({article}: BlogCardProps) {

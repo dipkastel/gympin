@@ -20,4 +20,6 @@ public interface MultimediaRepository extends BaseRepository<MultimediaEntity, L
     MultimediaEntity findByFileName(String fileName);
 
     List<MultimediaEntity> findAllByMediaTypeAndDeletedFalseOrderByIdDesc(MediaType mediaType, Pageable pageable);
+
+    MultimediaEntity getBySlug(String slug);
 }

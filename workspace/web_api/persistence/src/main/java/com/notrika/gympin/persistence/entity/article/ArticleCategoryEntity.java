@@ -25,6 +25,9 @@ public class ArticleCategoryEntity extends BaseEntityWithCreateUpdate<ArticleCat
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "slug", nullable = false)
+    private String slug;
+
 
     @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
    @JsonIgnore

@@ -46,5 +46,8 @@ public class ArticleQuery extends BaseQuery<ArticleQuery> {
     @JsonProperty("Summary")
     private String like_summary;
 
+    @JsonProperty("Category")
+    private String is_categoriesæslug;
+
 
 }

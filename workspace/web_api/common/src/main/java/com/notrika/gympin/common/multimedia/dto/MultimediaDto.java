@@ -25,8 +25,14 @@ public class MultimediaDto extends BaseDtoWithCreateUpdate<MultimediaDto> {
     @JsonProperty("Title")
     private String title;
 
+    @JsonProperty("Slug")
+    private String slug;
+
     @JsonProperty("Description")
     private String description;
+
+    @JsonProperty("Extension")
+    private String extension;
 
     @JsonProperty("DocumentFormat")
     private String documentFormat;

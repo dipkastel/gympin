@@ -3,11 +3,11 @@ import {IconButton,} from "@mui/material";
 import {LinkedIn, Telegram, WhatsApp} from "@mui/icons-material";
 import {categoriesLabel, estimateReadingMinutes, formatDate} from "@/lib/util";
 import Link from "next/link";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 
 
 type ArticleHeaderProps = {
-    article: Article;
+    article: ArticleType;
 };
 
 export default function ArticleHeader({article}: ArticleHeaderProps): JSX.Element {

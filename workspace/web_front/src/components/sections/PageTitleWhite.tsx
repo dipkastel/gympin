@@ -8,41 +8,6 @@ type PageTitleWhiteProps = {
 };
 
 export default function PageTitleWhite({title, subtitle}: PageTitleWhiteProps): JSX.Element {
-    return (
-        <section>
-            <Grid
-                className="headerw"
-                sx={{
-                    display:"flex",
-                    flexDirection:"column",
-                    alignContent: "center",
-                    textAlign: "center",
-                }}
-            >
-                <Typography
-                    className="title"
-                    variant="h1"
-                    sx={{
-                        fontSize: "1.5rem",
-                        fontWeight: 600,
-                        p: 1,
-                    }}
-                >
-                    {title}
-                </Typography>
-
-                <Typography
-                    className="subtitle"
-                    variant="h2"
-                    sx={{
-                        fontSize: "1rem",
-                        fontWeight: 400,
-                        p: 3,
-                    }}
-                >
-                    {subtitle}
-                </Typography>
-            </Grid>
-        </section>
+    return (<></>
     );
 }

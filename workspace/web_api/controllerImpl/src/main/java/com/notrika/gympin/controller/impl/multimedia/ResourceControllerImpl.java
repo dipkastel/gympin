@@ -30,6 +30,12 @@ public class ResourceControllerImpl implements ResourceController {
     public  @ResponseBody void getImageById(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception {
         param.setMediaType(MediaType.IMAGE);
         response.setContentType(MyMediaType.IMAGE_JPEG_VALUE);
+        if(param.getSlug()!=null){
+            String Extention = param.getSlug().split("\\.")[1];
+            param.setSlug(param.getSlug().split("\\.")[0]);
+            if(Extention.equals("webp"))
+                response.setContentType("image/webp");
+        }
         InputStream inputStream = multimediaService.getById(param);
         IOUtils.copy(inputStream,response.getOutputStream());
     }

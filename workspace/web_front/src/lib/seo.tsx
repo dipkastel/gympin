@@ -3,7 +3,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "./data/constants";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 
 interface FaqItem {
   q: string;
@@ -100,7 +100,7 @@ export function breadcrumbJsonLd(
 }
 
 export function articleJsonLd(
-    article: Article,
+    article: ArticleType,
     url: string,
 ) {
   const plainSummary = (

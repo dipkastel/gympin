@@ -1,10 +1,10 @@
 import Link from "next/link";
 import {Button} from "@mui/material";
 import {buildArticleHref, categoriesLabel, estimateReadingMinutes, formatDate} from "@/lib/util";
-import {Article} from "@/types/Article";
+import {ArticleType} from "@/types/ArticleType";
 
 interface BlogHeroProps {
-    article?: Article | null;
+    article?: ArticleType | null;
 }
 
 export default function BlogHero({article}: BlogHeroProps) {

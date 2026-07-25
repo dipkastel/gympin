@@ -174,6 +174,7 @@ export let MultimediaApi = {
     add: "v1/multimedia/add",
     getAllImages: "v1/multimedia/getAllImages",
     getAllFiles: "v1/multimedia/getAllFiles",
+    update: "v1/multimedia/update",
     delete: "v1/multimedia/delete",
     query: "v1/multimedia/query"
 };

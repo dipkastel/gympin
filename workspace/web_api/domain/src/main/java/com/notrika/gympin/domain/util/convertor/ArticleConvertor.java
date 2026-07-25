@@ -37,6 +37,7 @@ public class ArticleConvertor {
         ArticleCategoryDto dto = new ArticleCategoryDto();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
+        dto.setSlug(entity.getSlug());
         return dto;
     }
 
@@ -44,7 +45,9 @@ public class ArticleConvertor {
         if(category==null) return null;
         ArticleCategoryParam param = ArticleCategoryParam.builder()
                 .id(category.getId())
-                .name(category.getName()).build();
+                .name(category.getName())
+                .slug(category.getSlug())
+                .build();
         return param;
     }
 

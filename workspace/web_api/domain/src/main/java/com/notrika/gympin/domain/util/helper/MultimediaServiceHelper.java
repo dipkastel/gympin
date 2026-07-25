@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.util.helper;
 
+import com.luciad.imageio.webp.WebPWriteParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
@@ -22,7 +23,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -31,10 +37,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.text.Normalizer;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public final class MultimediaServiceHelper {
@@ -42,7 +47,7 @@ public final class MultimediaServiceHelper {
 
     @Value("${multimedia.dir}")
     private String dir;
-
+    private static final float WEBP_QUALITY = 0.75f;
     private String[] supportImageTypes = new String[]{"image/jpeg", "image/webp", "image/gif", "image/png"};
     private String[] supportVideoTypes = new String[]{"audio/mpeg"};
     private String[] supportAudioTypes = new String[]{"video/mpeg"};
@@ -145,7 +150,11 @@ public final class MultimediaServiceHelper {
         multimedia.setDocumentFormat(multipartFile.getContentType());
         multimedia.setUser((UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
         multimedia.setMediaType(multimediaStoreParam.getMediaType());
+        multimedia.setExtension(getFileNameExtension(fileName));
         multimedia.setTitle(multimediaStoreParam.getTitle());
+        if(multimediaStoreParam.getSlug().isEmpty())
+            multimediaStoreParam.setSlug(generateSlugOfText(multimediaStoreParam.getTitle()));
+        multimedia.setSlug(multimediaStoreParam.getSlug());
         multimedia.setDescription(multimediaStoreParam.getDescription());
         multimedia.setIsDef(multimediaStoreParam.getIsDefault());
         //save and get address
@@ -184,47 +193,98 @@ public final class MultimediaServiceHelper {
         } catch (MalformedURLException e) {
             throw new NotFoundException();
         }
-        //checks
         if (!resource.exists()) {
             throw new NotFoundException();
         }
-        //orginal file
-        if (multimediaParam.getWidth() == null && multimediaParam.getHeight() == null) {
-            try {
-                return new FileInputStream(resource.getFile());
-            } catch (IOException e) {
-                throw new ImageReadError();
+
+
+        Integer width = multimediaParam.getWidth();
+        Integer height = multimediaParam.getHeight();
+
+        if ((width != null && width == 0) || (height != null && height == 0)) {
+            throw new FileDimensionsCannotBeZiro();
+        }
+        if(multimediaParam.getExtension().equals("webp"))
+            return convertAndCacheAsWebp(multimediaParam, resource);
+        else
+            return convertAndCacheAsJpg(multimediaParam, resource);
+    }
+
+    private InputStream convertAndCacheAsWebp(MultimediaRetrieveParam multimediaParam, Resource resource) {
+        try {
+            Path resourcePath = Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize();
+            String baseName = getFileNameWithoutExtension(resourcePath.getFileName().toString());
+
+            Integer width = multimediaParam.getWidth();
+            Integer height = multimediaParam.getHeight();
+            boolean isResize = (width != null && height != null);
+
+            Path targetDir = isResize ? GetPathForSizes(multimediaParam) : resourcePath.getParent();
+            String sizeTag = isResize ? width + "X" + height + "_" : "orig_";
+
+            Path webpPath = Paths.get(targetDir.toString() + "/" + sizeTag + baseName + ".webp")
+                    .toAbsolutePath().normalize();
+
+            UrlResource cached = new UrlResource(webpPath.toUri());
+            if (cached.exists()) {
+                return new FileInputStream(cached.getFile());
             }
-        } else {
-            if (multimediaParam.getWidth() == 0 || multimediaParam.getHeight() == 0) {
-                throw new FileDimensionsCannotBeZiro();
+
+            BufferedImage inputBI = ImageIO.read(resource.getFile());
+            BufferedImage outputBI = inputBI;
+
+            if (isResize) {
+                int type = inputBI.getType() != 0 ? inputBI.getType() : BufferedImage.TYPE_INT_ARGB;
+                outputBI = new BufferedImage(width, height, type);
+                Graphics2D g2d = outputBI.createGraphics();
+                g2d.drawImage(inputBI, 0, 0, width, height, null);
+                g2d.dispose();
             }
-            return resizeFile(multimediaParam, resource);
+
+            Files.createDirectories(webpPath.getParent());
+            writeAsWebp(outputBI, webpPath.toFile());
+
+            return new FileInputStream(webpPath.toFile());
+        } catch (Exception e) {
+            throw new ImageSaveError();
         }
     }
 
-    private InputStream resizeFile(MultimediaRetrieveParam multimediaParam, Resource resource) {
+    private InputStream convertAndCacheAsJpg(MultimediaRetrieveParam multimediaParam, Resource resource) {
         try {
-            BufferedImage inputBI = ImageIO.read(resource.getFile());
             Path resourcePath = Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize();
-            String fileName = resourcePath.getFileName().toString();
-            Path sizedPath = GetPathForSizes(multimediaParam);
-            Path imagePath = Paths.get(sizedPath.toString() + "/" + multimediaParam.getWidth() + "X" + multimediaParam.getHeight() + "_" + fileName).toAbsolutePath().normalize();
-            UrlResource fileResource = new UrlResource(imagePath.toUri());
-            if (fileResource.exists()) {
-                //return image
-                return new FileInputStream(fileResource.getFile());
-            } else {
-                //save and return image
-                BufferedImage outputBI = new BufferedImage(multimediaParam.getWidth(), multimediaParam.getHeight(), inputBI.getType());
-                Graphics2D g2d = outputBI.createGraphics();
-                g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
-                g2d.dispose();
-                String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
-                ImageIO.write(outputBI, formatName, new File(imagePath.toUri()));
-                resource = new UrlResource(imagePath.toUri());
-                return new FileInputStream(resource.getFile());
+            String baseName = getFileNameWithoutExtension(resourcePath.getFileName().toString());
+            Integer width = multimediaParam.getWidth();
+            Integer height = multimediaParam.getHeight();
+
+            boolean isResize = (width != null && height != null);
+
+            Path targetDir = isResize ? GetPathForSizes(multimediaParam) : resourcePath.getParent();
+            String sizeTag = isResize ? width + "X" + height + "_" : "";
+
+            Path jpgPath = Paths.get(targetDir.toString() + "/" + sizeTag + baseName + ".jpg")
+                    .toAbsolutePath().normalize();
+
+
+            UrlResource cached = new UrlResource(jpgPath.toUri());
+            if (cached.exists()) {
+                return new FileInputStream(cached.getFile());
             }
+
+            BufferedImage inputBI = ImageIO.read(resource.getFile());
+            BufferedImage outputBI = inputBI;
+
+            if (isResize) {
+                int type = inputBI.getType() != 0 ? inputBI.getType() : BufferedImage.TYPE_INT_ARGB;
+                outputBI = new BufferedImage(width, height, type);
+                Graphics2D g2d = outputBI.createGraphics();
+                g2d.drawImage(inputBI, 0, 0, width, height, null);
+                g2d.dispose();
+            }
+
+            Files.createDirectories(jpgPath.getParent());
+            writeAsWebp(outputBI, jpgPath.toFile());
+            return new FileInputStream(jpgPath.toFile());
         } catch (Exception e) {
             throw new ImageSaveError();
         }
@@ -258,10 +318,18 @@ public final class MultimediaServiceHelper {
 
     private MultimediaRetrieveParam FillRetrieveItemFromEntity(MultimediaRetrieveParam multimediaParam) throws FileNotFoundException {
         try {
-            MultimediaEntity entity = multimediaRepository.getById(multimediaParam.getId());
+            MultimediaEntity entity = null;
+            if(multimediaParam.getSlug()!=null)
+             entity = multimediaRepository.getBySlug(multimediaParam.getSlug());
+            else
+             entity = multimediaRepository.getById(multimediaParam.getId());
+            if(entity==null)
+                entity = multimediaRepository.getById(11L);
+
             multimediaParam.setFileName(entity.getFileName());
             multimediaParam.setId(entity.getId());
             multimediaParam.setFileUrl(entity.getUploadDir());
+            multimediaParam.setExtension(entity.getExtension());
 
             Integer baseW = Integer.parseInt(entity.getSize().split("X")[0]);
             Integer baseH = Integer.parseInt(entity.getSize().split("X")[1]);
@@ -324,5 +392,49 @@ public final class MultimediaServiceHelper {
         return result;
     }
 
+    public static String generateSlugOfText(String text) {
+        if (text == null || text.isBlank()) {
+            return String.valueOf(System.currentTimeMillis());
+        }
 
+        return Normalizer.normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "")
+                .toLowerCase(Locale.ROOT)
+                .trim()
+                .replaceAll("[^\\p{L}\\p{N}\\s-]", "")
+                .replaceAll("[\\s_]+", "-")
+                .replaceAll("-{2,}", "-")
+                .replaceAll("^-|-$", "");
+    }
+
+
+    private void writeAsWebp(BufferedImage image, File outputFile) throws IOException {
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("webp");
+        if (!writers.hasNext()) {
+            throw new IllegalStateException("ImageWriter برای webp پیدا نشد؛ کتابخانه webp-imageio اضافه نشده.");
+        }
+        ImageWriter writer = writers.next();
+
+        try (ImageOutputStream ios = ImageIO.createImageOutputStream(outputFile)) {
+            writer.setOutput(ios);
+
+            WebPWriteParam writeParam = new WebPWriteParam(writer.getLocale());
+            writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            writeParam.setCompressionType(writeParam.getCompressionTypes()[WebPWriteParam.LOSSY_COMPRESSION]);
+            writeParam.setCompressionQuality(WEBP_QUALITY);
+
+            writer.write(null, new IIOImage(image, null, null), writeParam);
+        } finally {
+            writer.dispose();
+        }
+    }
+
+    private String getFileNameWithoutExtension(String fileName) {
+        int idx = fileName.lastIndexOf(".");
+        return idx == -1 ? fileName : fileName.substring(0, idx);
+    }
+    private String getFileNameExtension(String fileName) {
+        int idx = fileName.lastIndexOf(".");
+        return idx == -1 ? "jpg" : fileName.substring(idx+1);
+    }
 }

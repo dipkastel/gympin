@@ -17,4 +17,7 @@ public class ArticleCategoryDto extends BaseDto<ArticleCategoryDto> {
 
     @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("Slug")
+    private String slug;
 }

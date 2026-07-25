@@ -25,6 +25,10 @@ public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
 
     private String Title;
 
+    private String Slug;
+
+    private String Extension;
+
     private String Description;
 
     private Boolean IsDefault = false;

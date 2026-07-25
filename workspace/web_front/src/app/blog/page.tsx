@@ -1,7 +1,7 @@
 import {JSX} from "react";
 import type {Metadata} from "next";
 
-import {Container} from "@mui/material";
+import {Container, Grid, Typography} from "@mui/material";
 
 import {getArticles} from "@/lib/network/api";
 import {SITE_URL} from "@/lib/data/constants";
@@ -17,6 +17,7 @@ import BlogPagination from "@/components/sections/BlogPagination";
 interface BlogPageProps {
     searchParams: Promise<{
         page?: string;
+        category?: string;
     }>;
 }
 
@@ -31,15 +32,49 @@ export const metadata: Metadata = {
 
 export default async function BlogPage({searchParams,}: BlogPageProps): Promise<JSX.Element> {
     const params = await searchParams;
+    const category:string | null = params?.category||null;
     const pageNum = Math.max(1, Number.parseInt(params?.page ?? "1", 10),);
-    const {articles, totalPages,} = await getArticles({page: pageNum - 1, size: 10,});
+    const {articles, totalPages} = await getArticles({category:category, page: pageNum - 1, size: 10,});
     const [featured, ...rest] = articles;
     return (
         <div className="blog-page">
             <JsonLd data={breadcrumbJsonLd([{name: "خانه", url: SITE_URL,}, {name: "وبلاگ", url: `${SITE_URL}/blog`,},])}/>
+            <section>
+                <Grid
+                    className="headerw"
+                    sx={{
+                        display:"flex",
+                        flexDirection:"column",
+                        alignContent: "center",
+                        textAlign: "center",
+                    }}
+                >
+                    <Typography
+                        className="title"
+                        variant="h1"
+                        sx={{
+                            fontSize: "1.5rem",
+                            fontWeight: 600,
+                            p: 1,
+                            mt:5
+                        }}
+                    >
+                        {"مطالب و مقالات"}
+                    </Typography>
 
-            <PageTitleWhite title="وبلاگ" subtitle="در جریان آخرین اخبار و مطالب جیم پین باشید"/>
-
+                    <Typography
+                        className="subtitle"
+                        variant="h2"
+                        sx={{
+                            fontSize: "1rem",
+                            fontWeight: 400,
+                            p: 3,
+                        }}
+                    >
+                        {"در جریان آخرین اخبار و مطالب جیم پین باشید"}
+                    </Typography>
+                </Grid>
+            </section>
             <Container sx={{pb: 8,}}>
                 {featured && pageNum === 1 && (<>
                     <BlogHero article={featured}/>
