@@ -6,8 +6,8 @@ type ArticleTableProps = {
     table: { id: string; text: string; type: string;  }[],
 };
 
-export default function ArticleTableOfContent({table}:ArticleTableProps): JSX.Element {
-    if(table.length<1) return;
+export default function ArticleTableOfContent({table}:ArticleTableProps): JSX.Element|null {
+    if(table.length<1) return null;
     return (
 
         <Card sx={{borderRadius: 5,mb:5}} className={"sideBox"} variant={"outlined"}>

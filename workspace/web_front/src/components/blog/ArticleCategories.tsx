@@ -3,11 +3,13 @@ import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import {ArticleCategoryType, ArticleType} from "@/types/ArticleType";
 import {getArticleCategories} from "@/lib/network/api";
 
-
-export default async function ArticleCategories({categories}: ArticleCategoryType[]): Promise<JSX.Element> {
+interface ArticleCategoriesProps {
+    categories: ArticleCategoryType[] | undefined;
+}
+export default async function ArticleCategories({categories}: ArticleCategoriesProps): Promise<JSX.Element|null> {
 
     const AllCategories : ArticleCategoryType[] | null = await getArticleCategories();
-    if(!AllCategories) return ;
+    if(!AllCategories) return null;
     return (
         <Card sx={{borderRadius: 5, mb: 5}} className={"sideBox"} variant={"outlined"}>
             <CardHeader
@@ -18,7 +20,7 @@ export default async function ArticleCategories({categories}: ArticleCategoryTyp
                 <ul>
                     {AllCategories.map(cat => (
                         <li>
-                            {categories.map(aCat=>(
+                            {categories?.map(aCat=>(
                                 aCat.Slug==cat.Slug&&<img
                                     height={"20px"}
                                     width={"20px"}

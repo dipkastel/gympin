@@ -142,7 +142,7 @@ export default async function ArticlePage({params}: ArticlePageProps): Promise<J
                 </Grid>
                 <Grid size={{sm:40,xs:40,md:10}}>
                     <ArticleTableOfContent table={table} />
-                    <ArticleSummary summary={article.Summary} />
+                    <ArticleSummary summary={article.Summary??""} />
                     <ArticleSearch />
                     <ArticleCategories categories={article.Categories} />
                 </Grid>
