@@ -56,7 +56,7 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @Column(name = "title")
     private String title;
 
-    @Column(name = "slug")
+    @Column(name = "slug", unique = true)
     private String slug;
 
     @Column(name = "size")

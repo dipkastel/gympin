@@ -29,7 +29,7 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "slug")
+    @Column(name = "slug", unique = true)
     private String slug;
 
     @Column(name = "seoPriority")
