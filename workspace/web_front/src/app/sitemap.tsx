@@ -76,6 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "monthly",
             priority: article.SeoPriority || 0.6,
         }));
+
     } catch (err) {
         console.error(
             "sitemap: failed to load articles",
@@ -101,7 +102,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
 
         if (all) {
-            articleRoutes = all.map((category) => ({
+            articleCategories = all.map((category) => ({
                 url: `${SITE_URL}${buildArticleCategoryHref(category)}`,
                 lastModified: updateDate,
                 changeFrequency: "monthly",

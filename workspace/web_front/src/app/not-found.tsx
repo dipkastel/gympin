@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <>
       <div className="notfound-center">
-        <img alt="این صفحه موجود نیست" src="/images/404.png" />
+        <img alt="این صفحه موجود نیست" src="/images/404.webp" />
       </div>
       <div className="notfound-center">
         <Typography sx={{ p: 1, m: 1 }} variant="h5" component="h1">۴۰۴ - این صفحه پیدا نشد</Typography>
