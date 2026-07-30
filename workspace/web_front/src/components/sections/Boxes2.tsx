@@ -87,21 +87,21 @@ export default function Boxes2(): JSX.Element {
           <SingleBox
             text="تخفیفات متنوع و متغیر روزانه استفاده از خدمات و ورزش‌های مختلف را برای همه پرسنل سازمان‌ها امکان‌پذیر کرده است."
             title="تخفیفات شگفت‌انگیز"
-            image="/images/strongman1.jpg"
+            image="/images/strongman1.webp"
             alt="تخفیفات شگفت‌انگیز"
           />
 
           <SingleBox
             text="تنوع ورزشی بالا در جیم پین به کارمندان کمک می‌کند تا ورزش‌های جدید را امتحان کرده و ورزش مورد علاقه خود را پیدا کنند."
             title="تنوع ورزشی بسیار زیاد"
-            image="/images/inhand1.jpg"
+            image="/images/inhand1.webp"
             alt="تنوع ورزشی بسیار زیاد"
           />
 
           <SingleBox
             text="جیم پین به سازمان‌ها این امکان را می‌دهد که از خدمات ورزشی بهره‌مند شوند، بدون اینکه هزینه اضافه‌ای برای آن‌ها ایجاد شود."
             title="بدون هزینه برای سازمان"
-            image="/images/savemoney1.jpg"
+            image="/images/savemoney1.webp"
             alt="بدون هزینه برای سازمان"
           />
         </Grid>

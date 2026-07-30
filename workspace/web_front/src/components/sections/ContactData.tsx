@@ -24,7 +24,7 @@ export default function ContactData(): JSX.Element {
                 sx={{ p: 2 }}
             >
               <img
-                  src="/images/support-man.jpg"
+                  src="/images/support-man.webp"
                   alt="ورزش‌های اثر بخش بر سلامتی با دیسک کمر"
                   className="apps-img2"
               />

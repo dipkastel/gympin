@@ -1,4 +1,4 @@
-import {JSX} from "react";
+import {Fragment, JSX} from "react";
 import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import {ArticleCategoryType, ArticleType} from "@/types/ArticleType";
 import {getArticleCategories} from "@/lib/network/api";
@@ -19,14 +19,18 @@ export default async function ArticleCategories({categories}: ArticleCategoriesP
             <nav>
                 <ul>
                     {AllCategories.map(cat => (
-                        <li>
+                        <li key={"cat"+cat.Slug}>
                             {categories?.map(aCat=>(
-                                aCat.Slug==cat.Slug&&<img
-                                    height={"20px"}
-                                    width={"20px"}
-                                    src={"/images/arrow-mag.svg"}
-                                    className="goals-img"
-                                />
+                                <Fragment key={"acat"+aCat.Slug}>
+                                    {
+                                        aCat.Slug == cat.Slug && <img
+                                            height={"20px"}
+                                            width={"20px"}
+                                            src={"/images/arrow-mag.svg"}
+                                            className="goals-img"
+                                        />
+                                    }
+                                </Fragment>
                             ))}
                             <a href={"/blog?category="+cat.Slug}>
                                 {cat.Name}

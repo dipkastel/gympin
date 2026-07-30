@@ -2,9 +2,11 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.article.dto.ArticleCategoryDto;
 import com.notrika.gympin.common.article.dto.ArticleDto;
+import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
 import com.notrika.gympin.common.article.param.ArticleCategoryParam;
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
+import com.notrika.gympin.persistence.entity.article.ArticlePhraseEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,4 +57,36 @@ public class ArticleConvertor {
        return categories.stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toParam).collect(Collectors.toList());
     }
 
+    public static ArticlePhraseDto toDto(ArticlePhraseEntity phraseEntity) {
+        return ArticlePhraseDto.builder()
+                .id(phraseEntity.getId())
+                .name(phraseEntity.getName())
+                .build();
+    }
+
+    public static ArticleDto toDto(ArticleEntity entity, List<ArticlePhraseEntity> phrases) {
+        if(entity==null) return null;
+        ArticleDto dto = new ArticleDto();
+        dto.setId(entity.getId());
+        dto.setArticleType(entity.getArticleType());
+        dto.setArticleStatus(entity.getArticleStatus());
+        dto.setSummary(entity.getSummary());
+        dto.setTitle(entity.getTitle());
+        dto.setSlug(entity.getSlug());
+        dto.setSeoPriority(entity.getSeoPriority());
+        dto.setArticleImage(MultimediaConvertor.toDto(entity.getArticleImage()));
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
+        dto.setUpdatedDate(entity.getUpdatedDate());
+        dto.setUpdaterUser(UserConvertor.toDtoSimple(entity.getUpdaterUser()));
+        if(entity.getCategories()!=null)
+            dto.setCategories(entity.getCategories().stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList()));
+        String text = entity.getText();
+        for (ArticlePhraseEntity phrase : phrases) {
+            String replace = "<a href=\"/blog/" +phrase.getArticle().getSlug()+ "\" >" +phrase.getName()+ "</a>";
+            text = text.replaceAll(phrase.getName(),replace);
+        }
+        dto.setFullText(text);
+        return dto;
+    }
 }

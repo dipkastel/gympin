@@ -24,7 +24,7 @@ export default function RedAdditionalData(): JSX.Element {
         >
           <Grid size={{ xs: 7, sm: 3 }}>
             <Image
-              src="/images/bgex.jpg"
+              src="/images/bgex.webp"
               alt="رفاهی ورزشی"
               width={1200}
               height={800}

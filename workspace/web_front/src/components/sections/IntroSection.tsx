@@ -32,7 +32,7 @@ export default function IntroSection(): JSX.Element {
             size={{ md: 6, xs: 12 }}
           >
             <Image
-              src="/images/main-img.jpg"
+              src="/images/main-img.webp"
               alt="رفاهی ورزشی کارمندان سازمان‌ها"
               width={1200}
               height={800}

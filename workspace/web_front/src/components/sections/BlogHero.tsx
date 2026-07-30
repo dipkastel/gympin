@@ -23,15 +23,9 @@ export default function BlogHero({article}: BlogHeroProps) {
         <article className="blog-hero">
             <div className="blog-hero__media">
                 {article.ArticleImage?.Url && (
-                    <img
-                        src={article.ArticleImage.Url}
-                        alt={article.Title ?? ""}
-                    />
+                    <img src={article.ArticleImage.Url} alt={article.Title ?? ""}/>
                 )}
-
-                <span className="blog-hero__badge">
-          جدیدترین مطلب
-        </span>
+                <span className="blog-hero__badge"> جدیدترین مطلب </span>
             </div>
 
             <div className="blog-hero__body">

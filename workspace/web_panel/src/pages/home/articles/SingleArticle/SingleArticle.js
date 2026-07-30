@@ -12,6 +12,7 @@ import _summary from "./summary/_summary";
 import {ArticleStatus} from "../../../../helper/enums/ArticleStatus";
 import _image from "./image/_image";
 import _selectEditor from "./baseData/_selectEditor";
+import _ArticlePhrase from "./phrase/_ArticlePhrase";
 
 const SingleArticle = () => {
 
@@ -108,6 +109,7 @@ const SingleArticle = () => {
                     </Portlet>}
                     {article && <_selectCategories itemCategories={article.Categories ? article.Categories : []}
                                                    changeSelectedCategories={changeSelectedCategories}/>}
+                    {article && <_ArticlePhrase article={article}/>}
                     {/*<_tags article={article} updateArticle={updateArticle}/>*/}
                     {article && <_image article={article} updateArticle={updateArticle}/>}
                     <_selectEditor />

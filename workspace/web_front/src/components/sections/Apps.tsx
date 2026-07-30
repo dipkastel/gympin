@@ -46,7 +46,7 @@ export default function Apps(): JSX.Element {
                         }}
                     >
                         <img
-                            src="/images/corporatelaptop.jpg"
+                            src="/images/corporatelaptop.webp"
                             alt="اپلیکیشن اختصاصی شرکت‌ها"
                             className="apps-img"
                         />
@@ -123,7 +123,7 @@ export default function Apps(): JSX.Element {
                         }}
                     >
                         <img
-                            src="/images/appuser.jpg"
+                            src="/images/appuser.webp"
                             alt="اپلیکیشن اختصاصی کارمندان"
                             className="apps-img"
                         />
@@ -187,7 +187,7 @@ export default function Apps(): JSX.Element {
                         }}
                     >
                         <img
-                            src="/images/place-application.jpg"
+                            src="/images/place-application.webp"
                             alt="پنل اختصاصی مراکز ورزشی"
                             className="apps-img"
                         />

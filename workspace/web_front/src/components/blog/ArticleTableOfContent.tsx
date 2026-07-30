@@ -10,7 +10,7 @@ export default function ArticleTableOfContent({table}:ArticleTableProps): JSX.El
     if(table.length<1) return null;
     return (
 
-        <Card sx={{borderRadius: 5,mb:5}} className={"sideBox"} variant={"outlined"}>
+        <Card sx={{borderRadius: 5,mb:5}} className={"sideBox sidebarSticky"} variant={"outlined"}>
                 <CardHeader
                     className={"sideBox_header"}
                     title={"در این مقاله خواهید خواند :"}

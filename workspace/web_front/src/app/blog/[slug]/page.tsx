@@ -129,22 +129,25 @@ export default async function ArticlePage({params}: ArticlePageProps): Promise<J
             {article&&<ArticleHeader article={article}/>}
             <Grid container columns={40} spacing={3} sx={{p: 3}}>
                 <Grid size={{sm:40,xs:40,md:30}}>
+
                     <Card sx={{borderRadius: 5}}  variant={"outlined"}>
                         {article?.ArticleImage?.Url && (
                             <div className="article-hero-image">
                                 <img src={article.ArticleImage.Url} alt={article.Title}/>
                             </div>
                         )}
+                    </Card>
+                    <Card sx={{borderRadius: 5}} className={"article-hero-text"}  variant={"outlined"}>
                         <div id={"article-content"} className="article-body" dangerouslySetInnerHTML={{__html: article.FullText || "",}}/>
                         <div className={"article-divider"}/>
                         <ArticleShare articleTitle={article.Title} href={href}/>
                     </Card>
                 </Grid>
                 <Grid size={{sm:40,xs:40,md:10}}>
-                    <ArticleTableOfContent table={table} />
+                    <ArticleCategories categories={article.Categories} />
                     <ArticleSummary summary={article.Summary??""} />
                     <ArticleSearch />
-                    <ArticleCategories categories={article.Categories} />
+                    <ArticleTableOfContent table={table} />
                 </Grid>
             </Grid>
             {relatedFiltered.length > 0 && (

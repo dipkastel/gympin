@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.article.enums.ArticleStatus;
 import com.notrika.gympin.common.article.enums.ArticleType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,12 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @JsonIgnore
     @ToString.Exclude
     private List<ArticleCategoryEntity> categories;
+
+
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ArticlePhraseEntity> phrases;
 
     @Override
     public boolean equals(Object o) {

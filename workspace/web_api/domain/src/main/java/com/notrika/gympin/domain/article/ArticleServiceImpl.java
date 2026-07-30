@@ -1,18 +1,22 @@
 package com.notrika.gympin.domain.article;
 
-import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.article.dto.ArticleDto;
+import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
 import com.notrika.gympin.common.article.param.ArticleImageParam;
 import com.notrika.gympin.common.article.param.ArticleParam;
+import com.notrika.gympin.common.article.param.ArticlePhraseParam;
 import com.notrika.gympin.common.article.query.ArticleQuery;
 import com.notrika.gympin.common.article.service.ArticleService;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.ArticleConvertor;
 import com.notrika.gympin.persistence.dao.repository.article.ArticleCategoryRepository;
+import com.notrika.gympin.persistence.dao.repository.article.ArticlePhraseRepository;
 import com.notrika.gympin.persistence.dao.repository.article.ArticleRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
+import com.notrika.gympin.persistence.entity.article.ArticlePhraseEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +42,9 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
 
     @Autowired
     private MultimediaRepository multimediaRepository;
+
+    @Autowired
+    private ArticlePhraseRepository articlePhraseRepository;
 
 
     @Override
@@ -54,7 +62,7 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
     }
 
     @Override
-    public ArticleDto update( ArticleParam articleParam) {
+    public ArticleDto update(ArticleParam articleParam) {
         ArticleEntity entity = articleRepository.getById(articleParam.getId());
         entity.setTitle(articleParam.getTitle());
         entity.setSlug(articleParam.getSlug());
@@ -64,14 +72,14 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
         entity.setArticleStatus(articleParam.getArticleStatus());
         entity.setArticleType(articleParam.getArticleType());
         if (articleParam.getCategories() != null) {
-            List<ArticleCategoryEntity> newCategorires = articleCategoryRepository.findAllByDeletedIsFalseAndIdIn(articleParam.getCategories().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList()));
+            List<ArticleCategoryEntity> newCategorires = articleCategoryRepository.findAllByDeletedIsFalseAndIdIn(articleParam.getCategories().stream().filter(o -> !o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList()));
             entity.setCategories(newCategorires);
         }
         return ArticleConvertor.toDto(articleRepository.update(entity));
     }
 
     @Override
-    public ArticleDto delete( ArticleParam articleParam) {
+    public ArticleDto delete(ArticleParam articleParam) {
         ArticleEntity entity = articleRepository.getById(articleParam.getId());
         return ArticleConvertor.toDto(articleRepository.deleteById2(entity));
     }
@@ -114,7 +122,7 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
 
     @Override
     public List<ArticleDto> convertToDtos(List<ArticleEntity> entities) {
-        return entities.stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o -> !o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -134,7 +142,33 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
     public ArticleDto getBySlug(String slug) {
         String decoded = URLDecoder.decode(slug, StandardCharsets.UTF_8);
         ArticleEntity article = articleRepository.findFirstBySlug(decoded);
-        return ArticleConvertor.toDto(article);
+        List<ArticlePhraseEntity> phrases = articlePhraseRepository.findAllByDeletedIsFalseAndArticleIsNot(article);
+        return ArticleConvertor.toDto(article,phrases);
+    }
+
+    @Override
+    public ArticlePhraseDto addPhrases(ArticlePhraseParam phrase) {
+        if (phrase.getName().isEmpty()) throw new EmptyStackException();
+        if (phrase.getArticleId() == null) throw new EmptyStackException();
+        ArticlePhraseEntity phraseEntity = articlePhraseRepository.add(ArticlePhraseEntity.builder()
+                .name(phrase.getName())
+                .article(articleRepository.getById(phrase.getArticleId()))
+                .build());
+        return ArticleConvertor.toDto(phraseEntity);
+
+    }
+
+    @Override
+    public List<ArticlePhraseDto> getPhrasesByArticleId(Long id) {
+        List<ArticlePhraseEntity> phraseListEntity = articleRepository.getById(id).getPhrases().stream().filter(i->!i.isDeleted()).collect(Collectors.toList());
+        return phraseListEntity.stream().map(ArticleConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ArticlePhraseDto deletePhrasesById(ArticlePhraseParam param) {
+        ArticlePhraseEntity phraseEntity = articlePhraseRepository.getById(param.getId());
+        articlePhraseRepository.deleteById2(phraseEntity);
+        return ArticleConvertor.toDto(phraseEntity);
     }
 
 }

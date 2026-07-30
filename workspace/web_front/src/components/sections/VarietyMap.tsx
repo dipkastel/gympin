@@ -7,7 +7,7 @@ export default function VarietyMap(): JSX.Element {
     <section className="VarietyMap">
       <Container>
         <img
-          src="/images/Variety.jpg"
+          src="/images/Variety.webp"
           alt="تنوع و گستردگی در جیم پین"
         />
       </Container>

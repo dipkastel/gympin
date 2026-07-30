@@ -20,12 +20,15 @@ export let AdministratorApi = {
 
 export let ArticleApi = {
     add: "v1/article/add",
+    query: "v1/article/query",
     delete: "v1/article/delete",
     getAll: "v1/article/getall",
-    query: "v1/article/query",
-    getById: "v1/article/getById",
     update: "v1/article/update",
+    getById: "v1/article/getById",
     updateArticleImage: "v1/article/updateArticleImage",
+    addPhrase: "v1/article/addPhrase",
+    getPhrasesByArticleId: "v1/article/getPhrasesByArticleId",
+    deletePhrasesById: "v1/article/deletePhrasesById",
 };
 
 export let ArticleCategoryApi = {

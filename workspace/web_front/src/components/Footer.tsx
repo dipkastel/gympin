@@ -10,6 +10,7 @@ import {
   WhatsApp,
 } from "@mui/icons-material";
 import {JSX} from "react";
+import Enamad from "@/components/certificates/Enamad";
 
 export default function Footer(): JSX.Element {
   return (
@@ -92,7 +93,7 @@ export default function Footer(): JSX.Element {
                   sx={{ px: 1, py: 4 ,textAlign:"center"}}
               >
                 <Image
-                    src="/images/anjoman.jpg"
+                    src="/images/anjoman.webp"
                     alt="انجمن صنفی کسب و کار‌های اینترنتی"
                     className="footer-li-img"
                     width={120}
@@ -106,7 +107,7 @@ export default function Footer(): JSX.Element {
                   sx={{ px: 1, py: 4 ,textAlign:"center"}}
               >
                 <Image
-                    src="/images/dargah-moj.jpg"
+                    src="/images/dargah-moj.webp"
                     alt="درگاه ملی مجوز‌ها"
                     className="footer-li-img"
                     width={120}
@@ -120,7 +121,7 @@ export default function Footer(): JSX.Element {
                   sx={{ px: 1, py: 4 ,textAlign:"center"}}
               >
                 <Image
-                    src="/images/etehadie.jpg"
+                    src="/images/etehadie.webp"
                     alt="اتحادیه کسب و کار‌های کشوری"
                     className="footer-li-img"
                     width={120}
@@ -133,22 +134,7 @@ export default function Footer(): JSX.Element {
                   size={{ xs: 2, md: 1, xl: 1 }}
                   sx={{ px: 1, py: 4 ,textAlign:"center"}}
               >
-                <a
-                    href="https://trustseal.enamad.ir/?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf"
-                    target="_blank"
-                    rel="noreferrer"
-                    referrerPolicy="origin"
-                >
-                  <Image
-                      src="https://trustseal.enamad.ir/logo.aspx?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf"
-                      alt="نشان اینماد وبسایت جیم پین"
-                      className="enamad"
-                      width={120}
-                      height={120}
-                      loading="lazy"
-                      unoptimized
-                  />
-                </a>
+                <Enamad />
               </Grid>
             </Grid>
           </Grid>

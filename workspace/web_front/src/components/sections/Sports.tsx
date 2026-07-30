@@ -111,7 +111,7 @@ export default function Sports(): JSX.Element {
         >
           <SportItem
             size={size}
-            image="/images/estakhr.jpg"
+            image="/images/estakhr.webp"
             alt="ورزش‌های آبی که برای کارمندان ایجاد نشاط می‌کند"
             title="ورزش‌های آبی"
             text="قدرت و شادابی را در دل آب پیدا کنید! با ورزش‌های آبی، تغییرات مثبت را در بدن و ذهن خود تجربه کنید و توانایی‌های خود را افزایش دهید."
@@ -119,7 +119,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/bodybuilding.jpg"
+            image="/images/bodybuilding.webp"
             alt="ورزش‌هایی که برای عموم مردم جذاب است"
             title="باشگاه‌های بدنسازی"
             text="هر بار که به باشگاه می‌آیید، یک قدم به هدف‌های خود نزدیک‌تر می‌شوید! هر تمرین فرصتی برای ایجاد تغییر و تحول است."
@@ -127,7 +127,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/shamshir.jpg"
+            image="/images/shamshir.webp"
             alt="پدل برد ورزش مورد علاقه مدیران"
             title="ورزش‌های رزمی"
             text="آماده‌اید تا مرزهای خود را بشکنید؟ با ورزش‌های رزمی، هر جلسه تمرین فرصتی برای ارتقای مهارت‌ها و تقویت روحیه‌تان است."
@@ -135,7 +135,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/zorkhane.jpg"
+            image="/images/zorkhane.webp"
             alt="از زورخانه تا پارکور، آرامش تا هیجان"
             title="ورزش‌های برگزیده"
             text="هر ورزشی که انتخاب کنید، فرصتی برای کشف قدرت‌های نهفته شماست! بیایید با هم به سمت موفقیت‌های بزرگ‌تر حرکت کنیم."
@@ -143,7 +143,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/padel.jpg"
+            image="/images/padel.webp"
             alt="تفریحاتی برای ایجاد انرژی و انگیزه"
             title="ورزش‌های تفریحی"
             text="ورزش را به یک ماجراجویی تبدیل کنید! با فعالیت‌های تفریحی، استرس را کنار بگذارید و از هر لحظه لذت ببرید."
@@ -151,7 +151,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/spa.jpg"
+            image="/images/spa.webp"
             alt="آرامش و حس خوب برای کارمندان"
             title="ماساژ و اسپا"
             text="با خدمات اسپا و ماساژ، به بدن و ذهن خود یک هدیه ویژه بدهید! احساس آرامش و تازگی را با هر لمس تجربه کنید."
@@ -159,7 +159,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/analiz-badan.jpg"
+            image="/images/analiz-badan.webp"
             alt="آنالیز بدن"
             title="آنالیز بدن"
             text="از بدن خود اطلاعات بیشتری به دست بیاورید و با ورزش مناسب از بیماری‌ها جلوگیری کنید."
@@ -167,7 +167,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/harakate-eslahi.jpg"
+            image="/images/harakate-eslahi.webp"
             alt="حرکات اصلاحی"
             title="حرکات اصلاحی"
             text="عموماً کارمندان پشت‌میزنشین دچار گرفتگی‌های عضلانی و بیماری‌های مفصلی می‌شوند که بهترین درمان برای آنان حرکات اصلاحی است."
@@ -175,7 +175,7 @@ export default function Sports(): JSX.Element {
 
           <SportItem
             size={size}
-            image="/images/toopi.jpg"
+            image="/images/toopi.webp"
             alt="ورزش‌های گروهی و تیمی"
             title="ورزش‌های گروهی"
             text="با ورزش‌های گروهی احساس تعامل و همکاری در گروه‌ها بیشتر شده و در کارهای گروهی موفقیت بیشتری به دست می‌آورند."

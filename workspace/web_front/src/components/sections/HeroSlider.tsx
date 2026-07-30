@@ -23,18 +23,18 @@ const settings: Settings = {
 
 const slides: Slide[] = [
   {
-    desktop: "/images/slide1.jpg",
-    mobile: "/images/slide11.jpg",
+    desktop: "/images/slide1.webp",
+    mobile: "/images/slide11.webp",
     alt: "جیم پین - پلتفرم رفاهیات ورزشی سازمان‌ها",
   },
   {
-    desktop: "/images/slide2.jpg",
-    mobile: "/images/slide12.jpg",
+    desktop: "/images/slide2.webp",
+    mobile: "/images/slide12.webp",
     alt: "ثبت‌نام رایگان سازمان‌ها در جیم پین",
   },
   {
-    desktop: "/images/slide3.jpg",
-    mobile: "/images/slide13.jpg",
+    desktop: "/images/slide3.webp",
+    mobile: "/images/slide13.webp",
     alt: "دسترسی کارمندان به هزاران مرکز ورزشی",
   },
 ];

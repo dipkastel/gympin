@@ -20,6 +20,9 @@ export function formatDate(dateStr?: string,): string {
 export function buildArticleHref(article: Pick<ArticleType,"Slug">): string {
     return `/blog/${article.Slug}`;
 }
+export function buildArticleCategoryHref(article: Pick<ArticleType,"Slug">): string {
+    return `/blog?category=${article.Slug}`;
+}
 
 export function parseArticleParam(param = ""): string | null {
     const match = /^(\d+)-/.exec(param);

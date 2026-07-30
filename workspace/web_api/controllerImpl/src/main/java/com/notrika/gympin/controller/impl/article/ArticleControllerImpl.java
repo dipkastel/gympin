@@ -1,5 +1,7 @@
 package com.notrika.gympin.controller.impl.article;
 
+import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
+import com.notrika.gympin.common.article.param.ArticlePhraseParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.article.api.ArticleController;
 import com.notrika.gympin.common.article.dto.ArticleDto;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/article")
@@ -62,6 +65,24 @@ public class ArticleControllerImpl implements ArticleController {
     @GetMapping("/getBySlug")
     public ResponseEntity<ArticleDto> getBySlug(String slug) {
         return ResponseEntity.ok(articleService.getBySlug(slug));
+    }
+
+    @Override
+    @PostMapping("/addPhrase")
+    public ResponseEntity<ArticlePhraseDto> addPhrase(ArticlePhraseParam phrase) {
+        return ResponseEntity.ok(articleService.addPhrases(phrase));
+    }
+
+    @Override
+    @GetMapping("/getPhrasesByArticleId")
+    public ResponseEntity<List<ArticlePhraseDto>> getPhrasesByArticleId(Long id) {
+        return ResponseEntity.ok(articleService.getPhrasesByArticleId(id));
+    }
+
+    @Override
+    @PutMapping("/deletePhrasesById")
+    public ResponseEntity<ArticlePhraseDto> deletePhrasesById(ArticlePhraseParam param) {
+        return ResponseEntity.ok(articleService.deletePhrasesById(param));
     }
 
 }

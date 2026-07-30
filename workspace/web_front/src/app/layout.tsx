@@ -22,7 +22,7 @@ export const metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    images: [{ url: "/images/og-cover.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/slide11.webp", width: 1280, height: 719 }],
   },
   twitter: {
     card: "summary_large_image",
@@ -42,8 +42,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({children}: RootLayoutProps): JSX.Element {
   return (
-    <html lang="fa" dir="rtl">
-      <head>
+    <html lang="fa" dir="rtl"  data-scroll-behavior="smooth">
+      <head >
         <link rel="stylesheet" href="/fonts/iransansweb/style.css" />
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />

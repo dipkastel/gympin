@@ -36,7 +36,7 @@ export default function HomeContact(): JSX.Element {
                     >
                         <img
                             className="apps-img"
-                            src="/images/main-img-footer.jpg"
+                            src="/images/main-img-footer.webp"
                             alt="اولین ارتباط با جیم پین مؤثرترین ارتباط خواهد بود"
                         />
                     </Grid>

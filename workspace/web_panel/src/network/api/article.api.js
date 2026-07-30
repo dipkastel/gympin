@@ -26,3 +26,14 @@ export function Article_update(data) {
 export function Article_updateArticleImage(data) {
     return axios.post(ArticleApi.updateArticleImage, data);
 }
+
+export function Article_addPhrase(data) {
+    return axios.post(ArticleApi.addPhrase, data);
+}
+export function Article_getPhrasesByArticleId(data) {
+    return axios.get(ArticleApi.getPhrasesByArticleId, {params: data});
+}
+
+export function Article_deletePhrase(data) {
+    return axios.put(ArticleApi.deletePhrasesById,data);
+}

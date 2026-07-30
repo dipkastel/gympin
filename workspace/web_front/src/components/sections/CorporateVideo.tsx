@@ -44,7 +44,7 @@ export default function CorporateVideo(): JSX.Element {
             <video
               ref={videoRef}
               className="video"
-              poster="/images/thumb1.jpg"
+              poster="/images/thumb1.webp"
               width="100%"
               height="100%"
               controls={isPlaying}
