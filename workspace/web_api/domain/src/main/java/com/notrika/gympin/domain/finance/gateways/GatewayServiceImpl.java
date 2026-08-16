@@ -25,6 +25,7 @@ import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntit
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class GatewayServiceImpl extends AbstractBaseService<GatewaysParam, GatewaysDto, GatewayQuery, FinanceGatewayEntity> implements GatewayService {
 
     @Autowired
@@ -159,8 +161,10 @@ public class GatewayServiceImpl extends AbstractBaseService<GatewaysParam, Gatew
                 requestData.setLoginAccount(applicationGateway.getGateway().getPassword());
                 ClientSaleResponseData gatwayresult = null;
                 try {
+
                     gatwayresult = parsianGatewayBankServiceImpl.salePaymentRequest(requestData);
                 } catch (Exception e) {
+                    log.error("Error in create bank request : \n", e);
                     throw new GatewayIsNotAvalable();
                 }
                 if (gatwayresult == null) {
