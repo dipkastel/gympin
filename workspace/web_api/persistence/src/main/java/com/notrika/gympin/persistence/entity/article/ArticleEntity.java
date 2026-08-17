@@ -42,11 +42,17 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @Column(name = "summary", columnDefinition = "longtext")
     private String summary;
 
+    @Column(name = "faq", columnDefinition = "longtext")
+    private String faq;
+
+    @Column(name = "reference", columnDefinition = "longtext")
+    private String reference;
+
     @Column(name = "articleStatus", columnDefinition = "varchar(255) default 'DRAFT' ")
     @Enumerated(EnumType.STRING)
     private ArticleStatus articleStatus;
 
-    @Column(name = "articleType", columnDefinition = "varchar(255) default 'SIMPLE' ")
+    @Column(name = "articleType", columnDefinition = "varchar(255)")
     @Enumerated(EnumType.STRING)
     private ArticleType articleType;
 

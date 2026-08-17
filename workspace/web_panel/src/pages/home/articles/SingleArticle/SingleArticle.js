@@ -8,11 +8,16 @@ import {Button, FormControl, InputLabel, LinearProgress, MenuItem, Select, Typog
 import _selectCategories from "./category/_selectCategories";
 import _baseData from "./baseData/_baseData";
 import _artilceText from "./text/_articleText";
-import _summary from "./summary/_summary";
+import _articleSummary from "./parts/_articleSummary";
 import {ArticleStatus} from "../../../../helper/enums/ArticleStatus";
 import _image from "./image/_image";
 import _selectEditor from "./baseData/_selectEditor";
 import _ArticlePhrase from "./phrase/_ArticlePhrase";
+import _articleFaq from "./parts/_articleFaq";
+import _articleReference from "./parts/_articleReference";
+import _DataCounts from "./baseData/_DataCounts";
+import _ReadDetails from "./baseData/_ReadDetails";
+import _AuthorDetail from "./baseData/_AuthorDetails";
 
 const SingleArticle = () => {
 
@@ -38,6 +43,7 @@ const SingleArticle = () => {
     }
 
     function updateArticle(name, data) {
+
         setArticle({...article, [name]: data});
     }
 
@@ -76,8 +82,21 @@ const SingleArticle = () => {
             <div className="row">
                 <div className="col-md-9">
                     {article && <_baseData article={article} updateArticle={updateArticle}/>}
+                    <div className="row">
+                        <div className="col-md-4">
+                            {article && <_DataCounts article={article} />}
+                        </div>
+                        <div className="col-md-4">
+                            {article && <_ReadDetails article={article}  />}
+                        </div>
+                        <div className="col-md-4">
+                            {article && <_AuthorDetail article={article} updateArticle={updateArticle}/>}
+                        </div>
+                    </div>
                     {article && <_artilceText article={article} updateArticle={updateArticle}/>}
-                    {article && <_summary article={article} updateArticle={updateArticle}/>}
+                    {article && <_articleSummary article={article} updateArticle={updateArticle}/>}
+                    {article && <_articleFaq article={article} updateArticle={updateArticle}/>}
+                    {article && <_articleReference article={article} updateArticle={updateArticle}/>}
                 </div>
                 <div className="col-md-3">
                     {article && <Portlet>

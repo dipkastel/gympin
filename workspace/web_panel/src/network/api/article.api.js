@@ -11,6 +11,7 @@ export function Article_delete(data) {
 export function Article_getAll(_page, _size) {
     return axios.get(ArticleApi.getAll, {params: {page: _page, size: _size}});
 }
+
 export function Article_query(data) {
     return axios.post(ArticleApi.query, data);
 }
@@ -36,4 +37,12 @@ export function Article_getPhrasesByArticleId(data) {
 
 export function Article_deletePhrase(data) {
     return axios.put(ArticleApi.deletePhrasesById,data);
+}
+
+export function Article_getArticleCountWithPhrase(data) {
+    return axios.post(ArticleApi.getArticleCountWithPhrase,data);
+}
+
+export function Article_getAllArticleLinkCount(data) {
+    return axios.post(ArticleApi.getAllArticleLinkCount,data);
 }

@@ -26,7 +26,7 @@ public class ArticleDto extends BaseDtoWithCreateUpdate<ArticleDto> {
     @JsonProperty("Slug")
     private String slug;
 
-    @JsonProperty("seoPriority")
+    @JsonProperty("SeoPriority")
     private Double seoPriority;
 
     @JsonProperty("FullText")
@@ -34,6 +34,12 @@ public class ArticleDto extends BaseDtoWithCreateUpdate<ArticleDto> {
 
     @JsonProperty("Summary")
     private String summary;
+
+    @JsonProperty("Faq")
+    private String faq;
+
+    @JsonProperty("Reference")
+    private String reference;
 
     @JsonProperty("ArticleStatus")
     private ArticleStatus articleStatus;

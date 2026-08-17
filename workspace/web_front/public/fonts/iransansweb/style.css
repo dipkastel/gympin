@@ -6,6 +6,11 @@
 url('IRANSans-Bold.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
 url('IRANSans-Bold.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 	font-weight: bold;
+	font-display: swap;
+
+	ascent-override:90%;
+	descent-override:22%;
+	line-gap-override:0%;
 }
 
 @font-face {
@@ -14,6 +19,11 @@ url('IRANSans-Bold.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 url('IRANSans-Black.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
 url('IRANSans-Black.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 	font-weight: 900;
+	font-display: swap;
+
+	ascent-override:90%;
+	descent-override:22%;
+	line-gap-override:0%;
 }
 
 
@@ -23,6 +33,11 @@ url('IRANSans-Black.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 url('IRANSans-UltraLight.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
 url('IRANSans-UltraLight.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 	font-weight: 200;
+	font-display: swap;
+
+	ascent-override:90%;
+	descent-override:22%;
+	line-gap-override:0%;
 }
 
 @font-face {
@@ -31,6 +46,11 @@ url('IRANSans-UltraLight.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.
 url('IRANSans-Light-Expanded.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
 url('IRANSans-Light-Expanded.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 	font-weight: 300;
+	font-display: swap;
+
+	ascent-override:90%;
+	descent-override:22%;
+	line-gap-override:0%;
 }
 
 
@@ -40,54 +60,9 @@ url('IRANSans-Light-Expanded.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, S
 url('IRANSANSExpanded.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
 url('IRANSANSExpanded.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 	font-weight: normal;
-}
+	font-display: swap;
 
-.IRANSansUltraLight {
-	font-family: IRANSans-web;
-	color: #000;
-    margin-right: 50px;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #FFF;
-	font-weight: 200;
-}
-
-.IRANSansLight {
-	font-family: IRANSans-web;
-	color: #000;
-    margin-right: 50px;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #FFF;
-	font-weight: 300;
-}
-
-.IRANSans {
-	font-family: IRANSans-web;
-	color: #000;
-    margin-right: 50px;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #FFF;
-	font-weight: normal;
-}
-
-.IRANSansBold {
-	font-family: IRANSans-web;
-	color: #000;
-    margin-right: 50px;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #FFF;
-	font-weight: bold;
-}
-
-.IRANSansBlack {
-	font-family: IRANSans-web;
-	color: #000;
-    margin-right: 50px;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #FFF;
-	font-weight: 900;
+	ascent-override:90%;
+	descent-override:22%;
+	line-gap-override:0%;
 }

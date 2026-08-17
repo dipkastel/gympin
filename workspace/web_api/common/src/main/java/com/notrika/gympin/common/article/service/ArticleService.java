@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.article.service;
 
 import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
+import com.notrika.gympin.common.article.dto.ArticleSeoCountDto;
 import com.notrika.gympin.common.article.param.ArticlePhraseParam;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.article.dto.ArticleDto;
@@ -18,4 +19,8 @@ public interface ArticleService extends BaseService<ArticleParam, ArticleDto, Ar
     ArticlePhraseDto addPhrases(ArticlePhraseParam phrase);
     List<ArticlePhraseDto> getPhrasesByArticleId(Long id);
     ArticlePhraseDto deletePhrasesById(ArticlePhraseParam param);
+    ArticleSeoCountDto getArticleCountWithPhrase(ArticlePhraseParam param);
+    ArticleSeoCountDto getAllArticleLinkCount(ArticlePhraseParam param);
+
+
 }

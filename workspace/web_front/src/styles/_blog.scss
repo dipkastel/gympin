@@ -461,16 +461,52 @@
   color: $colors-text-primary;
 
   img { max-width: 100%; border-radius: 12px; height: auto; }
+  h2 {
 
+    font-size: 23px;
+  }
+  h3 {
+
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 18px;
+  }
   h2, h3, h4 {
-    :before{
-      content: " ";
-      background-color: #CC0000;
-    }
     color: $colors-secondary;
     font-weight: 700;
     margin-top: 2.2em;
+    position: relative;
+    display: inline-block;
+    padding: 7px 25px 15px 0;
+    width: auto;
+    text-align: right;
+    border-bottom: 1px solid #d0d0d0;
+
+    :before{
+      content: "";
+      width: 180px;
+      height: 0;
+      display: inline-block;
+      border-bottom: 3px solid #2E5E4E;
+      bottom: -2px;
+      right: 40px;
+      position: absolute;
+      border-radius: 50px;
+    }
+    :after {
+      content: "";
+      width: 70px;
+      height: 70px;
+      background: rgba(176, 155, 155, 0.1);
+      position: absolute;
+      right: 0;
+      top: -10px;
+      transform: rotate(25deg);
+      border-radius: 20px;
+    }
   }
+
 
   a { color: $colors-primary; }
 
@@ -498,6 +534,7 @@
         height: 20px;
         width: 20px;
         background-image: url("/images/check.svg");
+        float: right;
       }
     }
   }

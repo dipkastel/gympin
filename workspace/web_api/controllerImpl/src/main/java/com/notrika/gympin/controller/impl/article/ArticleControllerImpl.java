@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.article;
 
 import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
+import com.notrika.gympin.common.article.dto.ArticleSeoCountDto;
 import com.notrika.gympin.common.article.param.ArticlePhraseParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.article.api.ArticleController;
@@ -83,6 +84,18 @@ public class ArticleControllerImpl implements ArticleController {
     @PutMapping("/deletePhrasesById")
     public ResponseEntity<ArticlePhraseDto> deletePhrasesById(ArticlePhraseParam param) {
         return ResponseEntity.ok(articleService.deletePhrasesById(param));
+    }
+
+    @Override
+    @PostMapping("/getArticleCountWithPhrase")
+    public ResponseEntity<ArticleSeoCountDto> getArticleCountWithPhrase(ArticlePhraseParam param) {
+        return ResponseEntity.ok(articleService.getArticleCountWithPhrase(param));
+    }
+
+    @Override
+    @PostMapping("/getAllArticleLinkCount")
+    public ResponseEntity<ArticleSeoCountDto> getAllArticleLinkCount(ArticlePhraseParam param) {
+        return ResponseEntity.ok(articleService.getAllArticleLinkCount(param));
     }
 
 }

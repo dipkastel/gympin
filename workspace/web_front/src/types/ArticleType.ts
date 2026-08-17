@@ -4,6 +4,8 @@ export interface ArticleType {
     Slug: string;
     Summary?: string;
     FullText?: string;
+    Faq?: string;
+    Reference?: string;
     CreatedDate?: string;
     SeoPriority?: number;
     UpdatedDate?: string;

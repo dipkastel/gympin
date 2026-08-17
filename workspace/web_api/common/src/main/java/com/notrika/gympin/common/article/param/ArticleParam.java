@@ -34,11 +34,17 @@ public class ArticleParam extends BaseParam<ArticleParam> {
     @JsonProperty("Summary")
     private String summary;
 
+    @JsonProperty("Faq")
+    private String faq;
+
+    @JsonProperty("Reference")
+    private String reference;
+
     @JsonProperty("ArticleStatus")
     private ArticleStatus articleStatus;
 
     @JsonProperty("ArticleType")
-    private ArticleType articleType;
+    private ArticleType articleType = ArticleType.SIMPLE;
 
     @JsonProperty("Categories")
     private List<ArticleCategoryParam> categories;

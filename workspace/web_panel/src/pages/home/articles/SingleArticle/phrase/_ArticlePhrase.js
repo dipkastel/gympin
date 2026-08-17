@@ -1,7 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Button, Checkbox, FormControlLabel, Grid, IconButton, List, ListItem, Typography} from "@mui/material";
-import {Article_addPhrase, Article_deletePhrase, Article_getPhrasesByArticleId} from "../../../../../network/api/article.api";
+import {
+    Article_addPhrase,
+    Article_deletePhrase,
+    Article_getArticleCountWithPhrase,
+    Article_getPhrasesByArticleId
+} from "../../../../../network/api/article.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import AddIcon from "@mui/icons-material/Add";
 import {TicketAppointments_add} from "../../../../../network/api/TicketAppointments.api";
@@ -13,6 +18,7 @@ const _ArticlePhrase = ({article}) => {
     const error = useContext(ErrorContext);
     const [phrases,setPhrases] = useState([])
     const [openModalAdd,setOpenModalAdd] = useState(false)
+    const [PhraseDetails,setPhraseDetails] = useState(null)
 
     useEffect(() => {
         getArticlePhrases();
@@ -32,9 +38,7 @@ const _ArticlePhrase = ({article}) => {
 
     function deletePhrase(e,item){
         e.preventDefault();
-        console.log("delete")
         Article_deletePhrase({Id:item.Id}).then(result=>{
-            console.log("deleted")
             getArticlePhrases();
         }).catch(e => {
             try {
@@ -62,6 +66,27 @@ const _ArticlePhrase = ({article}) => {
             });
         }
 
+        function PhraseChanged(e,value) {
+            e.preventDefault()
+            if(value.length<3){
+                setPhraseDetails("کوتاه")
+                return;
+            }
+            setPhraseDetails("درحال جستجو ...");
+            Article_getArticleCountWithPhrase({Name: value,ArticleId:article.Id})
+                .then(result => {
+                    setPhraseDetails("تکرار در "+(result.data.Data.WordCount||0)+" مقاله مجموعا "+(result.data.Data.ArticleCount||0)+" بار")
+                }).catch(e => {
+                setPhraseDetails("خطا در جستجو");
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
@@ -76,8 +101,12 @@ const _ArticlePhrase = ({article}) => {
                                 <Form.Control
                                     name="Name"
                                     type="text"
+                                    onChange={(e)=>PhraseChanged(e,e.target.value)}
                                     counselingholder="عبارت"
                                 />
+                                <Typography variant={"subtitle1"} >
+                                    {PhraseDetails&&PhraseDetails}
+                                 </Typography>
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>

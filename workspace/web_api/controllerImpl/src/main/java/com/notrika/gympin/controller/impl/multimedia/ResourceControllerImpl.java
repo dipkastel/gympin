@@ -36,6 +36,7 @@ public class ResourceControllerImpl implements ResourceController {
             if(Extention.equals("webp"))
                 response.setContentType("image/webp");
         }
+        response.addHeader("Robots-Tag","noindex");
         InputStream inputStream = multimediaService.getById(param);
         IOUtils.copy(inputStream,response.getOutputStream());
     }

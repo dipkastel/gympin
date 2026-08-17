@@ -25,10 +25,12 @@ export let ArticleApi = {
     getAll: "v1/article/getall",
     update: "v1/article/update",
     getById: "v1/article/getById",
-    updateArticleImage: "v1/article/updateArticleImage",
     addPhrase: "v1/article/addPhrase",
-    getPhrasesByArticleId: "v1/article/getPhrasesByArticleId",
     deletePhrasesById: "v1/article/deletePhrasesById",
+    updateArticleImage: "v1/article/updateArticleImage",
+    getPhrasesByArticleId: "v1/article/getPhrasesByArticleId",
+    getAllArticleLinkCount: "v1/article/getAllArticleLinkCount",
+    getArticleCountWithPhrase: "v1/article/getArticleCountWithPhrase",
 };
 
 export let ArticleCategoryApi = {

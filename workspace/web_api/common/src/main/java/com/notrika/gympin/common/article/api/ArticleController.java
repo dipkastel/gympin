@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.article.api;
 
 import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
+import com.notrika.gympin.common.article.dto.ArticleSeoCountDto;
 import com.notrika.gympin.common.article.param.ArticlePhraseParam;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.article.dto.ArticleDto;
@@ -19,4 +20,7 @@ public interface ArticleController extends BaseController<ArticleParam, ArticleD
     ResponseEntity<ArticlePhraseDto> addPhrase(@RequestBody ArticlePhraseParam phrase);
     ResponseEntity<List<ArticlePhraseDto>> getPhrasesByArticleId(Long id);
     ResponseEntity<ArticlePhraseDto> deletePhrasesById(@RequestBody ArticlePhraseParam id);
+
+    ResponseEntity<ArticleSeoCountDto> getArticleCountWithPhrase(@RequestBody ArticlePhraseParam param);
+    ResponseEntity<ArticleSeoCountDto> getAllArticleLinkCount(@RequestBody ArticlePhraseParam param);
 }

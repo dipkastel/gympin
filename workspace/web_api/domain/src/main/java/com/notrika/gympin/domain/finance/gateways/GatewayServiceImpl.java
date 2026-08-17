@@ -164,7 +164,6 @@ public class GatewayServiceImpl extends AbstractBaseService<GatewaysParam, Gatew
 
                     gatwayresult = parsianGatewayBankServiceImpl.salePaymentRequest(requestData);
                 } catch (Exception e) {
-                    log.error("Error in create bank request : \n", e);
                     throw new GatewayIsNotAvalable();
                 }
                 if (gatwayresult == null) {

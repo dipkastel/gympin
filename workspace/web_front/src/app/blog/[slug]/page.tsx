@@ -142,6 +142,12 @@ export default async function ArticlePage({params}: ArticlePageProps): Promise<J
                         <div className={"article-divider"}/>
                         <ArticleShare articleTitle={article.Title} href={href}/>
                     </Card>
+                    {article.Faq&&<Card sx={{borderRadius: 5}} className={"article-hero-text"} variant={"outlined"}>
+                        <div id={"article-content"} className="article-body" dangerouslySetInnerHTML={{__html: article.Faq || "",}}/>
+                    </Card>}
+                    {article.Reference&&<Card sx={{borderRadius: 5}} className={"article-hero-text"} variant={"outlined"}>
+                        <div id={"article-content"} className="article-body" dangerouslySetInnerHTML={{__html: article.Reference || "",}}/>
+                    </Card>}
                 </Grid>
                 <Grid size={{sm:40,xs:40,md:10}}>
                     <ArticleCategories categories={article.Categories} />

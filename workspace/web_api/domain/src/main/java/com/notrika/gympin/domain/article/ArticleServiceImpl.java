@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.article;
 
 import com.notrika.gympin.common.article.dto.ArticleDto;
 import com.notrika.gympin.common.article.dto.ArticlePhraseDto;
+import com.notrika.gympin.common.article.dto.ArticleSeoCountDto;
 import com.notrika.gympin.common.article.param.ArticleImageParam;
 import com.notrika.gympin.common.article.param.ArticleParam;
 import com.notrika.gympin.common.article.param.ArticlePhraseParam;
@@ -17,6 +18,7 @@ import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaReposi
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
 import com.notrika.gympin.persistence.entity.article.ArticlePhraseEntity;
+import com.notrika.gympin.persistence.entity.article.ArticleSeoCountQDto;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,8 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
                 .slug(articleParam.getSlug())
                 .seoPriority(articleParam.getSeoPriority())
                 .summary(articleParam.getSummary())
+                .faq(articleParam.getFaq())
+                .reference(articleParam.getReference())
                 .text(articleParam.getFullText())
                 .articleStatus(articleParam.getArticleStatus())
                 .articleType(articleParam.getArticleType())
@@ -68,6 +72,8 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
         entity.setSlug(articleParam.getSlug());
         entity.setSeoPriority(articleParam.getSeoPriority());
         entity.setSummary(articleParam.getSummary());
+        entity.setFaq(articleParam.getFaq());
+        entity.setReference(articleParam.getReference());
         entity.setText(articleParam.getFullText());
         entity.setArticleStatus(articleParam.getArticleStatus());
         entity.setArticleType(articleParam.getArticleType());
@@ -169,6 +175,45 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
         ArticlePhraseEntity phraseEntity = articlePhraseRepository.getById(param.getId());
         articlePhraseRepository.deleteById2(phraseEntity);
         return ArticleConvertor.toDto(phraseEntity);
+    }
+
+    @Override
+    public ArticleSeoCountDto getArticleCountWithPhrase(ArticlePhraseParam param) {
+        ArticleSeoCountQDto count = articleRepository.getCountByPhraseName(param.getName(),param.getArticleId());
+        ArticleSeoCountDto artCount = ArticleSeoCountDto
+                .builder()
+                .articleCount(count.getArticleCount())
+                .wordCount(count.getWordCount())
+                .build();
+        return artCount;
+    }
+
+    @Override
+    public ArticleSeoCountDto getAllArticleLinkCount(ArticlePhraseParam param) {
+        ArticleEntity article = articleRepository.getById(param.getArticleId());
+        List<ArticlePhraseEntity> phrases = article.getPhrases();
+        List<String> texts = articleRepository.findTextsForAnalysis(param.getArticleId());
+        long matchingRowsCount = 0;
+        long totalOccurrencesCount = 0;
+        for (String text : texts) {
+            long rowOccurrences = 0;
+            for (String phrase : phrases.stream().map(ArticlePhraseEntity::getName).collect(Collectors.toList())) {
+                if (phrase != null && !phrase.isBlank() && text.contains(phrase)) {
+                    int count = (text.length() - text.replace(phrase, "").length()) / phrase.length();
+                    rowOccurrences += count;
+                }
+            }
+            if (rowOccurrences > 0) {
+                matchingRowsCount++;
+                totalOccurrencesCount += rowOccurrences;
+            }
+        }
+        ArticleSeoCountDto artCount = ArticleSeoCountDto
+                .builder()
+                .articleCount(matchingRowsCount)
+                .wordCount(totalOccurrencesCount)
+                .build();
+        return artCount;
     }
 
 }

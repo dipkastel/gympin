@@ -20,6 +20,8 @@ public class ArticleConvertor {
         dto.setArticleType(entity.getArticleType());
         dto.setArticleStatus(entity.getArticleStatus());
         dto.setSummary(entity.getSummary());
+        dto.setFaq(entity.getFaq());
+        dto.setReference(entity.getReference());
         dto.setTitle(entity.getTitle());
         dto.setSlug(entity.getSlug());
         dto.setSeoPriority(entity.getSeoPriority());
@@ -71,6 +73,8 @@ public class ArticleConvertor {
         dto.setArticleType(entity.getArticleType());
         dto.setArticleStatus(entity.getArticleStatus());
         dto.setSummary(entity.getSummary());
+        dto.setFaq(entity.getFaq());
+        dto.setReference(entity.getReference());
         dto.setTitle(entity.getTitle());
         dto.setSlug(entity.getSlug());
         dto.setSeoPriority(entity.getSeoPriority());

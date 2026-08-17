@@ -1,4 +1,5 @@
 export const EditorsType = {
     JODIT:"جودیت ساده",
-    WYSIWYG:"ویسیویگ ",
+    WYSIWYG:"ویسیویگ",
+    TIPTAP:"تیپ تپ",
 }

@@ -1,37 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import {convertToRaw, EditorState} from 'draft-js';
+import {Editor} from "react-draft-wysiwyg";
 import {convertFromHTML} from 'draft-convert';
-import draftToHtml from 'draftjs-to-html';
-import {Editor} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from "draftjs-to-html";
+import {convertToRaw, EditorState} from "draft-js";
 import {getSelectedEditor} from "../../../../../helper/pocket/pocket";
 import JoditEditor from "jodit-react";
 import TipTapEditor from "../Editors/Tiptop/TipTapEditor";
 import {Collapse, IconButton} from "@mui/material";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 
-const _artilceText = ({article, updateArticle}) => {
+const _articleReference = ({article, updateArticle}) => {
     const [defaultEditorState, setDefaultEditorState] = useState();
-    const [userSelectedEditor, setUserSelectedEditor] = useState(getSelectedEditor())
-    const [show, setShow] = useState(false)
+    const [userSelectedEditor] = useState(getSelectedEditor());
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         if (userSelectedEditor == "WYSIWYG") {
-            if (article.FullText) {
-                setDefaultEditorState(EditorState.createWithContent(convertFromHTML(article.FullText)))
+            if (article.Reference) {
+                setDefaultEditorState(EditorState.createWithContent(convertFromHTML(article.Reference)))
             } else {
                 setDefaultEditorState(EditorState.createEmpty());
             }
         } else if (userSelectedEditor == "JODIT") {
-            if (article.FullText) {
-                setDefaultEditorState(article.FullText)
+            if (article.Reference) {
+                setDefaultEditorState(article.Reference)
             } else {
                 setDefaultEditorState("");
             }
         } else if (userSelectedEditor == "TIPTAP") {
-            if (article.FullText) {
-                setDefaultEditorState(article.FullText)
+            if (article.Reference) {
+                setDefaultEditorState(article.Reference)
             } else {
                 setDefaultEditorState("");
             }
@@ -41,16 +40,15 @@ const _artilceText = ({article, updateArticle}) => {
     const onEditorStateChange = (editorState) => {
         if (userSelectedEditor == "WYSIWYG") {
             setDefaultEditorState(editorState)
-            updateArticle("FullText", draftToHtml(convertToRaw(editorState.getCurrentContent())))
+            updateArticle("Reference", draftToHtml(convertToRaw(editorState.getCurrentContent())))
         } else if (userSelectedEditor == "JODIT") {
             setDefaultEditorState(editorState)
-            updateArticle("FullText", editorState)
+            updateArticle("Reference", editorState)
         } else if (userSelectedEditor == "TIPTAP") {
             setDefaultEditorState(editorState)
-            updateArticle("FullText", editorState)
+            updateArticle("Reference", editorState)
         }
     };
-
 
     const JODITconfig = {
         readonly: false,
@@ -61,11 +59,9 @@ const _artilceText = ({article, updateArticle}) => {
     };
     return (
         <>
-
-
             <Portlet>
                 <PortletHeader
-                    title={"مطلب"}
+                    title={"منابع"}
                     toolbar={
                         <PortletHeaderToolbar>
                             <IconButton onClick={(e) => setShow(!show)}>{show ? <ExpandLess/> :
@@ -73,6 +69,7 @@ const _artilceText = ({article, updateArticle}) => {
                         </PortletHeaderToolbar>
                     }
                 />
+
                 <Collapse in={show} timeout="auto" unmountOnExit>
                     <PortletBody>
                         {userSelectedEditor == "WYSIWYG" &&
@@ -102,4 +99,4 @@ const _artilceText = ({article, updateArticle}) => {
     );
 };
 
-export default _artilceText;
+export default _articleReference;
