@@ -1,7 +1,7 @@
 import {ArticleCategoryType, ArticleType} from "@/types/ArticleType";
 import {ArticleApi, ArticleCategoryApi, AuthApi, LinkApi} from "@/lib/network/apiConstants";
 
-const REVALIDATE_SECONDS = 60;
+const REVALIDATE_SECONDS = 3600;
 
 interface PagingRequest {
     Page: number;
