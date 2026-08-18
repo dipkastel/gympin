@@ -49,7 +49,7 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
         MultimediaEntity multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
         multimedia.setTitle(multimediaStoreParam.getTitle());
-        if(multimediaStoreParam.getSlug().isEmpty())
+        if(multimediaStoreParam.getSlug()==null)
             multimediaStoreParam.setSlug(helper.generateSlugOfText(multimediaStoreParam.getTitle()));
         multimedia.setSlug(multimediaStoreParam.getSlug());
         multimedia.setDescription(multimediaStoreParam.getDescription());

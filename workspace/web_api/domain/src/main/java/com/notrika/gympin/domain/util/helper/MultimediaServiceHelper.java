@@ -152,7 +152,7 @@ public final class MultimediaServiceHelper {
         multimedia.setMediaType(multimediaStoreParam.getMediaType());
         multimedia.setExtension(getFileNameExtension(fileName));
         multimedia.setTitle(multimediaStoreParam.getTitle());
-        if(multimediaStoreParam.getSlug().isEmpty()){
+        if(multimediaStoreParam.getSlug()!=null){
             multimediaStoreParam.setSlug(generateSlugOfText(multimediaStoreParam.getTitle()));
         }
         multimedia.setSlug(multimediaStoreParam.getSlug());
